@@ -1,0 +1,27 @@
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+.input {
+  padding: 10px 20px 10px 40px;
+  width: 100%;
+  border: none;
+  outline: 1px solid transparent;
+  font-size: 16px;
+  border-bottom: 2px solid #141010;
+  background: transparent;
+}
+
+.iconPosition {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 5px;
+  top: 100%;
+  transform: translateY(-100%);
+  fill: #2e2f42;
+}

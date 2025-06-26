@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 30px;
+  padding: 20px 0px;
+}
+
+.username {
+  color: #141010;
+}
+
+.btn {
+  padding: 15px 30px;
+  border: none;
+  outline: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #141010;
+  color: whitesmoke;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #c3195d;
+  color: #bab5b5;
+  border: 2px solid #141010;
+}

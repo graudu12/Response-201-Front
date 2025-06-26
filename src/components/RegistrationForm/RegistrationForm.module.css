@@ -1,0 +1,95 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 70px;
+  padding: 0 16px;
+}
+
+.formContainer {
+  border-radius: 8px;
+  box-shadow: rgba(10, 11, 1, 0.5) 15px 30px 80px 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: rgba(10, 11, 1, 0.5) 5px 20px 50px 10px;
+}
+
+.formTitle {
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  color: white;
+}
+
+.formInputLabel {
+  display: block;
+  margin-bottom: 4px;
+  margin-top: 30px;
+  font-size: 17px;
+  font-weight: 300;
+  color: white;
+}
+
+.input {
+  width: 400px;
+  padding: 10px 40px 10px 20px;
+  margin-bottom: 8px;
+  outline: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 15px;
+  border: 1px solid #888;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.iconPosition {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  right: 16px;
+  top: 70%;
+  transform: translateY(-100%);
+  fill: #2e2f42;
+}
+
+.btn {
+  width: 400px;
+  padding: 12px;
+  border: none;
+  margin-top: 30px;
+  outline: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #141010;
+  color: whitesmoke;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #c3195d;
+  color: #bab5b5;
+  border: 2px solid #141010;
+}
+
+.error {
+  height: 20px;
+  margin: 10px 0;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #ffc93c;
+}
