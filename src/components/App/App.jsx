@@ -9,7 +9,8 @@ import { refreshUser } from "../../redux/auth/operations";
 
 import { RestrictedRoute } from "../RestrictedRoute/RestrictedRoute";
 import { Layout } from "../Layout/Layout";
-import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
+import  RecipesList  from "../RecipesList/RecipesList";
+// import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
 import Loading from "../Loading/Loading";
 import NotificationToast from "../NotificationToast/NotificationToast";
 
@@ -18,9 +19,7 @@ const RegistrationPage = lazy(() =>
   import("../../pages/RegistrationPage/RegistrationPage")
 );
 const LoginPage = lazy(() => import("../../pages/LoginPage/LoginPage"));
-const ContactsPage = lazy(() =>
-  import("../../pages/ContactsPage/ContactsPage")
-);
+
 const NotFoundPage = lazy(() =>
   import("../../pages/NotFoundPage/NotFoundPage")
 );
@@ -61,13 +60,11 @@ export default function App() {
               />
             }
           />
-          <Route
-            path="contacts/"
-            element={
-              <PrivateRoute component={<ContactsPage />} redirectTo="/login" />
-            }
-          />
+          
+          <Route path="/recipes" element={<RecipesList />} />
+
           <Route path="*" element={<NotFoundPage />} />
+
         </Routes>
       </Layout>
       <NotificationToast />
