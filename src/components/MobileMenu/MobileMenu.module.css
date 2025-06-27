@@ -19,7 +19,7 @@
   animation: slideDown 300ms ease-out;
 }
 
-/* Анімація появи з верху */
+/* Анімація появи */
 @keyframes slideDown {
   from {
     transform: translateY(-100%);
@@ -31,11 +31,11 @@
   }
 }
 
-/* Кнопка закриття */
+/* Кнопка ✕ */
 .closeBtn {
   align-self: flex-end;
   font-size: 28px;
-  color: #fff;
+  color: #ffffff;
   background: none;
   border: none;
   cursor: pointer;
@@ -45,17 +45,16 @@
 .mobileNav {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  gap: 24px;
 }
 
+/* Посилання */
 .link {
   font-size: 18px;
-  color: #fff;
+  color: #ffffff;
   text-decoration: none;
-  background: none;
-  border: none;
-  text-align: left;
-  padding: 8px 0;
+  font-weight: 500;
   transition: color 0.3s ease;
 }
 
@@ -64,53 +63,80 @@
   color: #c2854d;
 }
 
-/* Кнопка */
+/* Кнопка Register / Add Recipe */
 .mobileButton {
-  background-color: #c2854d;
-  padding: 10px 16px;
-  border-radius: 8px;
-  color: #fff;
+  background-color: #a86939;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 12px;
   text-align: center;
-  font-weight: 500;
   text-decoration: none;
+  width: 100%;
+  max-width: 280px;
   transition: background-color 0.3s ease;
-  display: inline-block;
 }
 
-.mobileButton:hover {
-  background-color: #a96b3a;
+.mobileButton:hover,
+.mobileButton:focus {
+  background-color: #925c30;
 }
 
-/* Юзер блок */
-.userMini {
+/* Блок з аватаркою, імʼям та logout */
+.userBox {
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #fff;
+  gap: 12px;
+  color: #ffffff;
 }
 
+/* Ім’я */
 .username {
+  font-size: 16px;
   font-weight: 500;
 }
 
+/* Аватарка */
 .avatar {
-  background-color: #c2854d;
+  background-color: #a86939;
   color: #fff;
-  width: 32px;
-  height: 32px;
+  font-weight: 600;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
+  font-size: 18px;
 }
 
-/* Logout */
-.logoutBtn {
+/* Logout кнопка-іконка */
+.logoutIcon {
   background: none;
   border: none;
-  color: #e53935;
-  font-size: 16px;
-  text-align: left;
+  color: #ffffff;
   cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.logoutIcon:hover,
+.logoutIcon:focus {
+  color: #c2854d;
+}
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.logo {
+  max-width: 160px;
+  height: auto;
 }
