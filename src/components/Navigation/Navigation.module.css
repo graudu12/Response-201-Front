@@ -12,9 +12,11 @@
 }
 
 .link {
+  position: relative;
   color: #fff;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 12px;
+  font-weight: 500;
   padding-bottom: 4px;
   transition: color 0.3s ease;
 }
@@ -28,6 +30,7 @@
   height: 2px;
   background-color: #fff;
   transition: width 0.3s ease;
+  border-radius: 1px;
 }
 
 .link.active::after {
@@ -41,12 +44,18 @@
 .mobileButton {
   background-color: #c2854d;
   color: #fff;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border: none;
   border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .mobileButton:hover {
