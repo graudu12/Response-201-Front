@@ -1,0 +1,167 @@
+.recipeListContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+.FormRecipes {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+
+}
+.Recipes {
+  font-weight: 600;
+  font-size: 40px;
+  color: #000;
+  font-family: "Montserrat", sans-serif;
+}
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 32px;
+}
+.recipes {
+  font-weight: 600;
+  font-size: 18px;
+  color: #000;
+  font-family: "Montserrat", sans-serif;
+}
+.inputWithIcon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 24px;
+}
+.buttonReset {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4px;
+  border-bottom: 1px solid #000;
+  padding: 0px 0px 4px 0px;
+}
+.resetFilters {
+  font-weight: 600;
+  font-size: 12px;
+  background: none;
+  border: none;
+  outline: none;
+}
+.FormButton {
+  display: inline-block;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 4px;
+  position: relative; /* Важно! Нужно для абсолютного позиционирования dropdown */
+}
+.ButtonInput {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 8px;
+
+  background-color: #fff;
+  cursor: pointer;
+}
+.filterInput {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  border: none;
+  outline: none;
+  font-family: "Montserrat", sans-serif;
+}
+
+.recipeslist {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 24px;
+}
+.dropdown {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 0px;
+  border-radius: 12px;
+  padding: 8px;
+  position: absolute;
+  background: #fff;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.4), 0 8px 24px -6px rgba(0, 0, 0, 0.16);
+  min-width: 100%;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 4px;
+  padding: 8px 8px 8px 12px;
+  background: #fff;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.4), 0 8px 24px -6px rgba(0, 0, 0, 0.16);
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dropdownItem:hover {
+  background: #d3d3d3;
+}
+.recipeslist {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 24px;
+}
+.BtnLoadWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Центрируем содержимое по горизонтали */
+  margin-top: 24px; /* Отступ сверху, чтобы отделить от карточек */
+}
+.BtnLoad {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.loadMore {
+  background: #9b6c43;
+  transition: background 0.3s ease;
+  border-radius: 8px;
+  width: 289px;
+  height: 54px;
+
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+
+  border: none;
+  outline: none;
+  cursor: pointer;
+}

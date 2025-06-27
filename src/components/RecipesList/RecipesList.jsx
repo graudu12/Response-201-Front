@@ -18,6 +18,7 @@ const fetchRecipesFromServer = async () => {
       calories: 450,
       isFavorite: false,
       category: "Dinner",
+        cookingTime: 30,
     },
     {
       id: 2,
@@ -27,6 +28,7 @@ const fetchRecipesFromServer = async () => {
       calories: 200,
       isFavorite: false,
       category: "Lunch",
+        cookingTime: 30,
     },
     {
       id: 3,
@@ -36,6 +38,7 @@ const fetchRecipesFromServer = async () => {
       calories: 200,
       isFavorite: false,
       category: "Lunch",
+        cookingTime: 30,
     },
     {
       id: 4,
@@ -45,6 +48,7 @@ const fetchRecipesFromServer = async () => {
       calories: 200,
       isFavorite: false,
       category: "Lunch",
+        cookingTime: 30,
     },
     {
       id: 5,
@@ -54,6 +58,7 @@ const fetchRecipesFromServer = async () => {
       calories: 200,
       isFavorite: false,
       category: "Lunch",
+        cookingTime: 30,
     },
     {
       id: 6,
@@ -62,7 +67,8 @@ const fetchRecipesFromServer = async () => {
       image: "/image/postcard-8755004_640.webp",
       calories: 200,
       isFavorite: false,
-      category: "Lunch",
+      category: "Lunch",  cookingTime: 30,
+      
     },
     {
       id: 7,
@@ -84,6 +90,42 @@ const fetchRecipesFromServer = async () => {
     },
     {
       id: 9,
+      title: "Salad",
+      description: "Healthy green salad",
+      image: "/image/postcard-8755004_640.webp",
+      calories: 200,
+      isFavorite: false,
+      category: "Lunch",
+    },
+    {
+      id: 10,
+      title: "Salad",
+      description: "Healthy green salad",
+      image: "/image/postcard-8755004_640.webp",
+      calories: 200,
+      isFavorite: false,
+      category: "Lunch",
+    },
+    {
+      id: 11,
+      title: "Salad",
+      description: "Healthy green salad",
+      image: "/image/postcard-8755004_640.webp",
+      calories: 200,
+      isFavorite: false,
+      category: "Lunch",
+    },
+    {
+      id: 12,
+      title: "Salad",
+      description: "Healthy green salad",
+      image: "/image/postcard-8755004_640.webp",
+      calories: 200,
+      isFavorite: false,
+      category: "Lunch",
+    },
+    {
+      id: 13,
       title: "Salad",
       description: "Healthy green salad",
       image: "/image/postcard-8755004_640.webp",
@@ -140,29 +182,29 @@ const RecipesList = () => {
       </div>
       <div className={styles.filters}>
         <p className={styles.recipes}>{filteredRecipes.length} recipes</p>
-
-        <div className={styles.inputWithIcon}>
-          <div className={styles.buttonReset}>
-            <button
-              onClick={handleResetFilters}
-              className={styles.resetFilters}
-            >
-              Reset filters
-            </button>
-          </div>
-
-          <input
-            type="text"
-            name="category"
-            placeholder="Category"
-            value={selectedCategory}
-            className={styles.filterInput}
-            readOnly
+      </div>
+      <div className={styles.inputWithIcon}>
+        <div className={styles.buttonReset}>
+          <button onClick={handleResetFilters} className={styles.resetFilters}>
+            Reset filters
+          </button>
+        </div>
+        <div className={styles.FormButton}>
+          <div
+            className={styles.ButtonInput}
             onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-          />
-          <span className={styles.icon}>▼</span>
-
-          {/* <img alt="Expand" className={styles.icon} /> должна иконка присутствовать */}
+          >
+            <input
+              type="text"
+              name="category"
+              placeholder="Category"
+              value={selectedCategory}
+              className={styles.filterInput}
+              readOnly
+            />
+            <span>▼</span>
+            {/* <img alt="Expand" className={styles.icon} /> должна иконка присутствовать */}
+          </div>
 
           {showCategoryDropdown && (
             <ul className={styles.dropdown}>
@@ -178,24 +220,24 @@ const RecipesList = () => {
             </ul>
           )}
         </div>
-
-        <div className={styles.inputWithIcon}>
-          <input
-            type="text"
-            name="Ingredient"
-            placeholder="Ingredient"
-            className={styles.filterInput}
-            readOnly
-          />
-          <span className={styles.icon}>▼</span>
-
+        <div className={styles.FormButton}>
+          <div className={styles.ButtonInput}>
+            <input
+              type="text"
+              name="Ingredient"
+              placeholder="Ingredient"
+              className={styles.filterInput}
+              readOnly
+            />
+            <span className={styles.filterInput}>▼</span>
+          </div>
           {/* <img alt="Expand" className={styles.icon} /> должна иконка присутствовать */}
         </div>
       </div>
 
       {filteredRecipes.length === 0 && <p>No recipes found.</p>}
 
-      <div className={styles.recipeGrid}>
+      <div className={styles.recipeslist}>
         {filteredRecipes.slice(0, visibleCount).map((recipe) => (
           <RecipeCard
             key={recipe.id}
@@ -204,12 +246,15 @@ const RecipesList = () => {
           />
         ))}
       </div>
-
-      {visibleCount < filteredRecipes.length && (
-        <button onClick={loadMore} className={styles.loadMore}>
-          Load More
-        </button>
-      )}
+<div className={styles.BtnLoadWrapper}>
+      <div className={styles.BtnLoad}>
+        {visibleCount < filteredRecipes.length && (
+          <button onClick={loadMore} className={styles.loadMore}>
+            Load More
+          </button>
+        )}
+      </div>
+    </div>
     </div>
   );
 };
