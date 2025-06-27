@@ -3,10 +3,12 @@
   align-items: center;
   text-decoration: none;
   gap: 8px;
+  color: #fff;
 }
 
 .logoIcon {
   height: 30px;
+  fill: currentColor;
 }
 
 .logoText {

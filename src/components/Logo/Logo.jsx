@@ -1,11 +1,13 @@
 import { NavLink } from "react-router-dom";
 import css from "./Logo.module.css";
-import logo from "../../assets/logo.svg";
+import sprite from "../../svg/sprite.svg";
 
-const Logo = () => {
+const Logo = ({ className }) => {
   return (
-    <NavLink to="/" className={css.logo}>
-      <img src={logo} alt="Logo icon" className={css.logoIcon} />
+    <NavLink to="/" className={`${css.logo} ${className || ""}`}>
+      <svg className={css.logoIcon} width="30" height="30">
+        <use href={`${sprite}#icon-logo`} />
+      </svg>
       <span className={css.logoText}>Tasteorama</span>
     </NavLink>
   );
