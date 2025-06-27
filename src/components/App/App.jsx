@@ -9,7 +9,7 @@ import { refreshUser } from "../../redux/auth/operations";
 
 import { RestrictedRoute } from "../RestrictedRoute/RestrictedRoute";
 import { Layout } from "../Layout/Layout";
-import  RecipesList  from "../RecipesList/RecipesList";
+import RecipesList from "../RecipesList/RecipesList";
 // import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
 import Loading from "../Loading/Loading";
 import NotificationToast from "../NotificationToast/NotificationToast";
@@ -24,11 +24,9 @@ const NotFoundPage = lazy(() =>
   import("../../pages/NotFoundPage/NotFoundPage")
 );
 
-
-
 export default function App() {
-	const dispatch = useDispatch();
-	
+  const dispatch = useDispatch();
+
   const { isRefreshing } = useSelector(selectRefreshing);
 
   useEffect(() => {
@@ -60,11 +58,10 @@ export default function App() {
               />
             }
           />
-          
+
           <Route path="/recipes" element={<RecipesList />} />
 
           <Route path="*" element={<NotFoundPage />} />
-
         </Routes>
       </Layout>
       <NotificationToast />

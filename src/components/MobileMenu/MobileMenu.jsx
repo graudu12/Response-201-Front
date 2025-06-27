@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import css from "./MobileMenu.module.css";
 import clsx from "clsx";
+import Logo from "../Logo/Logo"; // імпорт логотипу
 
 const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
   // Закриття по Escape
@@ -26,13 +27,16 @@ const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
   return (
     <div className={css.backdrop} onClick={handleBackdropClick}>
       <div className={css.mobileMenu}>
-        <button
-          className={css.closeBtn}
-          onClick={onClose}
-          aria-label="Close menu"
-        >
-          ✕
-        </button>
+        <div className={css.headerRow}>
+          <Logo className={css.logo} />
+          <button
+            className={css.closeBtn}
+            onClick={onClose}
+            aria-label="Close menu"
+          >
+            ✕
+          </button>
+        </div>
 
         <nav className={css.mobileNav}>
           <NavLink to="/" className={css.link} onClick={onClose}>
@@ -45,6 +49,35 @@ const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
                 My Profile
               </NavLink>
 
+              <div className={css.userBox}>
+                <div className={css.avatar}>{user.name[0]}</div>
+                <span className={css.username}>{user.name}</span>
+                <button
+                  className={css.logoutIcon}
+                  onClick={() => {
+                    onLogout();
+                    onClose();
+                  }}
+                  aria-label="Logout"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 16l4-4m0 0l-4-4m4 4H7"
+                    />
+                  </svg>
+                </button>
+              </div>
+
               <NavLink
                 to="/add"
                 className={clsx(css.mobileButton)}
@@ -52,21 +85,6 @@ const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
               >
                 Add Recipe
               </NavLink>
-
-              <div className={css.userMini}>
-                <span className={css.username}>{user.name}</span>
-                <span className={css.avatar}>{user.name[0]}</span>
-              </div>
-
-              <button
-                className={css.logoutBtn}
-                onClick={() => {
-                  onLogout();
-                  onClose();
-                }}
-              >
-                Logout
-              </button>
             </>
           ) : (
             <>
