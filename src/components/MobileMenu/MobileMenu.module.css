@@ -33,12 +33,28 @@
 
 /* Кнопка ✕ */
 .closeBtn {
-  align-self: flex-end;
-  font-size: 28px;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
-  background: none;
+  font-size: 20px;
+  font-weight: 400;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.closeBtn:hover,
+.closeBtn:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #c2854d;
 }
 
 /* Навігація */
@@ -51,10 +67,10 @@
 
 /* Посилання */
 .link {
-  font-size: 18px;
+  font-size: 16px;
   color: #ffffff;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
   transition: color 0.3s ease;
 }
 
@@ -65,17 +81,16 @@
 
 /* Кнопка Register / Add Recipe */
 .mobileButton {
-  background-color: #a86939;
+  background-color: #9b6c43;
   color: #ffffff;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   padding: 14px 32px;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   text-align: center;
   text-decoration: none;
   width: 100%;
-  max-width: 280px;
   transition: background-color 0.3s ease;
 }
 
@@ -88,14 +103,14 @@
 .userBox {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   color: #ffffff;
 }
 
 /* Ім’я */
 .username {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 /* Аватарка */
@@ -103,13 +118,13 @@
   background-color: #a86939;
   color: #fff;
   font-weight: 600;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* Logout кнопка-іконка */

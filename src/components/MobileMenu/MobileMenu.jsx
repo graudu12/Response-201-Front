@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import css from "./MobileMenu.module.css";
 import clsx from "clsx";
-import Logo from "../Logo/Logo"; // імпорт логотипу
+import Logo from "../Logo/Logo";
 
 const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
   // Закриття по Escape
@@ -97,6 +97,10 @@ const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
                 onClick={onClose}
               >
                 Register
+              </NavLink>
+
+              <NavLink to="/" className={css.logo} onClick={onClose}>
+                <Logo />
               </NavLink>
             </>
           )}
