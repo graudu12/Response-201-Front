@@ -13,6 +13,7 @@
   flex-direction: column;
   gap: 16px;
   width: 100%;
+  user-select: none;
 
 }
 .Recipes {
@@ -27,6 +28,8 @@
   justify-content: flex-start;
   flex-direction: row;
   gap: 32px;
+  
+  user-select: none;
 }
 .recipes {
   font-weight: 600;
@@ -49,6 +52,7 @@
   gap: 4px;
   border-bottom: 1px solid #000;
   padding: 0px 0px 4px 0px;
+  user-select: none;
 }
 .resetFilters {
   font-weight: 600;
@@ -83,8 +87,11 @@
   font-size: 16px;
   line-height: 1.55;
   border: none;
-  outline: none;
   font-family: "Montserrat", sans-serif;
+  outline: none;
+    user-select: none;  /* нельзя выделять текст */
+  outline: none;      /* убрать обводку при фокусе */
+  cursor: pointer;    /* курсор стрелка */
 }
 
 .recipeslist {

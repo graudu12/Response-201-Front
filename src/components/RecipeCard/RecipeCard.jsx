@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 // import { selectIsLoggedIn } from '../../redux/auth/selectors';
 
 const RecipeCard = ({ recipe, onToggleFavorite }) => {
-  const { id, image, title, description, calories, isFavorite,  cookingTime } = recipe;
+  const { _id, thumb, title, description, calories, isFavorite,  time } = recipe;
   const isLoggedIn = useSelector(() => true); // потом добавь вместо функции true, selectIsLoggedIn 
   const navigate = useNavigate();
 
@@ -15,18 +15,18 @@ const RecipeCard = ({ recipe, onToggleFavorite }) => {
       navigate('/auth/login');
       return;
     }
-    onToggleFavorite(id, !isFavorite);
+    onToggleFavorite(_id, !isFavorite);
   };
 
   return (
     <div className={styles.recipeCard}>
-      <img src={image || "/image/postcard-8755004_640.webp"} alt={title} className={styles.imageCard} />
+      <img src={thumb || "/image/postcard-8755004_640.webp"} alt={title} className={styles.imageCard} />
 <div className={styles.recipeForm}>
       <h3 className={styles.recipeTitle}>{title}</h3>
-{cookingTime && (
+{time && (
           <div className={styles.recipeTitleTime}>
             <span>⏱️</span> {/* иконка таймера */}
-            <span>{cookingTime} min</span>
+            <span>{time} min</span>
           </div>
         )}
 </div>
@@ -38,7 +38,7 @@ const RecipeCard = ({ recipe, onToggleFavorite }) => {
 </div>
 <div className={styles.formButton}>
       <button className={styles.learnMoreButton}
-      onClick={() => navigate(`/recipes/${id}`)}
+      onClick={() => navigate(`/recipes/${_id}`)}
     >
         Learn More
       </button>
