@@ -1,14 +1,37 @@
-.mobileMenu {
+/* Backdrop — затемнення фону */
+.backdrop {
   position: fixed;
   inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+
+/* Меню */
+.mobileMenu {
   background-color: #3b1f0a;
+  height: 100%;
+  width: 100%;
   padding: 32px 24px;
   display: flex;
   flex-direction: column;
   gap: 24px;
   z-index: 1000;
+  animation: slideDown 300ms ease-out;
 }
 
+/* Анімація появи з верху */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Кнопка закриття */
 .closeBtn {
   align-self: flex-end;
   font-size: 28px;
@@ -18,6 +41,7 @@
   cursor: pointer;
 }
 
+/* Навігація */
 .mobileNav {
   display: flex;
   flex-direction: column;
@@ -40,6 +64,7 @@
   color: #c2854d;
 }
 
+/* Кнопка */
 .mobileButton {
   background-color: #c2854d;
   padding: 10px 16px;
@@ -56,6 +81,7 @@
   background-color: #a96b3a;
 }
 
+/* Юзер блок */
 .userMini {
   display: flex;
   align-items: center;
@@ -79,6 +105,7 @@
   font-weight: bold;
 }
 
+/* Logout */
 .logoutBtn {
   background: none;
   border: none;

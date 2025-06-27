@@ -1,4 +1,5 @@
-/* Заголовок */
+/* === Base (Mobile First: 320px+) === */
+
 .header {
   background-color: #3b1f0a;
   padding: 16px 20px;
@@ -6,34 +7,32 @@
   z-index: 100;
 }
 
-/* Обгортка всередині */
 .container {
-  max-width: 1280px;
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Логотип */
 .logo {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: bold;
   color: #fff;
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
-/* Навігація */
+.burger {
+  display: block;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+}
+
 .desktopNav {
-  display: flex;
-  align-items: center;
-  gap: 24px;
+  display: none;
 }
 
-/* Загальні лінки */
 .link {
   color: #fff;
   text-decoration: none;
@@ -46,7 +45,6 @@
   color: #c2854d;
 }
 
-/* Кнопка "Register" / "Add Recipe" */
 .mobileButton,
 .logoutBtn {
   background-color: #c2854d;
@@ -63,17 +61,6 @@
   background-color: #a96b3a;
 }
 
-/* Бургер-іконка */
-.burger {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 28px;
-  color: #fff;
-  cursor: pointer;
-}
-
-/* UserMenu */
 .userMenu {
   display: flex;
   align-items: center;
@@ -97,21 +84,6 @@
   font-weight: 500;
 }
 
-/* MobileMenu */
-.mobileMenu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #3b1f0a;
-  padding: 32px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  z-index: 999;
-}
-
 .closeBtn {
   align-self: flex-end;
   background: none;
@@ -121,7 +93,6 @@
   cursor: pointer;
 }
 
-/* Мобільна навігація */
 .mobileNav a,
 .mobileNav button {
   font-size: 18px;
@@ -131,6 +102,7 @@
   border: none;
   text-align: left;
   padding: 8px 0;
+  transition: color 0.3s ease;
 }
 
 .userMini {
@@ -140,13 +112,50 @@
   color: #fff;
 }
 
-/* Адаптивність */
-@media (max-width: 1279px) {
-  .desktopNav {
-    display: none;
+/* === Tablet (768px+) === */
+@media (min-width: 768px) {
+  .logo {
+    font-size: 22px;
+  }
+
+  .container {
+    padding: 0 32px;
+  }
+
+  .mobileButton,
+  .logoutBtn {
+    padding: 10px 18px;
   }
 
   .burger {
-    display: block;
+    display: none;
+  }
+
+  .desktopNav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+/* === Desktop (1280px+) === */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .mobileButton,
+  .logoutBtn {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+
+  .link {
+    font-size: 18px;
   }
 }
