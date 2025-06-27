@@ -1,0 +1,16 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 8px;
+}
+
+.logoIcon {
+  height: 30px;
+}
+
+.logoText {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}

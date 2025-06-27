@@ -1,15 +1,12 @@
 import css from "./Layout.module.css";
-
 import { Suspense } from "react";
 
-import AppBar from "../AppBar/AppBar";
-
-
+import Header from "../Header/Header";
 
 export const Layout = ({ children }) => {
   return (
     <div className={css.container}>
-      <AppBar />
+      <Header />
       <Suspense fallback={null}>{children}</Suspense>
     </div>
   );
