@@ -1,0 +1,104 @@
+.recipeCard {
+    display: flex;
+align-items: flex-start;
+justify-content: flex-start;
+flex-direction: column;
+gap: 16px;
+border-radius: 16px;
+
+padding: 12px;
+  box-sizing: border-box; 
+}
+.imageCard {
+ border-radius: 8px;
+}
+.recipeForm {
+    display: flex;
+justify-content: flex-start;
+flex-direction: row;
+  position: relative; 
+
+  align-items: center;
+gap: 8px;
+
+  width: 100%;   
+}
+.recipeTitle {
+    font-weight: 700;
+font-size: 24px;
+color: #000;
+}
+.recipeTitleTime {
+    
+  margin-left: auto;
+    display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+gap: 4px;
+border-radius: 8px;
+padding: 2px 8px 2px 4px;
+margin-right: 12px;
+
+}
+.recipeDescCal {
+    display: flex;
+align-items: flex-start;
+justify-content: flex-start;
+flex-direction: column;
+gap: 8px;
+}
+.recipeDescription {
+    font-weight: 400;
+font-size: 16px;
+line-height: 1.55;
+color: #000;
+}
+.formButton {
+    display: flex;
+align-items: flex-start;
+justify-content: flex-start;
+flex-direction: row;
+gap: 8px;
+}
+.learnMoreButton {
+  display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+gap: 8px;
+border: 1px solid #000;
+border-radius: 8px;
+padding: 8px;
+font-weight: 600;
+font-size: 16px;
+color: #000;
+}
+.favorite {
+ display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+gap: 8px;
+border: 1px solid #000;
+border-radius: 8px;
+padding: 8px;
+}
+
+.favorite:hover {
+  background: #9b6c43;
+}
+
+.favoriteActive {
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+gap: 8px;
+border-radius: 8px;
+padding: 8px;
+}
+
+.favoriteActive:hover {
+    background: #c80000;
+}
