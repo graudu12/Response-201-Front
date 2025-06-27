@@ -18,6 +18,9 @@
   font-weight: bold;
   color: #fff;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .burger {
@@ -31,18 +34,6 @@
 
 .desktopNav {
   display: none;
-}
-
-.link {
-  color: #fff;
-  text-decoration: none;
-  font-size: 16px;
-  transition: color 0.3s ease;
-}
-
-.link:hover,
-.link.active {
-  color: #c2854d;
 }
 
 .mobileButton,
@@ -93,25 +84,6 @@
   cursor: pointer;
 }
 
-.mobileNav a,
-.mobileNav button {
-  font-size: 18px;
-  color: #fff;
-  text-decoration: none;
-  background: none;
-  border: none;
-  text-align: left;
-  padding: 8px 0;
-  transition: color 0.3s ease;
-}
-
-.userMini {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #fff;
-}
-
 /* === Tablet (768px+) === */
 @media (min-width: 768px) {
   .logo {
@@ -153,9 +125,5 @@
   .logoutBtn {
     padding: 12px 20px;
     font-size: 16px;
-  }
-
-  .link {
-    font-size: 18px;
   }
 }
