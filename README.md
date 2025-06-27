@@ -1,4 +1,4 @@
-## Phonebook Project
+## Tasteorama
 
 ## Description:
 The Phonebook is a modern web application designed to help users manage their contacts. It was developed using advanced web technologies.
