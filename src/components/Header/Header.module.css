@@ -1,0 +1,152 @@
+/* Заголовок */
+.header {
+  background-color: #3b1f0a;
+  padding: 16px 20px;
+  position: relative;
+  z-index: 100;
+}
+
+/* Обгортка всередині */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Логотип */
+.logo {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Навігація */
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Загальні лінки */
+.link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.link:hover,
+.link.active {
+  color: #c2854d;
+}
+
+/* Кнопка "Register" / "Add Recipe" */
+.mobileButton,
+.logoutBtn {
+  background-color: #c2854d;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logoutBtn:hover {
+  background-color: #a96b3a;
+}
+
+/* Бургер-іконка */
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* UserMenu */
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  background-color: #c2854d;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.username {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* MobileMenu */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #3b1f0a;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 999;
+}
+
+.closeBtn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* Мобільна навігація */
+.mobileNav a,
+.mobileNav button {
+  font-size: 18px;
+  color: #fff;
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 8px 0;
+}
+
+.userMini {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+/* Адаптивність */
+@media (max-width: 1279px) {
+  .desktopNav {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+  }
+}

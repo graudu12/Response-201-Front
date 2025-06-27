@@ -1,0 +1,89 @@
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  background-color: #3b1f0a;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 1000;
+}
+
+.closeBtn {
+  align-self: flex-end;
+  font-size: 28px;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.link {
+  font-size: 18px;
+  color: #fff;
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 8px 0;
+  transition: color 0.3s ease;
+}
+
+.link:hover,
+.link:focus {
+  color: #c2854d;
+}
+
+.mobileButton {
+  background-color: #c2854d;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: #fff;
+  text-align: center;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.mobileButton:hover {
+  background-color: #a96b3a;
+}
+
+.userMini {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+.username {
+  font-weight: 500;
+}
+
+.avatar {
+  background-color: #c2854d;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.logoutBtn {
+  background: none;
+  border: none;
+  color: #e53935;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+}
