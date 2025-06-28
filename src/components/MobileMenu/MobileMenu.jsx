@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import css from "./MobileMenu.module.css";
 import clsx from "clsx";
-import Logo from "../Logo/Logo"; // імпорт логотипу
+import Logo from "../Logo/Logo";
+import sprite from "../../svg/sprite.svg";
 
 const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
   // Закриття по Escape
@@ -28,13 +29,17 @@ const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
     <div className={css.backdrop} onClick={handleBackdropClick}>
       <div className={css.mobileMenu}>
         <div className={css.headerRow}>
-          <Logo className={css.logo} />
+          <NavLink to="/" onClick={onClose} className={css.logo}>
+            <Logo />
+          </NavLink>
           <button
             className={css.closeBtn}
             onClick={onClose}
             aria-label="Close menu"
           >
-            ✕
+            <svg className={css.icon} width="32" height="32">
+              <use href={`${sprite}#icon-close_modal`} />
+            </svg>
           </button>
         </div>
 
@@ -60,20 +65,9 @@ const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
                   }}
                   aria-label="Logout"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 16l4-4m0 0l-4-4m4 4H7"
-                    />
+                  <div className={css.separator}></div>
+                  <svg className={css.icon} width="32" height="32">
+                    <use href={`${sprite}#icon-logout`} />
                   </svg>
                 </button>
               </div>
