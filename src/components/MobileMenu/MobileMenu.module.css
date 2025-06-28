@@ -8,6 +8,7 @@
 
 /* Меню */
 .mobileMenu {
+  position: relative;
   background-color: #3b1f0a;
   height: 100%;
   width: 100%;
@@ -31,14 +32,47 @@
   }
 }
 
+/* Рядок із логотипом і кнопкою ✕ */
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+/* Логотип */
+.logo {
+  max-width: 160px;
+  height: auto;
+  display: inline-block;
+}
+
 /* Кнопка ✕ */
 .closeBtn {
-  align-self: flex-end;
-  font-size: 28px;
-  color: #ffffff;
   background: none;
   border: none;
   cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn:hover .icon,
+.closeBtn:focus .icon {
+  stroke: #c2854d;
+}
+
+/* SVG іконка */
+.icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  stroke: white;
+  fill: none;
+  pointer-events: none;
 }
 
 /* Навігація */
@@ -75,7 +109,6 @@
   text-align: center;
   text-decoration: none;
   width: 100%;
-  max-width: 280px;
   transition: background-color 0.3s ease;
 }
 
@@ -84,7 +117,7 @@
   background-color: #925c30;
 }
 
-/* Блок з аватаркою, імʼям та logout */
+/* Блок з аватаркою, імʼям та Logout */
 .userBox {
   display: flex;
   align-items: center;
@@ -125,18 +158,13 @@
   transition: color 0.3s ease;
 }
 
-.logoutIcon:hover,
-.logoutIcon:focus {
-  color: #c2854d;
+.logoutIcon:hover .icon,
+.logoutIcon:focus .icon {
+  stroke: #c2854d;
 }
-.headerRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-}
-
-.logo {
-  max-width: 160px;
-  height: auto;
+.separator {
+  width: 1px;
+  height: 39px;
+  background-color: #fff;
+  margin-right: 16px;
 }
