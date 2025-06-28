@@ -3,7 +3,7 @@ import css from "../App/App.module.css";
 import { lazy, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import RecipesDetailsPage from "../../pages/RecipeDetailsPage/RecipeDetailsPage";
 import { selectRefreshing } from "../../redux/auth/selectors";
 import { refreshUser } from "../../redux/auth/operations";
 
@@ -44,7 +44,7 @@ export default function App() {
             path="/register"
             element={
               <RestrictedRoute
-                redirectTo="/contacts"
+                redirectTo="/recipes"
                 component={<RegistrationPage />}
               />
             }
@@ -54,13 +54,13 @@ export default function App() {
             element={
               <RestrictedRoute
                 component={<LoginPage />}
-                redirectTo="/contacts"
+                redirectTo="/recipes"
               />
             }
           />
 
           <Route path="/recipes" element={<RecipesList />} />
-
+          <Route path="/recipes/:recipeId" element={<RecipesDetailsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
