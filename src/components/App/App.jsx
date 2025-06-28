@@ -1,6 +1,6 @@
 import css from "../App/App.module.css";
 
-import { lazy, useEffect } from "react";
+import { lazy, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,6 +14,9 @@ import RecipesList from "../RecipesList/RecipesList";
 import Loading from "../Loading/Loading";
 import NotificationToast from "../NotificationToast/NotificationToast";
 
+// 👉 Імпортуємо NotFound модалку для тесту
+import NotFound from "../NotFound/NotFound";
+
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() =>
   import("../../pages/RegistrationPage/RegistrationPage")
@@ -26,8 +29,9 @@ const NotFoundPage = lazy(() =>
 
 export default function App() {
   const dispatch = useDispatch();
-
   const { isRefreshing } = useSelector(selectRefreshing);
+
+  const [showError, setShowError] = useState(false); // стан для модалки
 
   useEffect(() => {
     dispatch(refreshUser());
@@ -38,6 +42,13 @@ export default function App() {
   ) : (
     <div className={css.app}>
       <Layout>
+        {/* 👉 Тимчасова кнопка для перегляду модалки NotFound */}
+        <button onClick={() => setShowError(true)} style={{ margin: 20 }}>
+          Показати помилку (NotFound)
+        </button>
+
+        {showError && <NotFound onRetry={() => setShowError(false)} />}
+
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
@@ -58,12 +69,11 @@ export default function App() {
               />
             }
           />
-
           <Route path="/recipes" element={<RecipesList />} />
-
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
+
       <NotificationToast />
     </div>
   );
