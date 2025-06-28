@@ -1,51 +1,18 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-export const fetchContacts = createAsyncThunk(
-  "contacts/fetchAll",
-  async (_, thunkAPI) => {
-    try {
-      const res = await axios.get("/contacts");
-      return res.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
+export const fetchRecipes = createAsyncThunk(
+  'recipes/fetchRecipes',
+  async () => {
+    const response = await axios.get('http://localhost:4000/api/recipes');
+    return response.data;
   }
 );
 
-export const addContact = createAsyncThunk(
-  "contacts/addContact",
-  async (items, thunkAPI) => {
-    try {
-      const res = await axios.post("/contacts", items);
-      return res.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const deleteContact = createAsyncThunk(
-  "contacts/deleteContact",
-  async (itemId, thunkAPI) => {
-    try {
-      const res = await axios.delete(`/contacts/${itemId}`);
-      return res.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const patchContact = createAsyncThunk(
-  "contacts/patchContact",
-  async (updatedContact, thunkAPI) => {
-    const { id, name, number } = updatedContact;
-    try {
-      const res = await axios.patch(`/contacts/${id}`, { name, number });
-      return res.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
+export const toggleFavoriteRecipeAsync = createAsyncThunk(
+  'recipes/toggleFavoriteAsync',
+  async ({ id, add }) => {
+    await axios.post(`http://localhost:4000/api/recipes/${id}/favorites`, { add });
+    return { id, add };
   }
 );
