@@ -14,7 +14,6 @@
   gap: 16px;
   width: 100%;
   user-select: none;
-
 }
 .Recipes {
   font-weight: 600;
@@ -28,7 +27,7 @@
   justify-content: flex-start;
   flex-direction: row;
   gap: 32px;
-  
+
   user-select: none;
 }
 .recipes {
@@ -89,9 +88,9 @@
   border: none;
   font-family: "Montserrat", sans-serif;
   outline: none;
-    user-select: none;  /* нельзя выделять текст */
-  outline: none;      /* убрать обводку при фокусе */
-  cursor: pointer;    /* курсор стрелка */
+  user-select: none; /* нельзя выделять текст */
+  outline: none; /* убрать обводку при фокусе */
+  cursor: pointer; /* курсор стрелка */
 }
 
 .recipeslist {
@@ -155,20 +154,5 @@
   flex-direction: row;
   gap: 16px;
   border-radius: 8px;
-  cursor: pointer;
-}
-.loadMore {
-  background: #9b6c43;
-  transition: background 0.3s ease;
-  border-radius: 8px;
-  width: 289px;
-  height: 54px;
-
-  font-weight: 600;
-  font-size: 18px;
-  color: #fff;
-
-  border: none;
-  outline: none;
   cursor: pointer;
 }

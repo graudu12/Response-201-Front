@@ -7,57 +7,57 @@ import {
   fetchRecipes,
   toggleFavoriteRecipeAsync,
 } from "../../redux/recipesSlice/recipesSlice";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 
 const RecipesList = () => {
   const dispatch = useDispatch();
   const recipes = useSelector((state) => state.recipes.items);
 
- const categoryDropdownRef = useRef(null);
+  const categoryDropdownRef = useRef(null);
   const ingredientDropdownRef = useRef(null);
 
   // Фильтры и отображаемые элементы
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [visibleCount, setVisibleCount] = useState(12);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
-  const [showIngredientDropdown, setShowIngredientDropdown] = useState(false); 
+  const [showIngredientDropdown, setShowIngredientDropdown] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedIngredient, setSelectedIngredient] = useState("");
 
-const ingredientOptions = [
-  "Tomato",
-  "Cheese",
-  "Chicken",
-  "Beef",
-  "Onion",
-  "Garlic",
-  "Carrot",
-];
+  const ingredientOptions = [
+    "Tomato",
+    "Cheese",
+    "Chicken",
+    "Beef",
+    "Onion",
+    "Garlic",
+    "Carrot",
+  ];
 
   useEffect(() => {
     dispatch(fetchRecipes());
   }, [dispatch]);
 
   useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (
-      categoryDropdownRef.current &&
-      !categoryDropdownRef.current.contains(event.target)
-    ) {
-      setShowCategoryDropdown(false);
-    }
-    if (
-      ingredientDropdownRef.current &&
-      !ingredientDropdownRef.current.contains(event.target)
-    ) {
-      setShowIngredientDropdown(false);
-    }
-  };
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, []);
-
+    const handleClickOutside = (event) => {
+      if (
+        categoryDropdownRef.current &&
+        !categoryDropdownRef.current.contains(event.target)
+      ) {
+        setShowCategoryDropdown(false);
+      }
+      if (
+        ingredientDropdownRef.current &&
+        !ingredientDropdownRef.current.contains(event.target)
+      ) {
+        setShowIngredientDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleResetFilters = () => {
     setSelectedCategory("");
@@ -70,10 +70,9 @@ const ingredientOptions = [
   };
 
   const handleIngredientSelect = (ingredient) => {
-  setSelectedIngredient(ingredient);
-  setShowIngredientDropdown(false);
-};
-
+    setSelectedIngredient(ingredient);
+    setShowIngredientDropdown(false);
+  };
 
   const loadMore = () => {
     setVisibleCount((prev) => prev + 8);
@@ -89,7 +88,7 @@ const ingredientOptions = [
     if (selectedCategory) {
       filtered = filtered.filter((r) => r.category === selectedCategory);
     }
-  if (selectedIngredient.trim() !== "") {
+    if (selectedIngredient.trim() !== "") {
       filtered = filtered.filter((r) =>
         // Если у рецепта есть поле ingredients (массив), ищем в нем
         r.ingredients
@@ -103,10 +102,9 @@ const ingredientOptions = [
       );
     }
 
-  setFilteredRecipes(filtered);
-  setVisibleCount(12);
-}, [recipes, selectedCategory, selectedIngredient]);
-
+    setFilteredRecipes(filtered);
+    setVisibleCount(12);
+  }, [recipes, selectedCategory, selectedIngredient]);
 
   return (
     <div className={styles.recipeListContainer}>
@@ -172,7 +170,10 @@ const ingredientOptions = [
           )}
         </div>
         <div className={styles.FormButton} ref={ingredientDropdownRef}>
-          <div className={styles.ButtonInput} onClick={() => setShowIngredientDropdown(!showIngredientDropdown)}>
+          <div
+            className={styles.ButtonInput}
+            onClick={() => setShowIngredientDropdown(!showIngredientDropdown)}
+          >
             <input
               type="text"
               name="Ingredient"
@@ -199,19 +200,19 @@ const ingredientOptions = [
               </svg>
             </span>
           </div>
-            {showIngredientDropdown && (
-    <ul className={styles.dropdown}>
-      {ingredientOptions.map((ing) => (
-        <li
-          key={ing}
-          onClick={() => handleIngredientSelect(ing)}
-          className={styles.dropdownItem}
-        >
-          {ing}
-        </li>
-      ))}
-    </ul>
-  )}
+          {showIngredientDropdown && (
+            <ul className={styles.dropdown}>
+              {ingredientOptions.map((ing) => (
+                <li
+                  key={ing}
+                  onClick={() => handleIngredientSelect(ing)}
+                  className={styles.dropdownItem}
+                >
+                  {ing}
+                </li>
+              ))}
+            </ul>
+          )}
           {/* <img alt="Expand" className={styles.icon} /> должна иконка присутствовать */}
         </div>
       </div>
@@ -230,9 +231,7 @@ const ingredientOptions = [
       <div className={styles.BtnLoadWrapper}>
         <div className={styles.BtnLoad}>
           {visibleCount < filteredRecipes.length && (
-            <button onClick={loadMore} className={styles.loadMore}>
-              Load More
-            </button>
+            <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
           )}
         </div>
       </div>

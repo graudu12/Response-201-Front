@@ -16,6 +16,7 @@ import NotificationToast from "../NotificationToast/NotificationToast";
 
 // 👉 Імпортуємо NotFound модалку для тесту
 import NotFound from "../NotFound/NotFound";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() =>
@@ -73,6 +74,13 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
+
+      {/* 👇 Тимчасова тестова кнопка */}
+      <div>
+        <LoadMoreBtn onClick={() => alert("Натиснуто")}>
+          Завантажити ще
+        </LoadMoreBtn>
+      </div>
 
       <NotificationToast />
     </div>
