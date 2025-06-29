@@ -24,6 +24,9 @@ const NotFoundPage = lazy(() =>
   import("../../pages/NotFoundPage/NotFoundPage")
 );
 
+const AddRecipePage = lazy(() => import("../../pages/AddRecipePage/AddRecipePage"))
+
+
 export default function App() {
   const dispatch = useDispatch();
 
@@ -57,6 +60,10 @@ export default function App() {
                 redirectTo="/contacts"
               />
             }
+          />
+          <Route
+            path="/add"
+            element={<AddRecipePage/>}
           />
 
           <Route path="/recipes" element={<RecipesList />} />
