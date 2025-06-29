@@ -1,88 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchRecipes, toggleFavoriteRecipeAsync } from "./operations";
 
-import {
-  fetchContacts,
-  addContact,
-  deleteContact,
-  patchContact,
-} from "./operations";
-
-import { logOut } from "../auth/operations";
-
-const handlePending = (state) => {
-  state.loading = true;
-  state.error = false;
-};
-
-const handleRejected = (state, action) => {
-  state.loading = false;
-  state.error = action.payload;
-};
-
-const contactsSlice = createSlice({
-  name: "contacts",
+const recipesSlice = createSlice({
+  name: 'recipes',
   initialState: {
     items: [],
-    loading: false,
-    error: false,
-    editing: {},
+    favorites: [],
   },
   reducers: {
-    startEditing: (state, action) => {
-      state.editing[action.payload.id] = true;
+    toggleFavoriteRecipe: (state, action) => {
+      const { id, add } = action.payload;
+      const recipe = state.items.find((r) => r._id === id);
+      if (recipe) {
+        recipe.isFavorite = add;
+      }
     },
-    stopEditing: (state, action) => {
-      state.editing[action.payload.id] = false;
+    setRecipes: (state, action) => {
+      state.items = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchContacts.pending, handlePending)
-      .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = false;
-        state.items = action.payload;
-      })
-      .addCase(fetchContacts.rejected, handleRejected)
-
-      .addCase(addContact.pending, handlePending)
-      .addCase(addContact.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = false;
-        state.items.push(action.payload);
-      })
-      .addCase(addContact.rejected, handleRejected)
-
-      .addCase(deleteContact.pending, handlePending)
-      .addCase(deleteContact.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = false;
-        const index = state.items.findIndex(
-          (contact) => contact.id === action.payload.id
-        );
-        state.items.splice(index, 1);
-      })
-      .addCase(deleteContact.rejected, handleRejected)
-
-      .addCase(patchContact.pending, handlePending)
-      .addCase(patchContact.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = false;
-        const { id } = action.payload;
-        const index = state.items.findIndex((contact) => contact.id === id);
-        if (index !== -1) {
-          state.items[index] = action.payload;
+      .addCase(fetchRecipes.fulfilled, (state, action) => {
+ 
+  state.items = action.payload.data;
+})
+      .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
+        const { id, add } = action.payload;
+        const recipe = state.items.find((r) => r._id === id);
+        if (recipe) {
+          recipe.isFavorite = add;
         }
-        state.editing[id] = false;
-      })
-      .addCase(patchContact.rejected, handleRejected)
-      .addCase(logOut.fulfilled, (state) => {
-        state.items = [];
-        state.error = false;
-        state.loading = false;
       });
   },
 });
 
-export const { startEditing, stopEditing } = contactsSlice.actions;
-export const contactsReducer = contactsSlice.reducer;
+export const {
+  toggleFavoriteRecipe,
+  setRecipes,
+} = recipesSlice.actions;
+
+export const recipesReducer = recipesSlice.reducer;

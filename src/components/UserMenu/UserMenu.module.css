@@ -1,0 +1,68 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 6px;
+  color: #fff;
+}
+
+.logoIcon {
+  height: 30px;
+  fill: currentColor;
+}
+
+.logoText {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  background-color: #9b6c43;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.username {
+  color: #fff;
+  font-weight: 600;
+}
+
+.separator {
+  width: 1px;
+  height: 28px;
+  background-color: #fff;
+}
+
+.logoutBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoutIcon {
+  width: 24px;
+  height: 28px;
+  fill: #fff;
+  transition: fill 0.3s ease;
+}
+
+.logoutBtn:hover .logoutIcon {
+  fill: #c2854d;
+}

@@ -1,5 +1,5 @@
 {
-  "name": "goit-react-hw-03",
+  "name": "Response-201-Front",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -36,6 +36,7 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "gh-pages": "^6.3.0",
     "vite": "^5.2.0"
   }
 }
