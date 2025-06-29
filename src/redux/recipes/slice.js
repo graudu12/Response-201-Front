@@ -125,3 +125,4 @@ export const { toggleFavoriteRecipe, setSearchQuery, clearNotFound } =
 
 export const recipesReducer = recipesSlice.reducer;
 
+
