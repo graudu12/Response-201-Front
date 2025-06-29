@@ -18,6 +18,19 @@ export const fetchRecipes = createAsyncThunk(
   }
 );
 
+export const fetchRecipeById = createAsyncThunk(
+  "recipes/fetchRecipeById",
+  async (id, thunkAPI) => {
+    try {
+      console.log("📡 Отправка запроса на рецепт по ID:", id); // <-- ВСТАВЬ СЮДА
+      const response = await axios.get(`/api/recipes/${id}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const toggleFavoriteRecipeAsync = createAsyncThunk(
   "recipes/toggleFavoriteAsync",
   async ({ id, add }) => {
