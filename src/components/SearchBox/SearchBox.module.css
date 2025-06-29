@@ -1,8 +1,17 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: 600px; 
-  margin: 0 auto 30px;
+  max-width: 300px;
+}
+
+.input {
+  padding: 10px 20px 10px 40px;
+  width: 100%;
+  border: none;
+  outline: 1px solid transparent;
+  font-size: 16px;
+  border-bottom: 2px solid #141010;
+  background: transparent;
 }
 
 .iconPosition {
@@ -15,43 +24,4 @@
   top: 100%;
   transform: translateY(-100%);
   fill: #2e2f42;
-}
-
-.searchInput {
-  flex: 1;
-  padding: 12px 12px;
-  font-size: 16px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  outline: none;
-  color: #333;
-  width: auto;
-  margin-right: 12px;
-}
-
-.searchInput::placeholder {
-  color: #aaa;
-}
-
-.searchButton {
-  padding: 13px 66.5px;
-  font-size: 16px;
-  background-color: #9B6C43; 
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.searchButton:hover {
-  background-color: #5c3c27;
-}
-
-.searchBox {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  width: 100%;
 }
