@@ -9,15 +9,14 @@ import { refreshUser } from "../../redux/auth/operations";
 
 import { RestrictedRoute } from "../RestrictedRoute/RestrictedRoute";
 import { Layout } from "../Layout/Layout";
-import RecipesList from "../RecipesList/RecipesList";
+
 // import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
 import Loading from "../Loading/Loading";
 import NotificationToast from "../NotificationToast/NotificationToast";
 
 // 👉 Імпортуємо NotFound модалку для тесту
 import NotFound from "../NotFound/NotFound";
-import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
-
+import RecipesList from "../RecipesList/RecipesList";
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() =>
   import("../../pages/RegistrationPage/RegistrationPage")
@@ -74,13 +73,6 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
-
-      {/* 👇 Тимчасова тестова кнопка */}
-      <div>
-        <LoadMoreBtn onClick={() => alert("Натиснуто")}>
-          Завантажити ще
-        </LoadMoreBtn>
-      </div>
 
       <NotificationToast />
     </div>
