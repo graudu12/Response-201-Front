@@ -5,7 +5,7 @@ export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
   async ({ page, perPage }) => {
     const response = await axios.get(
-      `http://localhost:4000/api/recipes?page=${page}&perPage=${perPage}`
+      `http://localhost:3000/api/recipes?page=${page}&perPage=${perPage}`
     );
     return response.data;
   }
