@@ -1,161 +1,6 @@
-/* до 768px */
-@media only screen and (max-width: 767px) {
-  .recipeListContainer {
-    padding: 24px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .FormRecipes {
-    gap: 12px;
-  }
-
-  .Recipes {
-    font-size: 28px;
-  }
-
-  .filters {
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    gap: 12px;
-  }
-
-  .recipes {
-    font-size: 16px;
-  }
-
-  .inputWithIcon {
-    flex-direction: column;
-    width: 100%;
-    gap: 12px;
-    margin-left: 0;
-  }
-
-  .filtersRight {
-    gap: 16px;
-  }
-
-  .buttonReset {
-    padding-bottom: 2px;
-  }
-
-  .resetFilters {
-    font-size: 12px;
-  }
-
-  .FormButton {
-    width: 100%;
-  }
-
-  .ButtonInput {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .filterInput {
-    width: 100%;
-  }
-
-  .recipeslist {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .dropdown {
-    width: 100%;
-  }
-
-  .BtnLoadWrapper {
-    margin-top: 24px;
-  }
-
-  .loadMore {
-    width: 100%;
-    height: 48px;
-    font-size: 16px;
-  }
-
-  .loader,
-  .error,
-  .notFound,
-  .noResults {
-    font-size: 18px;
-    padding: 32px 0;
-    text-align: center;
-  }
+@media only screen and (min-width: 768px) {
 }
 
-/* 768px–1279px */
-@media only screen and (min-width: 768px) and (max-width: 1279px) {
-  .recipeListContainer {
-    padding: 32px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .FormRecipes {
-    gap: 14px;
-  }
-
-  .Recipes {
-    font-size: 32px;
-  }
-
-  .filters {
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    gap: 12px;
-  }
-
-  .recipes {
-    font-size: 16px;
-  }
-
-  .inputWithIcon {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 16px;
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .FormButton {
-    min-width: 240px;
-  }
-
-  .filterInput {
-    font-size: 15px;
-  }
-
-  .recipeslist {
-    gap: 20px;
-  }
-
-  .BtnLoadWrapper {
-    margin-top: 24px;
-  }
-
-  .loadMore {
-    width: 220px;
-    height: 48px;
-    font-size: 16px;
-  }
-
-  .loader,
-  .error,
-  .notFound,
-  .noResults {
-    font-size: 18px;
-    padding: 36px 0;
-    text-align: center;
-  }
-}
-
-/* 1280px */
 @media only screen and (min-width: 1280px) {
   .recipeListContainer {
     padding: 48px 107px;
@@ -169,79 +14,94 @@
 
   .FormRecipes {
     display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
     flex-direction: column;
     gap: 16px;
     user-select: none;
   }
-
   .Recipes {
     font-weight: 600;
     font-size: 40px;
     color: #000;
     font-family: "Montserrat", sans-serif;
   }
-
   .filters {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     flex-direction: row;
+    user-select: none;
     width: 1225px;
     height: 33px;
   }
-
   .recipes {
     font-weight: 600;
     font-size: 18px;
     color: #000;
     font-family: "Montserrat", sans-serif;
   }
-
   .inputWithIcon {
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
     flex-direction: row;
     gap: 24px;
     margin-left: auto;
   }
-
   .filtersRight {
-    gap: 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px; /* расстояние между кнопкой Reset и фильтрами */
   }
-
   .buttonReset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 4px;
     border-bottom: 1px solid #000;
-    padding-bottom: 4px;
+    padding: 0px 0px 4px 0px;
+    user-select: none;
   }
-
   .resetFilters {
     font-weight: 600;
     font-size: 12px;
     background: none;
     border: none;
-    cursor: pointer;
+    outline: none;
   }
-
   .FormButton {
-    position: relative;
+    display: inline-block;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 4px;
+    position: relative; /* Важно! Нужно для абсолютного позиционирования dropdown */
   }
-
   .ButtonInput {
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
     gap: 8px;
     border: 1px solid #d9d9d9;
     border-radius: 4px;
     padding: 4px 8px;
+
     background-color: #fff;
     cursor: pointer;
   }
-
   .filterInput {
     font-weight: 400;
     font-size: 16px;
+    line-height: 1.55;
     border: none;
     font-family: "Montserrat", sans-serif;
     outline: none;
-    user-select: none;
-    cursor: pointer;
+    user-select: none; /* нельзя выделять текст */
+    outline: none; /* убрать обводку при фокусе */
+    cursor: pointer; /* курсор стрелка */
   }
 
   .recipeslist {
@@ -249,23 +109,36 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
+    flex-direction: row;
     gap: 24px;
   }
-
   .dropdown {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 0px;
     border-radius: 12px;
     padding: 8px;
     position: absolute;
     background: #fff;
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.4), 0 8px 24px -6px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.4),
+      0 8px 24px -6px rgba(0, 0, 0, 0.16);
     min-width: 100%;
-    z-index: 10;
   }
 
   .dropdownItem {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 4px;
     padding: 8px 8px 8px 12px;
     background: #fff;
-    border-radius: 4px;
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.4),
+      0 8px 24px -6px rgba(0, 0, 0, 0.16);
+
     cursor: pointer;
     transition: background 0.2s ease;
   }
@@ -273,60 +146,36 @@
   .dropdownItem:hover {
     background: #d3d3d3;
   }
-
+  .recipeslist {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 24px;
+  }
   .BtnLoadWrapper {
     width: 100%;
     display: flex;
-    justify-content: center;
-    margin-top: 24px;
+    justify-content: center; /* Центрируем содержимое по горизонтали */
+    margin-top: 24px; /* Отступ сверху, чтобы отделить от карточек */
   }
-
   .BtnLoad {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
     gap: 16px;
     border-radius: 8px;
     cursor: pointer;
   }
 
-  .loadMore {
-    background: #9b6c43;
-    border-radius: 8px;
-    width: 289px;
-    height: 54px;
-    font-weight: 600;
-    font-size: 18px;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-
   .icon {
+    display: inline-block;
     width: 1em;
     height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
     fill: currentColor;
-  }
-
-  .loader,
-  .error,
-  .notFound,
-  .noResults {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    text-align: center;
-    padding: 40px 0;
-    color: #9b6c43;
-  }
-
-  .error {
-    color: #d9534f;
-  }
-
-  .notFound {
-    color: #f0ad4e;
-  }
-
-  .noResults {
-    color: #6c757d;
   }
 }
