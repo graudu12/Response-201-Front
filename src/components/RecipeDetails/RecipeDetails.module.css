@@ -1,33 +1,57 @@
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  max-width: 361px;
+  padding: 48px 16px;
   font-family: "Arial", sans-serif;
+}
+.headerSection {
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .title {
   color: #2c3e50;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
 }
 
 .image {
   width: 100%;
   height: auto;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
 }
-
+.contentWrapper {
+  display: flex;
+  gap: 24px;
+  flex-direction: column-reverse;
+}
+.infoBox {
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  background: #faf3e0;
+  gap: 15px;
+  padding: 16px;
+  border-radius: 16px;
+}
+.infoTitle {
+  font-weight: 600;
+  font-size: 24px;
+}
 .section {
-  margin-bottom: 25px;
+  margin-bottom: 40px;
 }
 
 .section h2 {
-  color: #e74c3c;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 5px;
-}
+  font-size: 32px;
 
+  margin-bottom: 8px;
+}
+.section p {
+  font-size: 16px;
+  line-height: 1.55;
+}
 .ingredients,
 .steps {
   padding-left: 20px;
@@ -41,17 +65,11 @@
   margin-bottom: 10px;
 }
 
-.info {
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-}
-
 .favoriteButton {
   display: block;
   width: 100%;
   padding: 10px;
-  background: #e74c3c;
+  background: #9b6c43;
   color: white;
   border: none;
   border-radius: 5px;
