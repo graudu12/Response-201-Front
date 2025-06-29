@@ -1,23 +1,28 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import RecipeCard from "../RecipeCard/RecipeCard";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import styles from "./RecipesList.module.css";
 import sprite from "../../svg/sprite.svg";
 import {
   fetchRecipes,
   toggleFavoriteRecipeAsync,
-} from '../../redux/recipes/operations';
-
+} from "../../redux/recipes/operations";
 
 const RecipesList = () => {
   const dispatch = useDispatch();
   const recipes = useSelector((state) => state.recipes.items);
+  const totalItems = useSelector((state) => state.recipes.totalItems);
+
   const categoryDropdownRef = useRef(null);
   const ingredientDropdownRef = useRef(null);
 
   // Фильтры и отображаемые элементы
   const [filteredRecipes, setFilteredRecipes] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(12);
+
+  const [page, setPage] = useState(1);
+  const recipesPerPage = 12;
+
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [showIngredientDropdown, setShowIngredientDropdown] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -32,11 +37,11 @@ const RecipesList = () => {
     "Garlic",
     "Carrot",
   ];
+  const recipesListRef = useRef(null);
 
   useEffect(() => {
-    dispatch(fetchRecipes());
-  }, [dispatch]);
-
+    dispatch(fetchRecipes({ page, perPage: recipesPerPage }));
+  }, [dispatch, page]);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -57,6 +62,9 @@ const RecipesList = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  useEffect(() => {
+    setPage(1); // повертаємо на першу сторінку при зміні фільтрів
+  }, [selectedCategory, selectedIngredient]);
 
   const handleResetFilters = () => {
     setSelectedCategory("");
@@ -73,16 +81,31 @@ const RecipesList = () => {
     setShowIngredientDropdown(false);
   };
 
-  const loadMore = () => {
-    setVisibleCount((prev) => prev + 8);
-  };
-
   const handleToggleFavorite = (id, add) => {
     dispatch(toggleFavoriteRecipeAsync({ id, add }));
   };
-
+  const startIndex = (page - 1) * recipesPerPage;
+  const endIndex = startIndex + recipesPerPage;
+  const recipesToShow = filteredRecipes.slice(startIndex, endIndex);
+  const loadMore = () => {
+    setPage((prev) => prev + 1);
+  };
   useEffect(() => {
-    let filtered =  Array.isArray(recipes) ? recipes : [];
+    if (page > 1 && recipesListRef.current) {
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          const list = recipesListRef.current;
+          // Знаходимо останній елемент в списку
+          const lastRecipe = list.children[list.children.length - 1];
+          if (lastRecipe) {
+            lastRecipe.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      }, 200);
+    }
+  }, [page]);
+  useEffect(() => {
+    let filtered = Array.isArray(recipes) ? recipes : [];
 
     if (selectedCategory) {
       filtered = filtered.filter((r) => r.category === selectedCategory);
@@ -102,7 +125,6 @@ const RecipesList = () => {
     }
 
     setFilteredRecipes(filtered);
-    setVisibleCount(12);
   }, [recipes, selectedCategory, selectedIngredient]);
 
   return (
@@ -111,7 +133,7 @@ const RecipesList = () => {
         <h2 className={styles.Recipes}>Recipes</h2>
       </div>
       <div className={styles.filters}>
-        <p className={styles.recipes}>{filteredRecipes.length} recipes</p>
+        <p className={styles.recipes}>{totalItems} recipes</p>
         <div className={styles.inputWithIcon}>
           <div className={styles.buttonReset}>
             <button
@@ -137,9 +159,14 @@ const RecipesList = () => {
                 onFocus={(e) => e.target.blur()}
               />
               <span style={{ marginLeft: 5 }}>
-                <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32">
-              <use href={`${sprite}#icon-select_arrow`} />
-            </svg>
+                <svg
+                  className={styles.icon}
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                >
+                  <use href={`${sprite}#icon-select_arrow`} />
+                </svg>
               </span>
             </div>
 
@@ -171,9 +198,14 @@ const RecipesList = () => {
                 readOnly
               />
               <span style={{ marginLeft: 5 }}>
-                <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32">
-              <use href={`${sprite}#icon-select_arrow`} />
-            </svg>
+                <svg
+                  className={styles.icon}
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                >
+                  <use href={`${sprite}#icon-select_arrow`} />
+                </svg>
               </span>
             </div>
             {showIngredientDropdown && (
@@ -194,8 +226,8 @@ const RecipesList = () => {
       </div>
       {filteredRecipes.length === 0 && <p>No recipes found.</p>}
 
-      <div className={styles.recipeslist}>
-        {filteredRecipes.slice(0, visibleCount).map((recipe) => (
+      <div className={styles.recipeslist} ref={recipesListRef}>
+        {recipesToShow.map((recipe) => (
           <RecipeCard
             key={recipe._id}
             recipe={recipe}
@@ -205,10 +237,8 @@ const RecipesList = () => {
       </div>
       <div className={styles.BtnLoadWrapper}>
         <div className={styles.BtnLoad}>
-          {visibleCount < filteredRecipes.length && (
-            <button onClick={loadMore} className={styles.loadMore}>
-              Load More
-            </button>
+          {page * recipesPerPage < filteredRecipes.length && (
+            <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
           )}
         </div>
       </div>
