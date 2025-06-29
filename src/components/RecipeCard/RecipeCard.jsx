@@ -24,7 +24,7 @@ const RecipeCard = ({ recipe, onToggleFavorite }) => {
         <h3 className={styles.recipeTitle}>{title}</h3>
         {time && (
           <div className={styles.recipeTitleTime}>
-            <svg width="32" height="32" viewBox="0 0 32 32">
+            <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32">
               <use href={`${sprite}#icon-cooktime`} />
             </svg>
             <span>{time}</span>
