@@ -1,28 +1,27 @@
+// src/components/App/App.jsx
 import css from "../App/App.module.css";
-
 import { lazy, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import { selectRefreshing } from "../../redux/auth/selectors";
 import { refreshUser } from "../../redux/auth/operations";
-
 import { RestrictedRoute } from "../RestrictedRoute/RestrictedRoute";
 import { Layout } from "../Layout/Layout";
-
-// import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
+import RecipesList from "../RecipesList/RecipesList";
 import Loading from "../Loading/Loading";
 import NotificationToast from "../NotificationToast/NotificationToast";
-import RecipeDetailsPage from "../../pages/recipeDetailsPage/recipeDetailsPage";
-// 👉 Імпортуємо NotFound модалку для тесту
+
+//toastify
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import NotFound from "../NotFound/NotFound";
-import RecipesList from "../RecipesList/RecipesList";
+
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() =>
   import("../../pages/RegistrationPage/RegistrationPage")
 );
 const LoginPage = lazy(() => import("../../pages/LoginPage/LoginPage"));
-
 const NotFoundPage = lazy(() =>
   import("../../pages/NotFoundPage/NotFoundPage")
 );
@@ -31,7 +30,7 @@ export default function App() {
   const dispatch = useDispatch();
   const { isRefreshing } = useSelector(selectRefreshing);
 
-  const [showError, setShowError] = useState(false); // стан для модалки
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     dispatch(refreshUser());
@@ -42,7 +41,7 @@ export default function App() {
   ) : (
     <div className={css.app}>
       <Layout>
-        {/* 👉 Тимчасова кнопка для перегляду модалки NotFound */}
+        {}
         <button onClick={() => setShowError(true)} style={{ margin: 20 }}>
           Показати помилку (NotFound)
         </button>
@@ -70,12 +69,16 @@ export default function App() {
             }
           />
           <Route path="/recipes" element={<RecipesList />} />
-          <Route path="/recipes/:recipeId" element={<RecipeDetailsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
 
+      {}
       <NotificationToast />
+
+      {}
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }
+
