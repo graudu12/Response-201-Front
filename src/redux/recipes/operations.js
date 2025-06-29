@@ -8,6 +8,13 @@ export const fetchRecipes = createAsyncThunk(
       `http://localhost:3000/api/recipes?page=${page}&perPage=${perPage}`
     );
     return response.data;
+
+    /*"recipes/fetchRecipes",
+  async ({ page = 1, perPage = 40 } = {}) => {
+    const response = await axios.get(
+      `http://localhost:4000/api/recipes?page=${page}&perPage=${perPage}`
+    );
+    return response.data.data.enrichedRecipes;*/
   }
 );
 

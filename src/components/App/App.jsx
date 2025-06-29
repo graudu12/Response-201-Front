@@ -73,7 +73,7 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
-
+      <RecipesList />
       <NotificationToast />
     </div>
   );

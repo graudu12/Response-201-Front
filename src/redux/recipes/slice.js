@@ -23,8 +23,8 @@ const recipesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-        state.items = [...state.items, ...action.payload.data];
-        state.totalItems = action.payload.totalItems;
+        state.items = [...state.items, ...action.payload.data.enrichedRecipes];
+        state.totalItems = action.payload.data.totalItems;
       })
       .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
         const { id, add } = action.payload;
