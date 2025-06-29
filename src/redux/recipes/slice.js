@@ -1,11 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchRecipes, toggleFavoriteRecipeAsync } from "./operations";
+import {
+  fetchRecipes,
+  toggleFavoriteRecipeAsync,
+  fetchRecipeById,
+} from "./operations";
 
 const recipesSlice = createSlice({
   name: "recipes",
   initialState: {
     items: [],
     favorites: [],
+    currentRecipe: null,
+    loading: false,
+    error: null,
     totalItems: 0,
   },
   reducers: {
@@ -32,6 +39,20 @@ const recipesSlice = createSlice({
         if (recipe) {
           recipe.isFavorite = add;
         }
+      })
+      .addCase(fetchRecipeById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.currentRecipe = null;
+      })
+      .addCase(fetchRecipeById.fulfilled, (state, action) => {
+        console.log("📦 Reducer получил рецепт:", action.payload);
+        state.loading = false;
+        state.currentRecipe = action.payload;
+      })
+      .addCase(fetchRecipeById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Ошибка при загрузке рецепта";
       });
   },
 });

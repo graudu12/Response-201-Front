@@ -2,24 +2,22 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import {
-  addToFavorites,
-  removeFromFavorites,
-} from "../../redux/recipes/operations.js"; //  для Redux
+// import { addToFavorites, removeFromFavorites } from "../../redux/recipes/operations.js";
 import styles from "./RecipeDetails.module.css";
-import Loader from "../Loading/Loading.jsx";
+import Loading from "../Loading/Loading.jsx";
 
 const RecipeDetails = ({ recipe }) => {
+  console.log("🧪 Получен recipe в компоненте:", recipe);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector((state) => state.auth); // Проверка авторизации
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Проверка, есть ли рецепт в избранном (зависит от API)
   useEffect(() => {
     if (recipe && isAuthenticated) {
-      // Запрос к API для проверки, например:
+      // Например:
       // setIsFavorite(recipe.isFavorite);
     }
   }, [recipe, isAuthenticated]);
@@ -33,13 +31,13 @@ const RecipeDetails = ({ recipe }) => {
     setIsLoading(true);
     try {
       if (isFavorite) {
-        await dispatch(removeFromFavorites(recipe.id)).unwrap();
+        await dispatch(removeFromFavorites(recipe._id)).unwrap();
         toast.success("Рецепт удалён из избранного");
       } else {
-        await dispatch(addToFavorites(recipe.id)).unwrap();
+        await dispatch(addToFavorites(recipe._id)).unwrap();
         toast.success("Рецепт добавлен в избранное!");
       }
-      setIsFavorite(!isFavorite);
+      setIsFavorite((prev) => !prev);
     } catch (error) {
       toast.error(error.message || "Ошибка при сохранении");
     } finally {
@@ -47,68 +45,86 @@ const RecipeDetails = ({ recipe }) => {
     }
   };
 
-  if (!recipe) return <div className={styles.notFound}>Рецепт не найден</div>;
+  if (!recipe) {
+    return <div className={styles.notFound}>Рецепт не найден</div>;
+  }
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>{recipe.title}</h1>
-      <img src={recipe.image} alt={recipe.title} className={styles.image} />
+      <div className={styles.headerSection}>
+        <h1 className={styles.title}>{recipe.title}</h1>
+        <img src={recipe.thumb} alt={recipe.title} className={styles.image} />
+      </div>
 
-      <section className={styles.section}>
-        <h2>About recipe</h2>
-        <p>{recipe.description}</p>
-      </section>
+      <div className={styles.contentWrapper}>
+        <div className={styles.mainContent}>
+          <section className={styles.section}>
+            <h2>About recipe</h2>
+            <p>{recipe.description}</p>
+          </section>
 
-      <section className={styles.section}>
-        <h2>Ingredients</h2>
-        <ul className={styles.ingredients}>
-          {recipe.ingredients.map((item, index) => (
-            <li key={index}>
-              {item.name} — {item.amount}
-            </li>
-          ))}
-        </ul>
-      </section>
+          <section className={styles.section}>
+            <h2>Ingredients</h2>
+            {recipe.ingredients?.length > 0 ? (
+              <ul className={styles.ingredients}>
+                {recipe.ingredients.map((item, index) => (
+                  <li key={index}>
+                    Ingredient ID: <code>{item.id}</code> — {item.measure}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No ingredients found.</p>
+            )}
+          </section>
 
-      <section className={styles.section}>
-        <h2>Preparation Steps</h2>
-        <ol className={styles.steps}>
-          {recipe.instructions.map((step, index) => (
-            <li key={index}>{step}</li>
-          ))}
-        </ol>
-      </section>
+          <section className={styles.section}>
+            <h2>Preparation Steps</h2>
+            {recipe.instructions ? (
+              <ol className={styles.steps}>
+                {recipe.instructions.split(". ").map((step, index) => (
+                  <li key={index}>{step.trim()}</li>
+                ))}
+              </ol>
+            ) : (
+              <p>Instructions not available.</p>
+            )}
+          </section>
+        </div>
 
-      <section className={styles.info}>
-        <h2>General information</h2>
-        <p>
-          <strong>Category:</strong> {recipe.category}
-        </p>
-        <p>
-          <strong>Cooking time:</strong> {recipe.time} minutes
-        </p>
-        {recipe.calories && (
-          <p>
-            <strong>Calories:</strong> ~{recipe.calories} kcal
-          </p>
-        )}
-      </section>
+        <div className={styles.infoBox}>
+          <section className={styles.info}>
+            <h2 className={styles.infoTitle}>General information</h2>
+            <p>
+              <strong>Category:</strong> {recipe.category || "—"}
+            </p>
+            <p>
+              <strong>Cooking time:</strong> {recipe.time || "—"} minutes
+            </p>
 
-      <button
-        onClick={handleFavoriteClick}
-        disabled={isLoading}
-        className={`${styles.favoriteButton} ${
-          isFavorite ? styles.active : ""
-        }`}
-      >
-        {isLoading ? (
-          <Loader size="20px" />
-        ) : isFavorite ? (
-          "Remove from favorites"
-        ) : (
-          "Save to favorites"
-        )}
-      </button>
+            <p>
+              <strong>Caloric content:</strong> ~{recipe.calories || ""} kcal
+              per serving
+            </p>
+          </section>
+
+          <button
+            onClick={handleFavoriteClick}
+            disabled={isLoading}
+            className={`${styles.favoriteButton} ${
+              isFavorite ? styles.active : ""
+            }`}
+          >
+            {isLoading ? (
+              <Loading size="20px" />
+            ) : isFavorite ? (
+              "Remove from favorites"
+            ) : (
+              "Save"
+            )}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

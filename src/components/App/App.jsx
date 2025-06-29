@@ -13,7 +13,7 @@ import { Layout } from "../Layout/Layout";
 // import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
 import Loading from "../Loading/Loading";
 import NotificationToast from "../NotificationToast/NotificationToast";
-
+import RecipeDetailsPage from "../../pages/recipeDetailsPage/recipeDetailsPage";
 // 👉 Імпортуємо NotFound модалку для тесту
 import NotFound from "../NotFound/NotFound";
 import RecipesList from "../RecipesList/RecipesList";
@@ -70,6 +70,7 @@ export default function App() {
             }
           />
           <Route path="/recipes" element={<RecipesList />} />
+          <Route path="/recipes/:recipeId" element={<RecipeDetailsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
