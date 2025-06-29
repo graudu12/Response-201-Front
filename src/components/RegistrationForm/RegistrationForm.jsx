@@ -171,7 +171,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (token) {
-      navigate('/contacts'); // редирект після входу
+      navigate('/recipes'); // редирект після входу
     }
   }, [token, navigate]);
 

@@ -1,4 +1,5 @@
-.recipeCard {
+@media only screen and (min-width: 1280px) { 
+  .recipeCard {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -123,4 +124,5 @@ height: 40px;
   stroke-width: 0;
   stroke: currentColor;
   fill: currentColor;
+}
 }
