@@ -1,35 +1,55 @@
 import css from "./AddRecipeForm.module.css";
-import { useRef, useState, useEffect } from "react";
-import { Formik, Form, Field } from "formik";
-import * as Yup from 'yup';
-import { useNavigate } from "react-router-dom";
+import sprite from "../../svg/sprite.svg";
 import axios from "axios";
+import * as Yup from 'yup';
+import { useRef, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Formik, Form, Field, useFormikContext } from "formik";
+import { useNavigate } from "react-router-dom";
+import { fetchRecipes, toggleFavoriteRecipeAsync } from "../../redux/recipes/operations";
+
 
 export default function AddRecipeForm() {
+const dispatch = useDispatch();
 const navigate = useNavigate(); 
-const [categories, setCategories] = useState([]);
-const [ingredientsList, setIngredientsList] = useState([]); 
+
 const inputRef = useRef(null);
+
+const categoryDropdownRef = useRef(null);
+
+const [ingredientsList, setIngredientsList] = useState([]); 
+
 const [preview, setPreview] = useState(null);
 
 useEffect(() => {
-  //Для отримання категорій та інгрідієнтів з бази
-  const fetchData = async () => {
-    try {
-      const [catRes, ingRes] = await Promise.all([
-        axios.get('/api/categoties'), //звіриться з базою
-        axios.get('/api/ingredients'), //також
-      ]);
-      setCategories(catRes.data);
-      setIngredientsList(ingRes.data);
-    }
-    catch (err) {
-      console.error('Помилка, не забудь зробить правильно');
+    dispatch(fetchRecipes());
+  }, [dispatch]);
+
+// useEffect(() => {
+//   //Для отримання категорій та інгрідієнтів з бази
+//     const handleClickCurrent = (event) => {
+//         if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target)
+//         ) {
+//             setCategories(false);
+//         }
+//         // далі доаисать по інгрід
+//     };
+//     document.addEventListener("mousedown", handleClickCurrent);
+//     return () => {
+//     document.removeEventListener("mousedown", handleClickCurrent);
+//     };
+// }, []);
     
-    }
-  };
-  fetchData();
-}, []);
+// const handleChange = (e) => {
+//     const value = e.target.value;
+//     setFieldValue("category", value);
+//     // handleCategorySelect(value);
+//   };
+    
+// const handleCategorySelect = (category) => {
+//     setSelectedCategory(category);
+//     setCategories(false);
+//   };
 
 const handleSubmit = async (values, actions) => {
   const formData = new FormData();
@@ -101,7 +121,7 @@ const initialValues = {
             >
             {!preview && (
             <svg className={css.icon_svg}>
-                          <use xlinkHref="/public/sprite.svg/#icon-brush" />
+                          <use href={`${sprite}#icon-default_photo`} />
             </svg>
             )}
             </div> 
@@ -172,12 +192,22 @@ const initialValues = {
                 />
               </label>
 
-              <label className={css.label} htmlFor="category">
+           
+                <label className={css.label} htmlFor="category">
                 Category
-                <Field className={css.field} id="category" name="category" as="select">
-                  <option value="">Пізніше</option>
+                <Field 
+                    className={css.field} 
+                    id="category" 
+                    name="category" 
+                    as="select" 
+                    >
+                {["Soup", "Breakfest", "Lunch"].map((cat) => (
+                    <option value={cat} key={cat}>{cat}</option>
+                ))}
                 </Field>
-              </label>
+                </label>             
+            
+    
             </div>
 
             <h2 className={css.title}>Ingredients</h2>

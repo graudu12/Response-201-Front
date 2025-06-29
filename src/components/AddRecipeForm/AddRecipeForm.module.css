@@ -27,11 +27,12 @@
 }
 
 .icon_svg {
+    display: inline-block;
     position: absolute;
     z-index: 100;
     width: 82px;
     height: 82px;
-    fill: #000;
+    fill: none;
     stroke: #000;
 }
 
