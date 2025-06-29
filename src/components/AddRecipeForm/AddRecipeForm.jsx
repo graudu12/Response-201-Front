@@ -4,26 +4,26 @@ import axios from "axios";
 import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Formik, Form, Field, useFormikContext } from "formik";
+import { Formik, Form, Field} from "formik";
 import { useNavigate } from "react-router-dom";
-import { fetchRecipes, toggleFavoriteRecipeAsync } from "../../redux/recipes/operations";
+import { fetchRecipes,} from "../../redux/recipes/operations";
 
 
 export default function AddRecipeForm() {
-const dispatch = useDispatch();
+// const dispatch = useDispatch();
 const navigate = useNavigate(); 
 
 const inputRef = useRef(null);
 
-const categoryDropdownRef = useRef(null);
+// const categoryDropdownRef = useRef(null);
 
-const [ingredientsList, setIngredientsList] = useState([]); 
+// const [ingredientsList, setIngredientsList] = useState([]); 
 
 const [preview, setPreview] = useState(null);
 
-useEffect(() => {
-    dispatch(fetchRecipes());
-  }, [dispatch]);
+// useEffect(() => {
+//     dispatch(fetchRecipes());
+//   }, [dispatch]);
 
 // useEffect(() => {
 //   //Для отримання категорій та інгрідієнтів з бази
@@ -110,30 +110,6 @@ const initialValues = {
   
   return (
       <div className={css.container}>
-      <div className={css.cont_img}>
-        <h2 className={css.title}>Upload Photo</h2>
-            <div
-            className={css.img_recipe}
-                onClick={handleImageClick}
-                style={{
-                backgroundImage: preview ? `url(${preview})` : "none",
-                }}
-            >
-            {!preview && (
-            <svg className={css.icon_svg}>
-                          <use href={`${sprite}#icon-default_photo`} />
-            </svg>
-            )}
-            </div> 
-            <input
-            type="file"
-            accept="image/*"
-            ref={inputRef}
-            style={{ display: "none" }}
-            onChange={handleImageChange}
-            />
-      </div>
-
       <div>
         <h2 className={css.title}>General Information</h2>
 
@@ -143,6 +119,30 @@ const initialValues = {
           onSubmit={handleSubmit}
         >
           <Form>
+            
+            <div className={css.cont_img}>
+                <h2 className={css.title}>Upload Photo</h2>
+                <div
+                className={css.img_recipe}
+                onClick={handleImageClick}
+                style={{
+                backgroundImage: preview ? `url(${preview})` : "none",
+                    }}
+                >
+                {!preview && (
+                    <svg className={css.icon_svg}>
+                                <use href={`${sprite}#icon-default_photo`} />
+                    </svg>
+                )}
+                </div> 
+                <input
+                type="file"
+                accept="image/*"
+                ref={inputRef}
+                style={{ display: "none" }}
+                onChange={handleImageChange}
+                />
+            </div>
             
             <label className={css.label} htmlFor="recipe_title">
               Recipe Title
