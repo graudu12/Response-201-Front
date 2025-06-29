@@ -1,24 +1,19 @@
 import { createSelector } from "@reduxjs/toolkit";
-import {
-  selectNameFilter,
-  selectNumberFilter,
-} from "../../redux/filters/selectors";
+import { selectNameFilter } from "../filters/selectors";
 
-export const selectContacts = (state) => state.contacts.items;
+export const selectRecipes = (state) => state.recipes.items || [];
 
-export const selectLoading = (state) => state.contacts.loading;
+export const selectFavoriteRecipes = (state) =>
+  state.recipes.items.filter((recipe) => recipe.isFavorite);
 
-export const selectError = (state) => state.contacts.error;
+export const selectRecipeById = (id) => (state) =>
+  state.recipes.items.find((recipe) => recipe._id === id);
 
-export const selectEditing = (state) => state.contacts.editing;
-
-export const selectFilteredContacts = createSelector(
-  [selectContacts, selectNameFilter, selectNumberFilter],
-  (contacts, nameFilter, numberFilter) => {
-    return contacts.filter(
-      (contact) =>
-        contact.name.toLowerCase().includes(nameFilter.toLowerCase()) ||
-        contact.number.includes(numberFilter)
+export const selectFilteredRecipes = createSelector(
+  [selectRecipes, selectNameFilter],
+  (recipes, nameFilter) => {
+    return recipes.filter((recipe) =>
+      recipe.title.toLowerCase().includes(nameFilter.toLowerCase())
     );
   }
 );

@@ -1,18 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import RecipeCard from "../RecipeCard/RecipeCard";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import styles from "./RecipesList.module.css";
-
+import sprite from "../../svg/sprite.svg";
 import {
   fetchRecipes,
   toggleFavoriteRecipeAsync,
-} from "../../redux/recipesSlice/recipesSlice";
-import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+} from "../../redux/recipes/operations";
 
 const RecipesList = () => {
   const dispatch = useDispatch();
   const recipes = useSelector((state) => state.recipes.items);
-
   const categoryDropdownRef = useRef(null);
   const ingredientDropdownRef = useRef(null);
 
@@ -83,7 +82,7 @@ const RecipesList = () => {
   };
 
   useEffect(() => {
-    let filtered = recipes;
+    let filtered = Array.isArray(recipes) ? recipes : [];
 
     if (selectedCategory) {
       filtered = filtered.filter((r) => r.category === selectedCategory);
@@ -113,110 +112,86 @@ const RecipesList = () => {
       </div>
       <div className={styles.filters}>
         <p className={styles.recipes}>{filteredRecipes.length} recipes</p>
-      </div>
-      <div className={styles.inputWithIcon}>
-        <div className={styles.buttonReset}>
-          <button onClick={handleResetFilters} className={styles.resetFilters}>
-            Reset filters
-          </button>
-        </div>
-        <div className={styles.FormButton} ref={categoryDropdownRef}>
-          <div
-            className={styles.ButtonInput}
-            onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-          >
-            <input
-              type="text"
-              name="category"
-              placeholder="Category"
-              value={selectedCategory}
-              className={styles.filterInput}
-              readOnly
-              tabIndex={-1}
-              onFocus={(e) => e.target.blur()}
-            />
-            <span style={{ marginLeft: 5 }}>
-              <svg
-                width="10"
-                height="6"
-                viewBox="0 0 10 6"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 1L5 5L9 1"
-                  stroke="black"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            {/* <img alt="Expand" className={styles.icon} /> должна иконка присутствовать */}
+        <div className={styles.inputWithIcon}>
+          <div className={styles.buttonReset}>
+            <button
+              onClick={handleResetFilters}
+              className={styles.resetFilters}
+            >
+              Reset filters
+            </button>
           </div>
+          <div className={styles.FormButton} ref={categoryDropdownRef}>
+            <div
+              className={styles.ButtonInput}
+              onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
+            >
+              <input
+                type="text"
+                name="category"
+                placeholder="Category"
+                value={selectedCategory}
+                className={styles.filterInput}
+                readOnly
+                tabIndex={-1}
+                onFocus={(e) => e.target.blur()}
+              />
+              <span style={{ marginLeft: 5 }}>
+                <svg width="32" height="32" viewBox="0 0 32 32">
+                  <use href={`${sprite}#icon-select_arrow`} />
+                </svg>
+              </span>
+            </div>
 
-          {showCategoryDropdown && (
-            <ul className={styles.dropdown}>
-              {["Dinner", "Lunch", "Breakfast", "Snack"].map((cat) => (
-                <li
-                  key={cat}
-                  onClick={() => handleCategorySelect(cat)}
-                  className={styles.dropdownItem}
-                >
-                  {cat}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        <div className={styles.FormButton} ref={ingredientDropdownRef}>
-          <div
-            className={styles.ButtonInput}
-            onClick={() => setShowIngredientDropdown(!showIngredientDropdown)}
-          >
-            <input
-              type="text"
-              name="Ingredient"
-              placeholder="Ingredient"
-              className={styles.filterInput}
-              value={selectedIngredient}
-              readOnly
-            />
-            <span style={{ marginLeft: 5 }}>
-              <svg
-                width="10"
-                height="6"
-                viewBox="0 0 10 6"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 1L5 5L9 1"
-                  stroke="black"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
+            {showCategoryDropdown && (
+              <ul className={styles.dropdown}>
+                {["Dinner", "Lunch", "Breakfast", "Snack"].map((cat) => (
+                  <li
+                    key={cat}
+                    onClick={() => handleCategorySelect(cat)}
+                    className={styles.dropdownItem}
+                  >
+                    {cat}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-          {showIngredientDropdown && (
-            <ul className={styles.dropdown}>
-              {ingredientOptions.map((ing) => (
-                <li
-                  key={ing}
-                  onClick={() => handleIngredientSelect(ing)}
-                  className={styles.dropdownItem}
-                >
-                  {ing}
-                </li>
-              ))}
-            </ul>
-          )}
-          {/* <img alt="Expand" className={styles.icon} /> должна иконка присутствовать */}
+          <div className={styles.FormButton} ref={ingredientDropdownRef}>
+            <div
+              className={styles.ButtonInput}
+              onClick={() => setShowIngredientDropdown(!showIngredientDropdown)}
+            >
+              <input
+                type="text"
+                name="Ingredient"
+                placeholder="Ingredient"
+                className={styles.filterInput}
+                value={selectedIngredient}
+                readOnly
+              />
+              <span style={{ marginLeft: 5 }}>
+                <svg width="32" height="32" viewBox="0 0 32 32">
+                  <use href={`${sprite}#icon-select_arrow`} />
+                </svg>
+              </span>
+            </div>
+            {showIngredientDropdown && (
+              <ul className={styles.dropdown}>
+                {ingredientOptions.map((ing) => (
+                  <li
+                    key={ing}
+                    onClick={() => handleIngredientSelect(ing)}
+                    className={styles.dropdownItem}
+                  >
+                    {ing}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       </div>
-
       {filteredRecipes.length === 0 && <p>No recipes found.</p>}
 
       <div className={styles.recipeslist}>
