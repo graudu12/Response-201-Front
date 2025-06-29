@@ -3,9 +3,9 @@ import axios from "axios";
 
 export const fetchRecipes = createAsyncThunk(
   'recipes/fetchRecipes',
-  async () => {
-    const response = await axios.get('http://localhost:4000/api/recipes');
-    return response.data;
+  async ({ page = 1, perPage = 40 } = {}) => {
+    const response = await axios.get(`http://localhost:4000/api/recipes?page=${page}&perPage=${perPage}`);
+    return response.data.data.enrichedRecipes;
   }
 );
 

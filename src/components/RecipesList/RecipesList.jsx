@@ -137,7 +137,7 @@ const RecipesList = () => {
                 onFocus={(e) => e.target.blur()}
               />
               <span style={{ marginLeft: 5 }}>
-                <svg width="32" height="32" viewBox="0 0 32 32">
+                <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32">
               <use href={`${sprite}#icon-select_arrow`} />
             </svg>
               </span>
@@ -171,7 +171,7 @@ const RecipesList = () => {
                 readOnly
               />
               <span style={{ marginLeft: 5 }}>
-                <svg width="32" height="32" viewBox="0 0 32 32">
+                <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32">
               <use href={`${sprite}#icon-select_arrow`} />
             </svg>
               </span>

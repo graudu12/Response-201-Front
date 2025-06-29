@@ -23,7 +23,7 @@ const recipesSlice = createSlice({
     builder
       .addCase(fetchRecipes.fulfilled, (state, action) => {
  
-  state.items = action.payload.data;
+  state.items = action.payload;
 })
       .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
         const { id, add } = action.payload;
