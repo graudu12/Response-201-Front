@@ -1,58 +1,112 @@
-import css from "./SearchBox.module.css";
+// import css from "./SearchBox.module.css";
 
+// import { useDispatch, useSelector } from "react-redux";
+// import { useId } from "react";
+
+// import { changeFilter } from "../../redux/filters/slice.js";
+
+// import {
+//   selectNameFilter,
+//   selectNumberFilter,
+// } from "../../redux/filters/selectors.js";
+
+// import { RiFileSearchFill } from "react-icons/ri";
+// import { IconContext } from "react-icons";
+
+
+
+// export default function SearchBox() {
+// 	const fieldId = useId();
+	
+//   const dispatch = useDispatch();
+
+//   const name = useSelector(selectNameFilter);
+//   const number = useSelector(selectNumberFilter);
+
+//   const handleFindName = (e) => {
+//     const value = e.target.value;
+//     dispatch(
+//       changeFilter({
+//         name: value.toLowerCase(),
+//         number: value,
+//       })
+//     );
+//   };
+
+//   return (
+//     <div className={css.container}>
+//       <div className={css.formContainer}>
+//         <label className={css.inputLabel} htmlFor={`${fieldId}-name`}>
+//         </label>
+//         <div className={css.iconPosition}>
+//           <input
+//             className={css.input}
+//             id={`${fieldId}-name`}
+//             type="text"
+//             value={name || number}
+//             onChange={handleFindName}
+//           />
+//           <IconContext.Provider value={{ size: "2em" }}>
+//             <span className={css.inputIcon}>
+//               <RiFileSearchFill />
+//             </span>
+//           </IconContext.Provider>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+//src/components/SearchBox/SearchBox.jsx
 import { useDispatch, useSelector } from "react-redux";
-import { useId } from "react";
+import { useId, useState } from "react";
+import { toast } from "react-toastify";
 
+import css from "./SearchBox.module.css";
 import { changeFilter } from "../../redux/filters/slice.js";
-
-import {
-  selectNameFilter,
-  selectNumberFilter,
-} from "../../redux/filters/selectors.js";
-
-import { RiFileSearchFill } from "react-icons/ri";
-import { IconContext } from "react-icons";
-
-
+import { selectNameFilter } from "../../redux/filters/selectors.js";
+import { fetchRecipesByQuery } from "../../redux/recipes/operations.js";
 
 export default function SearchBox() {
-	const fieldId = useId();
-	
   const dispatch = useDispatch();
-
+  const fieldId = useId();
   const name = useSelector(selectNameFilter);
-  const number = useSelector(selectNumberFilter);
+  const [input, setInput] = useState(name || "");
 
-  const handleFindName = (e) => {
-    const value = e.target.value;
-    dispatch(
-      changeFilter({
-        name: value.toLowerCase(),
-        number: value,
-      })
-    );
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    const trimmed = input.trim();
+    if (!trimmed) {
+      toast.error("Введіть назву рецепта");
+      return;
+    }
+
+    dispatch(changeFilter({ name: trimmed }));
+    dispatch(fetchRecipesByQuery(trimmed));
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSubmit();
   };
 
   return (
     <div className={css.container}>
-      <div className={css.formContainer}>
-        <label className={css.inputLabel} htmlFor={`${fieldId}-name`}>
-        </label>
-        <div className={css.iconPosition}>
-          <input
-            className={css.input}
-            id={`${fieldId}-name`}
-            type="text"
-            value={name || number}
-            onChange={handleFindName}
-          />
-          <IconContext.Provider value={{ size: "2em" }}>
-            <span className={css.inputIcon}>
-              <RiFileSearchFill />
-            </span>
-          </IconContext.Provider>
-        </div>
-      </div>
+      <input
+        id={`${fieldId}-name`}
+        className={css.searchInput}
+        type="text"
+        value={input}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        placeholder="Search recipes"
+      />
+      <button className={css.searchButton} onClick={handleSubmit}>
+        Search
+      </button>
     </div>
   );
 }
