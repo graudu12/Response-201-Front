@@ -53,7 +53,12 @@ export const fetchRecipes = createAsyncThunk(
       const response = await axios.get(
         `http://localhost:4000/api/recipes?page=${page}&perPage=${perPage}`
       );
-      return response.data.data.enrichedRecipes;
+       console.log("Response from API:", response.data); // <-- Вот здесь
+
+      return {
+        items: response.data.data.enrichedRecipes,
+        totalItems: response.data.data.totalItems,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Помилка при завантаженні рецептів"

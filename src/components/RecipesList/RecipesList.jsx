@@ -84,9 +84,7 @@ const RecipesList = () => {
   const handleToggleFavorite = (id, add) => {
     dispatch(toggleFavoriteRecipeAsync({ id, add }));
   };
-  const startIndex = (page - 1) * recipesPerPage;
-  const endIndex = startIndex + recipesPerPage;
-  const recipesToShow = filteredRecipes.slice(startIndex, endIndex);
+const recipesToShow = filteredRecipes.slice(0, page * recipesPerPage);
   const loadMore = () => {
     setPage((prev) => prev + 1);
   };
@@ -237,9 +235,10 @@ const RecipesList = () => {
       </div>
       <div className={styles.BtnLoadWrapper}>
         <div className={styles.BtnLoad}>
-          {page * recipesPerPage < filteredRecipes.length && (
-            <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
-          )}
+          {page * recipesPerPage < totalItems && (
+  <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
+)}
+
         </div>
       </div>
     </div>

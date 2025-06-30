@@ -16,11 +16,9 @@ import NotificationToast from "../NotificationToast/NotificationToast";
 import RecipeDetailsPage from "../../pages/recipeDetailsPage/recipeDetailsPage";
 // 👉 Імпортуємо NotFound модалку для тесту
 import NotFound from "../NotFound/NotFound";
-import RecipesList from "../RecipesList/RecipesList";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() =>
@@ -74,7 +72,6 @@ export default function App() {
               />
             }
           />
-          <Route path="/recipes" element={<RecipesList />} />
           <Route path="/recipes/:recipeId" element={<RecipeDetailsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
