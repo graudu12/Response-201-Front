@@ -1,4 +1,4 @@
-@media only screen and (min-width: 1280px) {
+
   .recipeCard {
     display: flex;
     align-items: flex-start;
@@ -10,7 +10,6 @@
     padding: 12px;
     box-sizing: border-box;
     width: 288px;
-    height: 431px;
     background: #5e7057;
   }
   .imageCard {
@@ -43,11 +42,14 @@
     gap: 4px;
     border-radius: 8px;
     padding: 2px 8px 2px 4px;
-    width: 53px;
-    height: 28px;
     background: #fff;
     margin-left: auto;
     margin-bottom: auto;
+  }
+  .yourSpan {
+    font-weight: 600;
+font-size: 12px;
+color: #000;
   }
   .recipeDescCal {
     display: flex;
@@ -56,7 +58,7 @@
     flex-direction: column;
     gap: 8px;
   }
-  .recipeDescription {
+  .recipeDescriptioncss {
     font-weight: 400;
     font-size: 16px;
     line-height: 1.55;
@@ -73,7 +75,7 @@
     justify-content: flex-start;
     flex-direction: row;
     gap: 8px;
-    margin-top: auto;
+      width: 100%; 
   }
   .learnMoreButton {
     display: flex;
@@ -87,8 +89,7 @@
     font-weight: 600;
     font-size: 16px;
     color: #000;
-    width: 216px;
-    height: 40px;
+      flex-grow: 1; 
   }
   .favorite {
     display: flex;
@@ -99,8 +100,6 @@
     border: 1px solid #000;
     border-radius: 8px;
     padding: 8px;
-    width: 40px;
-    height: 40px;
   }
 
   .favorite:hover {
@@ -125,10 +124,7 @@
   }
   .icon {
     display: inline-block;
-    width: 1em;
-    height: 1em;
     stroke-width: 0;
     stroke: currentColor;
     fill: currentColor;
   }
-}

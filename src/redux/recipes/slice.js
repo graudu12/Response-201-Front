@@ -61,7 +61,6 @@
 
 // export const recipesReducer = recipesSlice.reducer;
 
-
 //src/redux/recipes/slice.js
 import { createSlice } from "@reduxjs/toolkit";
 import {
@@ -72,7 +71,7 @@ import {
 
 const initialState = {
   items: [],
-   totalItems: 0,
+  totalItems: 0,
   favorites: [],
   searchQuery: "",
   loading: false,
@@ -106,7 +105,13 @@ const recipesSlice = createSlice({
         state.notFound = false;
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-        state.items = action.payload.items;
+        if (action.payload.append) {
+          // Добавляем новые рецепты к уже загруженным
+          state.items = [...state.items, ...action.payload.items];
+        } else {
+          // Заменяем список рецептов
+          state.items = action.payload.items;
+        }
         state.totalItems = action.payload.totalItems;
         state.loading = false;
         state.notFound = action.payload.items.length === 0;
@@ -116,16 +121,16 @@ const recipesSlice = createSlice({
         state.error = action.error.message;
       })
 
-      
       .addCase(fetchRecipesByQuery.pending, (state) => {
         state.loading = true;
         state.error = null;
         state.notFound = false;
       })
       .addCase(fetchRecipesByQuery.fulfilled, (state, action) => {
-        state.items = action.payload;
-        state.loading = false;
-        state.notFound = action.payload.length === 0;
+         state.items = action.payload.items;
+  state.totalItems = action.payload.totalItems;
+  state.loading = false;
+  state.notFound = action.payload.items.length === 0;
       })
       .addCase(fetchRecipesByQuery.rejected, (state, action) => {
         state.loading = false;
