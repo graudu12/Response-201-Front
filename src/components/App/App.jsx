@@ -17,6 +17,11 @@ import RecipeDetailsPage from "../../pages/recipeDetailsPage/recipeDetailsPage";
 // 👉 Імпортуємо NotFound модалку для тесту
 import NotFound from "../NotFound/NotFound";
 import RecipesList from "../RecipesList/RecipesList";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() =>
   import("../../pages/RegistrationPage/RegistrationPage")
@@ -76,6 +81,8 @@ export default function App() {
       </Layout>
 
       <NotificationToast />
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }
