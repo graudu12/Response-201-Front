@@ -72,6 +72,7 @@ import {
 
 const initialState = {
   items: [],
+   totalItems: 0,
   favorites: [],
   searchQuery: "",
   loading: false,
@@ -105,9 +106,10 @@ const recipesSlice = createSlice({
         state.notFound = false;
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-        state.items = action.payload;
+        state.items = action.payload.items;
+        state.totalItems = action.payload.totalItems;
         state.loading = false;
-        state.notFound = action.payload.length === 0;
+        state.notFound = action.payload.items.length === 0;
       })
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.loading = false;
