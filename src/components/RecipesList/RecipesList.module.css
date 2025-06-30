@@ -24,7 +24,6 @@
     font-weight: 600;
     font-size: 40px;
     color: #000;
-    font-family: "Montserrat", sans-serif;
   }
   .filters {
     display: flex;
@@ -39,7 +38,6 @@
     font-weight: 600;
     font-size: 18px;
     color: #000;
-    font-family: "Montserrat", sans-serif;
   }
   .inputWithIcon {
     display: flex;
@@ -52,7 +50,7 @@
   .filtersRight {
     display: flex;
     align-items: center;
-    gap: 24px; /* расстояние между кнопкой Reset и фильтрами */
+    gap: 24px;
   }
   .buttonReset {
     display: flex;
@@ -67,9 +65,7 @@
   .resetFilters {
     font-weight: 600;
     font-size: 12px;
-    background: none;
     border: none;
-    outline: none;
   }
   .FormButton {
     display: inline-block;
@@ -97,7 +93,7 @@
     font-size: 16px;
     line-height: 1.55;
     border: none;
-    font-family: "Montserrat", sans-serif;
+
     outline: none;
     user-select: none; /* нельзя выделять текст */
     outline: none; /* убрать обводку при фокусе */
