@@ -1,7 +1,8 @@
 .container {
+  margin: 0 auto;
   max-width: 361px;
   padding: 48px 16px;
-  font-family: "Arial", sans-serif;
+  background-color: #fbfcf8;
 }
 .headerSection {
   display: flex;
@@ -9,8 +10,8 @@
 }
 
 .title {
+  font-size: 40px;
   color: #2c3e50;
-  text-align: center;
   margin-bottom: 32px;
 }
 
@@ -25,8 +26,7 @@
   gap: 24px;
   flex-direction: column-reverse;
 }
-.infoBox {
-}
+
 .info {
   display: flex;
   flex-direction: column;
@@ -34,35 +34,50 @@
   gap: 15px;
   padding: 16px;
   border-radius: 16px;
+  margin-bottom: 20px;
+  line-height: 1.55;
 }
+
 .infoTitle {
   font-weight: 600;
   font-size: 24px;
 }
-.section {
+.section:not(:last-child) {
   margin-bottom: 40px;
 }
 
 .section h2 {
   font-size: 32px;
-
   margin-bottom: 8px;
+}
+.section h2:has(+ ol) {
+  margin-bottom: 24px;
 }
 .section p {
   font-size: 16px;
   line-height: 1.55;
 }
-.ingredients,
-.steps {
-  padding-left: 20px;
+.ingredients {
+  list-style-position: inside;
+  padding-left: 1em;
+  text-indent: -1em;
 }
 
 .ingredients li {
-  margin-bottom: 5px;
+  list-style: disc;
+  padding-left: 0.8em;
 }
 
-.steps li {
-  margin-bottom: 10px;
+li::marker {
+  font-size: x-small;
+}
+
+.ingredients li:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.steps li:not(:last-child) {
+  margin-bottom: 16px;
 }
 
 .favoriteButton {
@@ -72,27 +87,89 @@
   background: #9b6c43;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
+  font-size: 18px;
   transition: background 0.3s;
 }
 
-.favoriteButton:hover {
-  background: #c0392b;
+.favoriteButton:hover,
+.favoriteButton:focus {
+  background: #6d554b;
 }
 
-.favoriteButton.active {
-  background: #27ae60;
+.favoriteButton:active {
+  background: #9b6c43;
+  border: 2px solid white;
 }
 
-.favoriteButton.active:hover {
-  background: #219653;
-}
+@media screen and (min-width: 768px) {
+  .container {
+    min-width: 768px;
+    padding: 48px 32px;
+  }
+  .headerSection {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
 
-.notFound {
-  text-align: center;
-  font-size: 18px;
-  color: #7f8c8d;
+  .image {
+    height: 624px;
+    object-fit: cover;
+    object-position: left center;
+  }
+
+  .title {
+    font-size: 48px;
+    margin-bottom: 32px;
+  }
+  .infoBox {
+    display: flex;
+    gap: 24px;
+    flex-direction: row;
+  }
+  .info {
+    margin-bottom: 0;
+    padding: 24px;
+    min-width: 431px;
+  }
+  .favoriteButton {
+    max-height: 56px;
+  }
+  .ingredients li:not(:last-child) {
+    margin-bottom: 20px;
+  }
+  .steps li:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+    padding: 48px 107px;
+  }
+  .image {
+    width: auto;
+    height: 624px;
+    border-radius: 8px;
+    margin-bottom: 32px;
+  }
+
+  .contentWrapper {
+    display: flex;
+    gap: 24px;
+    flex-direction: row;
+  }
+
+  .infoBox {
+    display: flex;
+    gap: 0;
+    flex-direction: column;
+  }
+
+  .info {
+    margin-bottom: 20px;
+    min-width: 302px;
+  }
 }
