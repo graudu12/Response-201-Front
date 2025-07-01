@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 // import { addToFavorites, removeFromFavorites } from "../../redux/recipes/operations.js";
 import styles from "./RecipeDetails.module.css";
 import Loading from "../Loading/Loading.jsx";
+import sprite from "../../svg/sprite.svg";
 
 const RecipeDetails = ({ recipe }) => {
   console.log("🧪 Получен recipe в компоненте:", recipe);
@@ -101,10 +102,19 @@ const RecipeDetails = ({ recipe }) => {
           >
             {isLoading ? (
               <Loading size="20px" />
-            ) : isFavorite ? (
-              "Remove from favorites"
             ) : (
-              "Save"
+              <>
+                <svg
+                  className={`${styles.icon} ${
+                    isFavorite ? styles.iconFilled : styles.iconOutline
+                  }`}
+                  width="24"
+                  height="24"
+                >
+                  <use href={`${sprite}#icon-saved`} />
+                </svg>
+                {isFavorite ? "Remove from favorites" : "Save"}
+              </>
             )}
           </button>
         </div>
