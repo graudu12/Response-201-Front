@@ -16,6 +16,7 @@ const inputRef = useRef(null);
 
 const [ingredients, setIngredients] = useState([]);
 const [categories, setCategories] = useState([]);
+const [addedIngredients, setAddedIngredients] = useState([]);
 const [preview, setPreview] = useState(null);
   
 useEffect(() => {
@@ -25,7 +26,7 @@ useEffect(() => {
 }, []);
   
 useEffect(() => {
-  axios.get('http://localhost:4000/api/ingredients')
+  axios.get('http://localhost:4000/api/categories')
     .then((res) => setIngredients(res.data))
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
@@ -63,6 +64,24 @@ const handleImageChange = (event) => {
       const imageUrl = URL.createObjectURL(file);
       setPreview(imageUrl);
     }
+  };
+  
+const handleAddIngridient = (values, setFieldValue) => {
+  if (!values.name_ingredients || !values.amount_ingredients)
+    return;
+
+  const newIngredient = {
+    name: values.name_ingredients,
+    amount: values.amount_ingredients,
+  };
+
+  setAddedIngredients(prev => [...prev, newIngredient]);
+
+  setFieldValue('amount_ingredients', '');
+};
+
+const handleRemoveLastIngredient = () => {
+  setAddedIngredients(prev => prev.slice(0, -1));
 };
     
 const initialValues = {
@@ -95,8 +114,9 @@ const initialValues = {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+          onSubmit={(values) => handleSubmit(values, addedIngredients)}
         >
+          {({ values, setFieldValue }) => (
           <Form>
             
             <div className={css.cont_img}>
@@ -181,12 +201,10 @@ const initialValues = {
                     as="select" 
                     >
                 {categories.map((cat) => (
-                    <option value={cat.name} key={cat}>{cat.name}</option>
+                    <option value={cat.name} key={cat._id}>{cat.name}</option>
                 ))}
                 </Field>
                 </label>             
-            
-    
             </div>
 
             <h2 className={css.title}>Ingredients</h2>
@@ -200,7 +218,7 @@ const initialValues = {
                     name="name_ingredients"
                 as="select">
                 {ingredients.map((ing) => (
-                  <option value={ing.name} key={ing}>{ing.name}</option>
+                  <option value={ing.name} key={ing._id}>{ing.name}</option>
                 ))}
               </Field>
             </label>
@@ -216,31 +234,34 @@ const initialValues = {
               />
             </label>
 
-            <button type="button" className={css.btn_remove}>
+            <button type="button" className={css.btn_remove} onClick={handleRemoveLastIngredient}>
               Remove last Ingredient
             </button>
 
-            <button type="button" className={css.btn_add}>
+            <button type="button" className={css.btn_add} onClick={() => handleAddIngridient(values, setFieldValue)}>
               Add new Ingredient
             </button>
             
-            <div className={css.cont_ing}> 
+            {addedIngredients.length > 0 && (
+              <div className={css.cont_ing}> 
               <div className={css.cont_select_ing}>
               <p className={css.ing}>Name:</p>
               <p className={css.ing}>Amount:</p>
               </div>
             <ul>
-              <li className={css.ing_list}>
-                <p className={css.ing_sel}>
-                  Eggs
-                </p>
-                <p className={css.ing_sel}>
-                  3
-                </p>
-                <svg className={css.icon_delete}><use href={`${sprite}#icon-delete`}/></svg>
-              </li>
+            {addedIngredients.map((ing, index) => (
+                <li className={css.ing_list} key={index}>
+                  <p className={css.ing_sel}>{ing.name}</p>
+                  <p className={css.ing_sel}>{ing.amount}</p>
+                  <svg className={css.icon_delete}>
+                    <use href={`${sprite}#icon-delete`} />
+                  </svg>
+                </li>
+             ))}
             </ul>
             </div>
+            )}
+            
            
 
             <h2 className={css.title}>Instructions</h2>
@@ -255,7 +276,8 @@ const initialValues = {
             <button type="submit" className={css.btn_submit}>
               Publish Recipe
             </button>
-          </Form>
+            </Form>
+          )}
         </Formik>
       </div>
     </div>
