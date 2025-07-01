@@ -1,261 +1,31 @@
-// import { useState, useEffect, useRef } from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import RecipeCard from "../RecipeCard/RecipeCard";
-// import styles from "./RecipesList.module.css";
-// import sprite from "../../svg/sprite.svg";
-// import {
-//   fetchRecipes,
-//   toggleFavoriteRecipeAsync,
-// } from '../../redux/recipes/operations';
-
-
-// const RecipesList = () => {
-//   const dispatch = useDispatch();
-//   const recipes = useSelector((state) => state.recipes.items);
-//   const categoryDropdownRef = useRef(null);
-//   const ingredientDropdownRef = useRef(null);
-
-// Фильтры и отображаемые элементы
-//   const [filteredRecipes, setFilteredRecipes] = useState([]);
-//   const [visibleCount, setVisibleCount] = useState(12);
-//   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
-//   const [showIngredientDropdown, setShowIngredientDropdown] = useState(false);
-//   const [selectedCategory, setSelectedCategory] = useState("");
-//   const [selectedIngredient, setSelectedIngredient] = useState("");
-
-//   const ingredientOptions = [
-//     "Tomato",
-//     "Cheese",
-//     "Chicken",
-//     "Beef",
-//     "Onion",
-//     "Garlic",
-//     "Carrot",
-//   ];
-
-//   useEffect(() => {
-//     dispatch(fetchRecipes());
-//   }, [dispatch]);
-
-//   useEffect(() => {
-//     const handleClickOutside = (event) => {
-//       if (
-//         categoryDropdownRef.current &&
-//         !categoryDropdownRef.current.contains(event.target)
-//       ) {
-//         setShowCategoryDropdown(false);
-//       }
-//       if (
-//         ingredientDropdownRef.current &&
-//         !ingredientDropdownRef.current.contains(event.target)
-//       ) {
-//         setShowIngredientDropdown(false);
-//       }
-//     };
-//     document.addEventListener("mousedown", handleClickOutside);
-//     return () => {
-//       document.removeEventListener("mousedown", handleClickOutside);
-//     };
-//   }, []);
-
-//   const handleResetFilters = () => {
-//     setSelectedCategory("");
-//     setSelectedIngredient("");
-//   };
-
-//   const handleCategorySelect = (category) => {
-//     setSelectedCategory(category);
-//     setShowCategoryDropdown(false);
-//   };
-
-//   const handleIngredientSelect = (ingredient) => {
-//     setSelectedIngredient(ingredient);
-//     setShowIngredientDropdown(false);
-//   };
-
-//   const loadMore = () => {
-//     setVisibleCount((prev) => prev + 8);
-//   };
-
-//   const handleToggleFavorite = (id, add) => {
-//     dispatch(toggleFavoriteRecipeAsync({ id, add }));
-//   };
-
-//   useEffect(() => {
-//     let filtered =  Array.isArray(recipes) ? recipes : [];
-
-//     if (selectedCategory) {
-//       filtered = filtered.filter((r) => r.category === selectedCategory);
-//     }
-//     if (selectedIngredient.trim() !== "") {
-//       filtered = filtered.filter((r) =>
-//         // Если у рецепта есть поле ingredients (массив), ищем в нем
-//         r.ingredients
-//           ? r.ingredients.some((ing) =>
-//               ing.toLowerCase().includes(selectedIngredient.toLowerCase())
-//             )
-//           : // иначе ищем по description как было
-//             r.description
-//               .toLowerCase()
-//               .includes(selectedIngredient.toLowerCase())
-//       );
-//     }
-
-//     setFilteredRecipes(filtered);
-//     setVisibleCount(12);
-//   }, [recipes, selectedCategory, selectedIngredient]);
-
-//   return (
-//     <div className={styles.recipeListContainer}>
-//       <div className={styles.FormRecipes}>
-//         <h2 className={styles.Recipes}>Recipes</h2>
-//       </div>
-//       <div className={styles.filters}>
-//         <p className={styles.recipes}>{filteredRecipes.length} recipes</p>
-//         <div className={styles.inputWithIcon}>
-//           <div className={styles.buttonReset}>
-//             <button
-//               onClick={handleResetFilters}
-//               className={styles.resetFilters}
-//             >
-//               Reset filters
-//             </button>
-//           </div>
-//           <div className={styles.FormButton} ref={categoryDropdownRef}>
-//             <div
-//               className={styles.ButtonInput}
-//               onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-//             >
-//               <input
-//                 type="text"
-//                 name="category"
-//                 placeholder="Category"
-//                 value={selectedCategory}
-//                 className={styles.filterInput}
-//                 readOnly
-//                 tabIndex={-1}
-//                 onFocus={(e) => e.target.blur()}
-//               />
-//               <span style={{ marginLeft: 5 }}>
-//                 <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32">
-//               <use href={`${sprite}#icon-select_arrow`} />
-//             </svg>
-//               </span>
-//             </div>
-
-//             {showCategoryDropdown && (
-//               <ul className={styles.dropdown}>
-//                 {["Dinner", "Lunch", "Breakfast", "Snack"].map((cat) => (
-//                   <li
-//                     key={cat}
-//                     onClick={() => handleCategorySelect(cat)}
-//                     className={styles.dropdownItem}
-//                   >
-//                     {cat}
-//                   </li>
-//                 ))}
-//               </ul>
-//             )}
-//           </div>
-//           <div className={styles.FormButton} ref={ingredientDropdownRef}>
-//             <div
-//               className={styles.ButtonInput}
-//               onClick={() => setShowIngredientDropdown(!showIngredientDropdown)}
-//             >
-//               <input
-//                 type="text"
-//                 name="Ingredient"
-//                 placeholder="Ingredient"
-//                 className={styles.filterInput}
-//                 value={selectedIngredient}
-//                 readOnly
-//               />
-//               <span style={{ marginLeft: 5 }}>
-//                 <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32">
-//               <use href={`${sprite}#icon-select_arrow`} />
-//             </svg>
-//               </span>
-//             </div>
-//             {showIngredientDropdown && (
-//               <ul className={styles.dropdown}>
-//                 {ingredientOptions.map((ing) => (
-//                   <li
-//                     key={ing}
-//                     onClick={() => handleIngredientSelect(ing)}
-//                     className={styles.dropdownItem}
-//                   >
-//                     {ing}
-//                   </li>
-//                 ))}
-//               </ul>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//       {filteredRecipes.length === 0 && <p>No recipes found.</p>}
-
-//       <div className={styles.recipeslist}>
-//         {filteredRecipes.slice(0, visibleCount).map((recipe) => (
-//           <RecipeCard
-//             key={recipe._id}
-//             recipe={recipe}
-//             onToggleFavorite={handleToggleFavorite}
-//           />
-//         ))}
-//       </div>
-//       <div className={styles.BtnLoadWrapper}>
-//         <div className={styles.BtnLoad}>
-//           {visibleCount < filteredRecipes.length && (
-//             <button onClick={loadMore} className={styles.loadMore}>
-//               Load More
-//             </button>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default RecipesList;
-
-
-//src/components/RecipesList/RecipesList.jsx
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify"; 
 import RecipeCard from "../RecipeCard/RecipeCard";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import styles from "./RecipesList.module.css";
 import sprite from "../../svg/sprite.svg";
-
 import {
   fetchRecipes,
   toggleFavoriteRecipeAsync,
 } from "../../redux/recipes/operations";
-
-import {
-  selectLoading,
-  selectError,
-  selectNotFound,
-  selectRecipes,
-} from "../../redux/recipes/selectors";
+import axios from "axios";
 
 const RecipesList = () => {
   const dispatch = useDispatch();
-
-  const recipes = useSelector(selectRecipes);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
-  const notFound = useSelector(selectNotFound);
+  const recipes = useSelector((state) => state.recipes.items);
+  const totalItems = useSelector((state) => state.recipes.totalItems);
 
   const categoryDropdownRef = useRef(null);
   const ingredientDropdownRef = useRef(null);
 
-  const [filteredRecipes, setFilteredRecipes] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(12);
+  const [page, setPage] = useState(1);
+  const recipesPerPage = 12;
+
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [showIngredientDropdown, setShowIngredientDropdown] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedIngredient, setSelectedIngredient] = useState("");
+  const [categories, setCategories] = useState([]);
 
   const ingredientOptions = [
     "Tomato",
@@ -266,16 +36,25 @@ const RecipesList = () => {
     "Garlic",
     "Carrot",
   ];
+  const recipesListRef = useRef(null);
 
   useEffect(() => {
-    dispatch(fetchRecipes());
-  }, [dispatch]);
+    axios
+      .get("http://localhost:4000/api/categories")
+      .then((res) => setCategories(res.data))
+      .catch((err) => console.error("Error loading categories:", err));
+  }, []);
 
   useEffect(() => {
-    if (notFound) {
-      toast.info("Рецепти не знайдені за вашим запитом.");
-    }
-  }, [notFound]);
+    dispatch(
+      fetchRecipes({
+        page,
+        perPage: recipesPerPage,
+        category: selectedCategory,
+        ingredient: selectedIngredient,
+      })
+    );
+  }, [dispatch, page, selectedCategory, selectedIngredient]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -298,6 +77,10 @@ const RecipesList = () => {
     };
   }, []);
 
+  useEffect(() => {
+    setPage(1); // повертаємо на першу сторінку при зміні фільтрів
+  }, [selectedCategory, selectedIngredient]);
+
   const handleResetFilters = () => {
     setSelectedCategory("");
     setSelectedIngredient("");
@@ -313,59 +96,36 @@ const RecipesList = () => {
     setShowIngredientDropdown(false);
   };
 
-  const loadMore = () => {
-    setVisibleCount((prev) => prev + 8);
-  };
-
   const handleToggleFavorite = (id, add) => {
     dispatch(toggleFavoriteRecipeAsync({ id, add }));
   };
 
+  const loadMore = () => {
+    setPage((prev) => prev + 1);
+  };
   useEffect(() => {
-    let filtered = Array.isArray(recipes) ? recipes : [];
-
-    if (selectedCategory) {
-      filtered = filtered.filter((r) => r.category === selectedCategory);
+    if (page > 1 && recipesListRef.current) {
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          const list = recipesListRef.current;
+          // Знаходимо останній елемент в списку
+          const lastRecipe = list.children[list.children.length - 1];
+          if (lastRecipe) {
+            lastRecipe.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      }, 200);
     }
-    if (selectedIngredient.trim() !== "") {
-      filtered = filtered.filter((r) =>
-        r.ingredients
-          ? r.ingredients.some((ing) =>
-              ing.toLowerCase().includes(selectedIngredient.toLowerCase())
-            )
-          : r.description
-              .toLowerCase()
-              .includes(selectedIngredient.toLowerCase())
-      );
-    }
-
-    setFilteredRecipes(filtered);
-    setVisibleCount(12);
-  }, [recipes, selectedCategory, selectedIngredient]);
-
-  if (loading) {
-    return <div className={styles.loader}>Завантаження...</div>;
-  }
-
-  if (error) {
-    return <div className={styles.error}>Помилка: {error}</div>;
-  }
-
-  if (notFound) {
-    return (
-      <div className={styles.notFound}>
-        Рецепти не знайдені за вашим запитом.
-      </div>
-    );
-  }
-
+  }, [page]);
+  const recipesToShow = recipes.slice(0, page * recipesPerPage);
+ 
   return (
     <div className={styles.recipeListContainer}>
       <div className={styles.FormRecipes}>
         <h2 className={styles.Recipes}>Recipes</h2>
       </div>
       <div className={styles.filters}>
-        <p className={styles.recipes}>{filteredRecipes.length} recipes</p>
+        <p className={styles.recipes}>{totalItems} recipes</p>
         <div className={styles.inputWithIcon}>
           <div className={styles.buttonReset}>
             <button
@@ -404,24 +164,26 @@ const RecipesList = () => {
 
             {showCategoryDropdown && (
               <ul className={styles.dropdown}>
-                {["Dinner", "Lunch", "Breakfast", "Snack"].map((cat) => (
-                  <li
-                    key={cat}
-                    onClick={() => handleCategorySelect(cat)}
-                    className={styles.dropdownItem}
-                  >
-                    {cat}
-                  </li>
-                ))}
+                {categories.length === 0 ? (
+                  <li className={styles.dropdownItem}>No categories</li>
+                ) : (
+                  categories.map((cat) => (
+                    <li
+                      key={cat._id}
+                      onClick={() => handleCategorySelect(cat.name)}
+                      className={styles.dropdownItem}
+                    >
+                      {cat.name}
+                    </li>
+                  ))
+                )}
               </ul>
             )}
           </div>
           <div className={styles.FormButton} ref={ingredientDropdownRef}>
             <div
               className={styles.ButtonInput}
-              onClick={() =>
-                setShowIngredientDropdown(!showIngredientDropdown)
-              }
+              onClick={() => setShowIngredientDropdown(!showIngredientDropdown)}
             >
               <input
                 type="text"
@@ -458,13 +220,10 @@ const RecipesList = () => {
           </div>
         </div>
       </div>
+      {recipes.length === 0 && <p>No recipes found.</p>}
 
-      {filteredRecipes.length === 0 && (
-        <p className={styles.noResults}>Рецепти не знайдені.</p>
-      )}
-
-      <div className={styles.recipeslist}>
-        {filteredRecipes.slice(0, visibleCount).map((recipe) => (
+      <div className={styles.recipeslist} ref={recipesListRef}>
+        {recipesToShow.map((recipe) => (
           <RecipeCard
             key={recipe._id}
             recipe={recipe}
@@ -474,10 +233,8 @@ const RecipesList = () => {
       </div>
       <div className={styles.BtnLoadWrapper}>
         <div className={styles.BtnLoad}>
-          {visibleCount < filteredRecipes.length && (
-            <button onClick={loadMore} className={styles.loadMore}>
-              Load More
-            </button>
+          {page * recipesPerPage < totalItems && (
+            <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
           )}
         </div>
       </div>

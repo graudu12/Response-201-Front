@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 // import { addToFavorites, removeFromFavorites } from "../../redux/recipes/operations.js";
 import styles from "./RecipeDetails.module.css";
 import Loading from "../Loading/Loading.jsx";
@@ -9,10 +8,9 @@ import Loading from "../Loading/Loading.jsx";
 const RecipeDetails = ({ recipe }) => {
   console.log("🧪 Получен recipe в компоненте:", recipe);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -29,20 +27,6 @@ const RecipeDetails = ({ recipe }) => {
     }
 
     setIsLoading(true);
-    try {
-      if (isFavorite) {
-        await dispatch(removeFromFavorites(recipe._id)).unwrap();
-        toast.success("Рецепт удалён из избранного");
-      } else {
-        await dispatch(addToFavorites(recipe._id)).unwrap();
-        toast.success("Рецепт добавлен в избранное!");
-      }
-      setIsFavorite((prev) => !prev);
-    } catch (error) {
-      toast.error(error.message || "Ошибка при сохранении");
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   if (!recipe) {
@@ -103,8 +87,8 @@ const RecipeDetails = ({ recipe }) => {
             </p>
 
             <p>
-              <strong>Caloric content:</strong> ~{recipe.calories || ""} kcal
-              per serving
+              <strong>Caloric content:</strong> Approximately ~
+              {recipe.calories || ""} kcal per serving
             </p>
           </section>
 

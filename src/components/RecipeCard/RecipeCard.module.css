@@ -1,128 +1,130 @@
-@media only screen and (min-width: 1280px) { 
+
   .recipeCard {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 16px;
-  border-radius: 16px;
-  user-select: none;
-  padding: 12px;
-  box-sizing: border-box;
-  width: 288px;
-  height: 431px;
-  background: #faf3e0;
-}
-.imageCard {
-  border-radius: 8px;
-  width: 264px;
-  height: 178px;
-}
-.recipeForm {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  position: relative;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-}
-.recipeTitle {
-  font-weight: 700;
-  font-size: 24px;
-  color: #000;
-}
-.recipeTitleTime {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 4px;
-  border-radius: 8px;
-  padding: 2px 8px 2px 4px;
-  margin-right: 12px;
-}
-.recipeDescCal {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 8px;
-}
-.recipeDescription {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.55;
-  color: #000;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.formButton {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: row;
-  gap: 8px;
-  margin-top: auto;
-}
-.learnMoreButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 8px;
-  border: 1px solid #000;
-  border-radius: 8px;
-  padding: 8px;
-  font-weight: 600;
-  font-size: 16px;
-  color: #000;
-  width: 216px;
-height: 40px;
-}
-.favorite {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 8px;
-  border: 1px solid #000;
-  border-radius: 8px;
-  padding: 8px;
-  width: 40px;
-height: 40px;
-}
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 16px;
+    user-select: none;
+    padding: 12px;
+    box-sizing: border-box;
+    width: 288px;
+    background: #5e7057;
+  }
+  .imageCard {
+    border-radius: 8px;
+    width: 264px;
+    height: 178px;
+  }
+  .recipeForm {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    gap: 8px;
+    width: 264px;
+    height: 58px;
+  }
+  .recipeTitle {
+    font-weight: 700;
+    font-size: 24px;
+    color: #000;
+    margin-right: auto;
+    margin-bottom: auto;
+  }
+  .recipeTitleTime {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 4px;
+    border-radius: 8px;
+    padding: 2px 8px 2px 4px;
+    background: #fff;
+    margin-left: auto;
+    margin-bottom: auto;
+  }
+  .yourSpan {
+    font-weight: 600;
+font-size: 12px;
+color: #000;
+  }
+  .recipeDescCal {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .recipeDescriptioncss {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #000;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .formButton {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 8px;
+      width: 100%; 
+  }
+  .learnMoreButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+      flex-grow: 1; 
+  }
+  .favorite {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 8px;
+  }
 
-.favorite:hover {
-  background: #9b6c43;
-  color: #fff;
-}
+  .favorite:hover {
+    background: #9b6c43;
+    color: #fff;
+  }
 
-.favoriteActive {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 8px;
-  border-radius: 8px;
-  padding: 8px;
-   color: red;
-}
+  .favoriteActive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+    border-radius: 8px;
+    padding: 8px;
+    color: red;
+  }
 
-.favoriteActive:hover {
-  background: #c80000;
-  color: #fff;
-}
-.icon {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
-}
-}
+  .favoriteActive:hover {
+    background: #c80000;
+    color: #fff;
+  }
+  .icon {
+    display: inline-block;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+  }

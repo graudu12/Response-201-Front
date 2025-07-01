@@ -1,20 +1,19 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: 600px; 
+  max-width: 300px;
+
+  max-width: 600px;
   margin: 0 auto 30px;
+  padding: 0 10px;
 }
 
-.iconPosition {
-  position: relative;
-}
-
-.inputIcon {
-  position: absolute;
-  left: 5px;
-  top: 100%;
-  transform: translateY(-100%);
-  fill: #2e2f42;
+.searchBox {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
 }
 
 .searchInput {
@@ -26,7 +25,6 @@
   border-radius: 8px;
   outline: none;
   color: #333;
-  width: auto;
   margin-right: 12px;
 }
 
@@ -46,12 +44,11 @@
 }
 
 .searchButton:hover {
-  background-color: #5c3c27;
+  background-color: #6D554B;
 }
 
-.searchBox {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  width: 100%;
-}
+
+
+
+
+

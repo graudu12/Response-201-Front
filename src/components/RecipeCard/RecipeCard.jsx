@@ -24,17 +24,22 @@ const RecipeCard = ({ recipe, onToggleFavorite }) => {
         <h3 className={styles.recipeTitle}>{title}</h3>
         {time && (
           <div className={styles.recipeTitleTime}>
-            <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32">
+            <svg
+              className={styles.icon}
+              width="24"
+              height="24"
+              viewBox="0 0 32 32"
+            >
               <use href={`${sprite}#icon-cooktime`} />
             </svg>
-            <span>{time}</span>
+            <span className={styles.yourSpan}>{time}</span>
           </div>
         )}
       </div>
       <div className={styles.recipeDescCal}>
-        <p className={styles.recipeDescription}>{description}</p>
+        <p className={styles.recipeDescriptioncss}>{description}</p>
 
-        <p className={styles.recipeDescription}> - {calories} cals</p>
+        <p className={styles.recipeDescriptioncss}> - {calories  ?? "?"} cals</p>
       </div>
       <div className={styles.formButton}>
         <button
@@ -53,13 +58,17 @@ const RecipeCard = ({ recipe, onToggleFavorite }) => {
             className={styles.icon}
             width="20"
             height="20"
-            viewBox="0 0 32 32"
+            viewBox="0 0 24 24"
           >
-            <use href={`${sprite}#${isFavorite ? "icon-delete" : "icon-saved"}`} />
+            <use
+              href={`${sprite}#${isFavorite ? "icon-delete" : "icon-saved"}`}
+            />
           </svg>
         </button>
       </div>
     </div>
+    
+
   );
 };
 
