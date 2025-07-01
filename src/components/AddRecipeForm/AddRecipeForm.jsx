@@ -3,53 +3,32 @@ import sprite from "../../svg/sprite.svg";
 import axios from "axios";
 import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { Formik, Form, Field} from "formik";
 import { useNavigate } from "react-router-dom";
-import { fetchRecipes,} from "../../redux/recipes/operations";
+// import { fetchRecipes,} from "../../redux/recipes/operations";
 
 
 export default function AddRecipeForm() {
-// const dispatch = useDispatch();
 const navigate = useNavigate(); 
 
 const inputRef = useRef(null);
 
-// const categoryDropdownRef = useRef(null);
-
-// const [ingredientsList, setIngredientsList] = useState([]); 
-
+const [ingredients, setIngredients] = useState([]);
+const [categories, setCategories] = useState([]);
 const [preview, setPreview] = useState(null);
-
-// useEffect(() => {
-//     dispatch(fetchRecipes());
-//   }, [dispatch]);
-
-// useEffect(() => {
-//   //Для отримання категорій та інгрідієнтів з бази
-//     const handleClickCurrent = (event) => {
-//         if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target)
-//         ) {
-//             setCategories(false);
-//         }
-//         // далі доаисать по інгрід
-//     };
-//     document.addEventListener("mousedown", handleClickCurrent);
-//     return () => {
-//     document.removeEventListener("mousedown", handleClickCurrent);
-//     };
-// }, []);
-    
-// const handleChange = (e) => {
-//     const value = e.target.value;
-//     setFieldValue("category", value);
-//     // handleCategorySelect(value);
-//   };
-    
-// const handleCategorySelect = (category) => {
-//     setSelectedCategory(category);
-//     setCategories(false);
-//   };
+  
+useEffect(() => {
+  axios.get('http://localhost:4000/api/categories')
+    .then((res) => setCategories(res.data))
+    .catch((err) => console.error("Error loading categories:", err));
+}, []);
+  
+useEffect(() => {
+  axios.get('http://localhost:4000/api/ingredients')
+    .then((res) => setIngredients(res.data))
+    .catch((err) => console.error("Error loading ingredients:", err));
+}, []);
 
 const handleSubmit = async (values, actions) => {
   const formData = new FormData();
@@ -130,7 +109,7 @@ const initialValues = {
                     }}
                 >
                 {!preview && (
-                    <svg className={css.icon_svg}>
+                    <svg className={css.icon_photo}>
                                 <use href={`${sprite}#icon-default_photo`} />
                     </svg>
                 )}
@@ -201,8 +180,8 @@ const initialValues = {
                     name="category" 
                     as="select" 
                     >
-                {["Soup", "Breakfest", "Lunch"].map((cat) => (
-                    <option value={cat} key={cat}>{cat}</option>
+                {categories.map((cat) => (
+                    <option value={cat.name} key={cat}>{cat.name}</option>
                 ))}
                 </Field>
                 </label>             
@@ -215,8 +194,14 @@ const initialValues = {
            
             <label className={css.label} htmlFor="name_ingredients">
               Name
-              <Field className={css.field} id="name_ingredients" name="name_ingredients" as="select">
-                <option value="">Пізніше</option>
+              <Field
+                    className={css.field}
+                    id="name_ingredients"
+                    name="name_ingredients"
+                as="select">
+                {ingredients.map((ing) => (
+                  <option value={ing.name} key={ing}>{ing.name}</option>
+                ))}
               </Field>
             </label>
 
@@ -238,6 +223,25 @@ const initialValues = {
             <button type="button" className={css.btn_add}>
               Add new Ingredient
             </button>
+            
+            <div className={css.cont_ing}> 
+              <div className={css.cont_select_ing}>
+              <p className={css.ing}>Name:</p>
+              <p className={css.ing}>Amount:</p>
+              </div>
+            <ul>
+              <li className={css.ing_list}>
+                <p className={css.ing_sel}>
+                  Eggs
+                </p>
+                <p className={css.ing_sel}>
+                  3
+                </p>
+                <svg className={css.icon_delete}><use href={`${sprite}#icon-delete`}/></svg>
+              </li>
+            </ul>
+            </div>
+           
 
             <h2 className={css.title}>Instructions</h2>
 
@@ -245,7 +249,7 @@ const initialValues = {
               className={css.field_textarea}
               as="textarea"
               name="instructions"
-              placeholder="Write the steps..."
+              placeholder="Enter a text"
             />
 
             <button type="submit" className={css.btn_submit}>

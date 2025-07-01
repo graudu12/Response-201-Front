@@ -29,7 +29,7 @@ const NotFoundPage = lazy(() =>
   import("../../pages/NotFoundPage/NotFoundPage")
 );
 
-const AddRecipePage = lazy(() => import("../../pages/AddRecipePage/AddRecipePage"))
+const AddRecipePage = lazy(() => import("../../pages/AddRecipePage/AddRecipePage"));
 
 
 export default function App() {

@@ -26,9 +26,7 @@
     margin-bottom: 24px;
 }
 
-.icon_svg {
-    display: inline-block;
-    position: absolute;
+.icon_photo {
     width: 82px;
     height: 82px;
     fill: none;
@@ -96,7 +94,52 @@
     font-size: 16px;
     text-align: center;
     color: #fff;
-    margin-bottom: 16px;
+    margin-bottom: 32px;
+}
+
+.cont_ing {
+    margin-bottom: 32px;
+}
+
+.cont_select_ing {
+    display: flex;
+}
+
+.ing {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    flex: 1;
+    padding: 16px 0;
+}
+
+.ing_list {
+    position: relative;
+    display: flex;
+    border-bottom: 1px solid #c5c5c5;;
+}
+
+.ing_list:first-child {
+    border-top: 1px solid #c5c5c5;;
+}
+
+.ing_sel {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #000;
+    flex: 1;
+    padding: 16px 0;
+}
+
+.icon_delete {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: 0;
+    top: 16px;
 }
 
 .btn_submit {
