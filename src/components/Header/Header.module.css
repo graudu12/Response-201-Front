@@ -1,6 +1,6 @@
 .header {
   background-color: #3d2218;
-  padding: 16px 20px;
+  padding: 14px 16px;
   position: relative;
   z-index: 100;
 }
@@ -170,12 +170,11 @@
 
 /* === Tablet (768px+) === */
 @media (min-width: 768px) {
+  .header {
+    padding: 14px 32px;
+  }
   .logo {
     font-size: 22px;
-  }
-
-  .container {
-    padding: 0 32px;
   }
 
   .mobileButton,
@@ -194,10 +193,13 @@
   }
 }
 
-/* === Desktop (1280px+) === */
-@media (min-width: 1280px) {
+/* === Desktop (1440px+) === */
+@media (min-width: 1440px) {
+  .header {
+    padding: 14px 108px;
+  }
   .container {
-    max-width: 1280px;
+    max-width: 1440px;
     margin: 0 auto;
   }
 
