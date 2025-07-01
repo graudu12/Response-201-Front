@@ -3,10 +3,8 @@ import sprite from "../../svg/sprite.svg";
 import axios from "axios";
 import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
-// import { useDispatch } from "react-redux";
 import { Formik, Form, Field} from "formik";
 import { useNavigate } from "react-router-dom";
-// import { fetchRecipes,} from "../../redux/recipes/operations";
 
 
 export default function AddRecipeForm() {
@@ -26,8 +24,8 @@ useEffect(() => {
 }, []);
   
 useEffect(() => {
-  axios.get('http://localhost:4000/api/categories')
-    .then((res) => setIngredients(res.data))
+  axios.get('http://localhost:4000/api/ingredients')
+    .then((res) => setIngredients(res.data.ingredients))
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
 
@@ -83,6 +81,10 @@ const handleAddIngridient = (values, setFieldValue) => {
 const handleRemoveLastIngredient = () => {
   setAddedIngredients(prev => prev.slice(0, -1));
 };
+
+const handleRemoveIng = (index) => {
+    setAddedIngredients(prev => prev.filter((_, i) => i !== index));
+}
     
 const initialValues = {
     recipe_title: "",
@@ -218,7 +220,7 @@ const initialValues = {
                     name="name_ingredients"
                 as="select">
                 {ingredients.map((ing) => (
-                  <option value={ing.name} key={ing._id}>{ing.name}</option>
+                  <option value={ing} key={ing}>{ing}</option>
                 ))}
               </Field>
             </label>
@@ -229,14 +231,16 @@ const initialValues = {
                 className={css.field}
                 id="amount_ingredients"
                 name="amount_ingredients"
-                type="number"
                 placeholder="100g"
               />
             </label>
 
+            {addedIngredients.length > 0 && (
             <button type="button" className={css.btn_remove} onClick={handleRemoveLastIngredient}>
-              Remove last Ingredient
-            </button>
+            Remove last Ingredient
+            </button> 
+            )}
+            
 
             <button type="button" className={css.btn_add} onClick={() => handleAddIngridient(values, setFieldValue)}>
               Add new Ingredient
@@ -253,9 +257,14 @@ const initialValues = {
                 <li className={css.ing_list} key={index}>
                   <p className={css.ing_sel}>{ing.name}</p>
                   <p className={css.ing_sel}>{ing.amount}</p>
-                  <svg className={css.icon_delete}>
-                    <use href={`${sprite}#icon-delete`} />
-                  </svg>
+                  <button
+                  type="button"
+                  className={css.icon_btn}
+                  onClick={() => handleRemoveIng(index)}>
+                    <svg className={css.icon_delete}>
+                      <use href={`${sprite}#icon-delete`} />
+                    </svg>
+                  </button>
                 </li>
              ))}
             </ul>

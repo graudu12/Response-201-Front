@@ -65,6 +65,8 @@
     font-size: 18px;
     color: #595d62;
     height: 144px;
+    resize: none;
+    overflow-y: auto;
 }
 
 .cal_cat {
@@ -118,6 +120,7 @@
     position: relative;
     display: flex;
     border-bottom: 1px solid #c5c5c5;;
+    padding-right: 40px;
 }
 
 .ing_list:first-child {
@@ -134,12 +137,25 @@
     padding: 16px 0;
 }
 
-.icon_delete {
+.icon_btn {
     position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     width: 24px;
     height: 24px;
-    right: 0;
-    top: 16px;
+    z-index: 1;
+}
+
+.icon_delete {
+    display: block;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
 }
 
 .btn_submit {
