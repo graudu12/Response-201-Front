@@ -1,5 +1,4 @@
 import css from "../App/App.module.css";
-
 import { lazy, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +32,7 @@ const NotFoundPage = lazy(() =>
 export default function App() {
   const dispatch = useDispatch();
   const { isRefreshing } = useSelector(selectRefreshing);
-
+  console.log("App render, isRefreshing:", isRefreshing);
   const [showError, setShowError] = useState(false); // стан для модалки
 
   useEffect(() => {
@@ -41,7 +40,7 @@ export default function App() {
   }, [dispatch]);
 
   return isRefreshing ? (
-    <Loading />
+  <Loading />
   ) : (
     <div className={css.app}>
       <Layout>

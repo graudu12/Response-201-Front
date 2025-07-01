@@ -8,6 +8,7 @@ import {
   fetchRecipes,
   toggleFavoriteRecipeAsync,
 } from "../../redux/recipes/operations";
+import axios from "axios";
 
 const RecipesList = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,6 @@ const RecipesList = () => {
   const categoryDropdownRef = useRef(null);
   const ingredientDropdownRef = useRef(null);
 
-  // Фильтры и отображаемые элементы
-  const [filteredRecipes, setFilteredRecipes] = useState([]);
-
   const [page, setPage] = useState(1);
   const recipesPerPage = 12;
 
@@ -27,6 +25,7 @@ const RecipesList = () => {
   const [showIngredientDropdown, setShowIngredientDropdown] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedIngredient, setSelectedIngredient] = useState("");
+  const [categories, setCategories] = useState([]);
 
   const ingredientOptions = [
     "Tomato",
@@ -40,8 +39,23 @@ const RecipesList = () => {
   const recipesListRef = useRef(null);
 
   useEffect(() => {
-    dispatch(fetchRecipes({ page, perPage: recipesPerPage }));
-  }, [dispatch, page]);
+    axios
+      .get("http://localhost:4000/api/categories")
+      .then((res) => setCategories(res.data))
+      .catch((err) => console.error("Error loading categories:", err));
+  }, []);
+
+  useEffect(() => {
+    dispatch(
+      fetchRecipes({
+        page,
+        perPage: recipesPerPage,
+        category: selectedCategory,
+        ingredient: selectedIngredient,
+      })
+    );
+  }, [dispatch, page, selectedCategory, selectedIngredient]);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -62,6 +76,7 @@ const RecipesList = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   useEffect(() => {
     setPage(1); // повертаємо на першу сторінку при зміні фільтрів
   }, [selectedCategory, selectedIngredient]);
@@ -84,7 +99,7 @@ const RecipesList = () => {
   const handleToggleFavorite = (id, add) => {
     dispatch(toggleFavoriteRecipeAsync({ id, add }));
   };
-const recipesToShow = filteredRecipes.slice(0, page * recipesPerPage);
+
   const loadMore = () => {
     setPage((prev) => prev + 1);
   };
@@ -102,29 +117,8 @@ const recipesToShow = filteredRecipes.slice(0, page * recipesPerPage);
       }, 200);
     }
   }, [page]);
-  useEffect(() => {
-    let filtered = Array.isArray(recipes) ? recipes : [];
-
-    if (selectedCategory) {
-      filtered = filtered.filter((r) => r.category === selectedCategory);
-    }
-    if (selectedIngredient.trim() !== "") {
-      filtered = filtered.filter((r) =>
-        // Если у рецепта есть поле ingredients (массив), ищем в нем
-        r.ingredients
-          ? r.ingredients.some((ing) =>
-              ing.toLowerCase().includes(selectedIngredient.toLowerCase())
-            )
-          : // иначе ищем по description как было
-            r.description
-              .toLowerCase()
-              .includes(selectedIngredient.toLowerCase())
-      );
-    }
-
-    setFilteredRecipes(filtered);
-  }, [recipes, selectedCategory, selectedIngredient]);
-
+  const recipesToShow = recipes.slice(0, page * recipesPerPage);
+ 
   return (
     <div className={styles.recipeListContainer}>
       <div className={styles.FormRecipes}>
@@ -170,15 +164,19 @@ const recipesToShow = filteredRecipes.slice(0, page * recipesPerPage);
 
             {showCategoryDropdown && (
               <ul className={styles.dropdown}>
-                {["Dinner", "Lunch", "Breakfast", "Snack"].map((cat) => (
-                  <li
-                    key={cat}
-                    onClick={() => handleCategorySelect(cat)}
-                    className={styles.dropdownItem}
-                  >
-                    {cat}
-                  </li>
-                ))}
+                {categories.length === 0 ? (
+                  <li className={styles.dropdownItem}>No categories</li>
+                ) : (
+                  categories.map((cat) => (
+                    <li
+                      key={cat._id}
+                      onClick={() => handleCategorySelect(cat.name)}
+                      className={styles.dropdownItem}
+                    >
+                      {cat.name}
+                    </li>
+                  ))
+                )}
               </ul>
             )}
           </div>
@@ -222,7 +220,7 @@ const recipesToShow = filteredRecipes.slice(0, page * recipesPerPage);
           </div>
         </div>
       </div>
-      {filteredRecipes.length === 0 && <p>No recipes found.</p>}
+      {recipes.length === 0 && <p>No recipes found.</p>}
 
       <div className={styles.recipeslist} ref={recipesListRef}>
         {recipesToShow.map((recipe) => (
@@ -236,9 +234,8 @@ const recipesToShow = filteredRecipes.slice(0, page * recipesPerPage);
       <div className={styles.BtnLoadWrapper}>
         <div className={styles.BtnLoad}>
           {page * recipesPerPage < totalItems && (
-  <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
-)}
-
+            <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
+          )}
         </div>
       </div>
     </div>
