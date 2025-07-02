@@ -26,13 +26,13 @@ const RecipesList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/categories")
+      .get("https://response-201-back.onrender.com/api/categories")
       .then((res) => setCategories(res.data))
       .catch((err) => console.error("Error loading categories:", err));
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/ingredients")
+      .get("https://response-201-back.onrender.com/api/ingredients")
       .then((res) => {
         if (Array.isArray(res.data.ingredients)) {
           setIngredientOptions(res.data.ingredients);
@@ -91,7 +91,7 @@ const RecipesList = () => {
   const recipesToShow = recipes.slice(0, page * recipesPerPage);
 
   return (
-    
+
     <div className={styles.recipeListContainer}>
       <div className={styles.FormRecipes}>
         <h2 className={styles.Recipes}>Recipes</h2>

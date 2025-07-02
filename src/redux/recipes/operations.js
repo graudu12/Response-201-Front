@@ -19,7 +19,7 @@ export const fetchRecipes = createAsyncThunk(
       if (category) params.category = category;
       if (ingredient) params.ingredient = ingredient;
 
-      const response = await axios.get("http://localhost:4000/api/recipes", {
+      const response = await axios.get("https://response-201-back.onrender.com/api/recipes", {
         params,
       });
 
@@ -43,7 +43,7 @@ export const fetchRecipesByQuery = createAsyncThunk(
   async (query, thunkAPI) => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/recipes?name=${encodeURIComponent(query)}`
+        `https://response-201-back.onrender.com/api/recipes?name=${encodeURIComponent(query)}`
       );
 
       return {
@@ -68,7 +68,7 @@ export const toggleFavoriteRecipeAsync = createAsyncThunk(
       const favoriteIds = state.auth.user.favoriteRecipes;
       const isCurrentlyFavorite = favoriteIds.includes(recipeId);
 
-      const url = `http://localhost:4000/api/recipes/${recipeId}/favorites`;
+      const url = `https://response-201-back.onrender.com/api/recipes/${recipeId}/favorites`;
       if (isCurrentlyFavorite) {
         await axios.delete(url);
       } else {
@@ -85,7 +85,7 @@ export const fetchRecipesByIngredients = createAsyncThunk(
   "recipes/fetchRecipesByIngredients",
   async (ingredientQuery, thunkAPI) => {
     try {
-      const response = await axios.get("http://localhost:4000/api/recipes", {
+      const response = await axios.get("https://response-201-back.onrender.com/api/recipes", {
         params: { names: ingredientQuery },
       });
       return response.data.data;

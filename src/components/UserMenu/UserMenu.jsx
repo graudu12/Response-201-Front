@@ -12,6 +12,11 @@ const UserMenu = () => {
     dispatch(logOut());
   };
 
+  // 🛡 Перевірка на null
+  if (!user || !user.name) {
+    return null; // або <></> або <span>Loading...</span>
+  }
+
   return (
     <div className={css.userMenu}>
       <span className={css.avatar}>{user.name.charAt(0).toUpperCase()}</span>
