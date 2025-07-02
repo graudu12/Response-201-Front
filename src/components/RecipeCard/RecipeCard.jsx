@@ -18,6 +18,13 @@ const RecipeCard = ({ recipe }) => {
     cookingTime = recipe.time,
   } = recipe;
 
+   const handleFavoriteClick = () => {
+    if (!isLoggedIn) {
+      navigate("/register");
+      return;
+    }
+    // Если залогинен, FavoriteButton должен обработать событие сам
+  };
   return (
     <div className={styles.recipeCard}>
       <img src={dishPhoto} alt={nameRecipe} className={styles.imageCard} />
@@ -48,7 +55,7 @@ const RecipeCard = ({ recipe }) => {
         >
           Learn More
         </button>
-        {isLoggedIn && <FavoriteButton recipeId={_id} />}
+        <FavoriteButton recipeId={_id} onClick={handleFavoriteClick} />
       </div>
     </div>
   );
