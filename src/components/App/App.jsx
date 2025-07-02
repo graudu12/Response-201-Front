@@ -40,7 +40,7 @@ export default function App() {
   }, [dispatch]);
 
   return isRefreshing ? (
-  <Loading />
+    <Loading />
   ) : (
     <div className={css.app}>
       <Layout>
@@ -77,7 +77,6 @@ export default function App() {
       </Layout>
 
       <NotificationToast />
-
       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );

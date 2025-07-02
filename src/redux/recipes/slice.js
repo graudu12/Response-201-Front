@@ -65,10 +65,10 @@ const recipesSlice = createSlice({
         state.notFound = false;
       })
       .addCase(fetchRecipesByQuery.fulfilled, (state, action) => {
-         state.items = action.payload.items;
-  state.totalItems = action.payload.totalItems;
-  state.loading = false;
-  state.notFound = action.payload.items.length === 0;
+        state.items = action.payload.items;
+        state.totalItems = action.payload.totalItems;
+        state.loading = false;
+        state.notFound = action.payload.items.length === 0;
       })
       .addCase(fetchRecipesByQuery.rejected, (state, action) => {
         state.loading = false;
@@ -76,8 +76,8 @@ const recipesSlice = createSlice({
       })
 
       .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
-        const { id, add } = action.payload;
-        const recipe = state.items.find((r) => r._id === id);
+        const { recipeId, add } = action.payload;
+        const recipe = state.items.find((r) => r._id === recipeId);
         if (recipe) {
           recipe.isFavorite = add;
         }
