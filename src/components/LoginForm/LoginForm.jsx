@@ -7,6 +7,7 @@ import { useId } from "react";
 import { useDispatch } from "react-redux";
 import { logIn } from "../../redux/auth/operations";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const UserSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,21 +23,7 @@ export default function LoginForm() {
   const emailFieldId = useId();
   const passwordFieldId = useId();
   const dispatch = useDispatch();
-
-  //HERE ADD REAL CONNECTION TO THE BE
-  const handleSkipLogin = () => {
-    dispatch({
-      type: "auth/logIn/fulfilled",
-      payload: {
-        user: {
-          name: "Mock User",
-          email: "mock@example.com",
-        },
-        token: "mock-token",
-      },
-    });
-    toast.success("Пропущено логін — увійшли як mock user");
-  };
+  const navigate = useNavigate();
 
   return (
     <div className={css.pageWrapper}>
@@ -51,6 +38,7 @@ export default function LoginForm() {
               .then(() => {
                 toast.success("Login successful");
                 actions.resetForm();
+                navigate("/");
               })
               .catch(() => {
                 toast.error("Login failed");

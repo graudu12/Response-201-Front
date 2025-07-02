@@ -8,7 +8,7 @@ const handlePending = (state) => {
 
 const handleFulfilled = (state, action) => {
   state.user = action.payload.user;
-  state.token = action.payload.token;
+  state.token = action.payload.accessToken;
   state.isLoggedIn = true;
   state.loading = false;
   state.error = false;

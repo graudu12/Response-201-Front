@@ -40,7 +40,7 @@ export default function App() {
   }, [dispatch]);
 
   return isRefreshing ? (
-  <Loading />
+    <Loading />
   ) : (
     <div className={css.app}>
       <Layout>
