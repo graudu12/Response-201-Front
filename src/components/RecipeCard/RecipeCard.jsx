@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 // import { selectIsLoggedIn } from '../../redux/auth/selectors';
 
 const RecipeCard = ({ recipe, onToggleFavorite }) => {
-  const { _id, thumb, title, description, calories, isFavorite, time } = recipe;
+  const { _id, dishPhoto, nameRecipe, recipeDescription, calories, isFavorite, cookingTime } = recipe;
+
   const isLoggedIn = useSelector(() => true); // потом добавь вместо функции true, selectIsLoggedIn
   const navigate = useNavigate();
 
@@ -19,10 +20,10 @@ const RecipeCard = ({ recipe, onToggleFavorite }) => {
 
   return (
     <div className={styles.recipeCard}>
-      <img src={thumb} alt={title} className={styles.imageCard} />
+      <img src={dishPhoto} alt={nameRecipe} className={styles.imageCard} />
       <div className={styles.recipeForm}>
-        <h3 className={styles.recipeTitle}>{title}</h3>
-        {time && (
+        <h3 className={styles.recipeTitle}>{nameRecipe}</h3>
+        {cookingTime  && (
           <div className={styles.recipeTitleTime}>
             <svg
               className={styles.icon}
@@ -32,14 +33,14 @@ const RecipeCard = ({ recipe, onToggleFavorite }) => {
             >
               <use href={`${sprite}#icon-cooktime`} />
             </svg>
-            <span className={styles.yourSpan}>{time}</span>
+            <span className={styles.yourSpan}>{cookingTime }</span>
           </div>
         )}
       </div>
       <div className={styles.recipeDescCal}>
-        <p className={styles.recipeDescriptioncss}>{description}</p>
+        <p className={styles.descriptioncss}>{recipeDescription}</p>
 
-        <p className={styles.recipeDescriptioncss}> - {calories  ?? "?"} cals</p>
+        <p className={styles.descriptioncss}> - {calories  ?? "?"} cals</p>
       </div>
       <div className={styles.formButton}>
         <button
