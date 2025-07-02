@@ -41,27 +41,37 @@
 //   }
 // );
 
-
 //src/redux/recipes/operations.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
-  async ({ page = 1, perPage = 40, append = false, category = "", ingredient = ""  } = {}, thunkAPI) => {
+  async (
+    {
+      page = 1,
+      perPage = 40,
+      append = false,
+      category = "",
+      ingredient = "",
+    } = {},
+    thunkAPI
+  ) => {
     try {
       const params = { page, perPage };
       if (category) params.category = category;
       if (ingredient) params.ingredient = ingredient;
 
-            const response = await axios.get("http://localhost:4000/api/recipes", { params });
-      
-       console.log("Response from API:", response.data); // <-- Вот здесь
+      const response = await axios.get("http://localhost:4000/api/recipes", {
+        params,
+      });
+
+      console.log("Response from API:", response.data); // <-- Вот здесь
 
       return {
         items: response.data.data.enrichedRecipes,
         totalItems: response.data.data.totalItems,
-         append,
+        append,
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -78,12 +88,13 @@ export const fetchRecipesByQuery = createAsyncThunk(
       const response = await axios.get(
         `http://localhost:4000/api/recipes?name=${encodeURIComponent(query)}`
       );
-      
+
       return {
-  items: response.data.data.enrichedRecipes || response.data.data || [],
-  append: false,
-  totalItems: response.data.data.totalItems || (response.data.data?.length) || 0,
-};
+        items: response.data.data.enrichedRecipes || response.data.data || [],
+        append: false,
+        totalItems:
+          response.data.data.totalItems || response.data.data?.length || 0,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Помилка при пошуку рецептів"
@@ -94,16 +105,21 @@ export const fetchRecipesByQuery = createAsyncThunk(
 
 export const toggleFavoriteRecipeAsync = createAsyncThunk(
   "recipes/toggleFavoriteAsync",
-  async ({ id, add }, thunkAPI) => {
+  async (recipeId, thunkAPI) => {
     try {
-      await axios.post(`http://localhost:4000/api/recipes/${id}/favorites`, {
-        add,
-      });
-      return { id, add };
+      const state = thunkAPI.getState();
+      const favoriteIds = state.auth.user.favoriteRecipes;
+      const isCurrentlyFavorite = favoriteIds.includes(recipeId);
+
+      const url = `http://localhost:4000/api/recipes/${recipeId}/favorites`;
+      if (isCurrentlyFavorite) {
+        await axios.delete(url);
+      } else {
+        await axios.patch(url);
+      }
+      return { recipeId, add: !isCurrentlyFavorite };
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Помилка при зміні улюблених рецептів"
-      );
+      return thunkAPI.rejectWithValue("Помилка при зміні улюблених рецептів");
     }
   }
 );

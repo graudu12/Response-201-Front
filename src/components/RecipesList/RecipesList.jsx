@@ -118,7 +118,7 @@ const RecipesList = () => {
     }
   }, [page]);
   const recipesToShow = recipes.slice(0, page * recipesPerPage);
- 
+
   return (
     <div className={styles.recipeListContainer}>
       <div className={styles.FormRecipes}>
