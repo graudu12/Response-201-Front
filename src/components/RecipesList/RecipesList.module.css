@@ -67,15 +67,7 @@
     font-size: 12px;
     border: none;
   }
-  .FormButton {
-    display: inline-block;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 4px;
-    position: relative; /* Важно! Нужно для абсолютного позиционирования dropdown */
-  }
-  .filterSelect {
+ .filterSelect {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
     padding: 4px 8px;
