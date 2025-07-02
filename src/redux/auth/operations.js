@@ -41,15 +41,33 @@ export const register = createAsyncThunk(
   }
 );
 
+// export const logIn = createAsyncThunk(
+//   "/auth/login",
+//   async (credentials, thunkAPI) => {
+//     try {
+//       const res = await axios.post("/auth/login", credentials);
+//       const accessToken = res.data.data.accessToken;
+//       setAuthHeader(accessToken);
+//       localStorage.setItem("token", accessToken);
+//       return { token: accessToken, user: res.data.user || null };
+//     } catch (e) {
+//       return thunkAPI.rejectWithValue(e.message);
+//     }
+//   }
+// );
+
 export const logIn = createAsyncThunk(
   "/auth/login",
   async (credentials, thunkAPI) => {
     try {
       const res = await axios.post("/auth/login", credentials);
       const accessToken = res.data.data.accessToken;
+      const user = res.data.data.user;
+
       setAuthHeader(accessToken);
       localStorage.setItem("token", accessToken);
-      return { token: accessToken, user: res.data.user || null };
+
+      return { accessToken, user };
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
