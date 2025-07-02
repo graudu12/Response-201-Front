@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import styles from "./RecipesList.module.css";
-import sprite from "../../svg/sprite.svg";
 import {
   fetchRecipes,
   toggleFavoriteRecipeAsync,
@@ -15,27 +14,14 @@ const RecipesList = () => {
   const recipes = useSelector((state) => state.recipes.items);
   const totalItems = useSelector((state) => state.recipes.totalItems);
 
-  const categoryDropdownRef = useRef(null);
-  const ingredientDropdownRef = useRef(null);
-
   const [page, setPage] = useState(1);
   const recipesPerPage = 12;
 
-  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
-  const [showIngredientDropdown, setShowIngredientDropdown] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [categories, setCategories] = useState([]);
+  const [ingredientOptions, setIngredientOptions] = useState([]);
 
-  const ingredientOptions = [
-    "Tomato",
-    "Cheese",
-    "Chicken",
-    "Beef",
-    "Onion",
-    "Garlic",
-    "Carrot",
-  ];
   const recipesListRef = useRef(null);
 
   useEffect(() => {
@@ -43,6 +29,22 @@ const RecipesList = () => {
       .get("http://localhost:4000/api/categories")
       .then((res) => setCategories(res.data))
       .catch((err) => console.error("Error loading categories:", err));
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/ingredients")
+      .then((res) => {
+        if (Array.isArray(res.data.ingredients)) {
+          setIngredientOptions(res.data.ingredients);
+        } else {
+          console.error("Expected an array of ingredients but got:", res.data);
+          setIngredientOptions([]);
+        }
+      })
+      .catch((err) => {
+        console.error("Error loading ingredients:", err);
+        setIngredientOptions([]);
+      });
   }, []);
 
   useEffect(() => {
@@ -57,43 +59,12 @@ const RecipesList = () => {
   }, [dispatch, page, selectedCategory, selectedIngredient]);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        categoryDropdownRef.current &&
-        !categoryDropdownRef.current.contains(event.target)
-      ) {
-        setShowCategoryDropdown(false);
-      }
-      if (
-        ingredientDropdownRef.current &&
-        !ingredientDropdownRef.current.contains(event.target)
-      ) {
-        setShowIngredientDropdown(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
     setPage(1); // повертаємо на першу сторінку при зміні фільтрів
   }, [selectedCategory, selectedIngredient]);
 
   const handleResetFilters = () => {
     setSelectedCategory("");
     setSelectedIngredient("");
-  };
-
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-    setShowCategoryDropdown(false);
-  };
-
-  const handleIngredientSelect = (ingredient) => {
-    setSelectedIngredient(ingredient);
-    setShowIngredientDropdown(false);
   };
 
   const handleToggleFavorite = (id, add) => {
@@ -120,6 +91,7 @@ const RecipesList = () => {
   const recipesToShow = recipes.slice(0, page * recipesPerPage);
 
   return (
+    
     <div className={styles.recipeListContainer}>
       <div className={styles.FormRecipes}>
         <h2 className={styles.Recipes}>Recipes</h2>
@@ -135,89 +107,31 @@ const RecipesList = () => {
               Reset filters
             </button>
           </div>
-          <div className={styles.FormButton} ref={categoryDropdownRef}>
-            <div
-              className={styles.ButtonInput}
-              onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-            >
-              <input
-                type="text"
-                name="category"
-                placeholder="Category"
-                value={selectedCategory}
-                className={styles.filterInput}
-                readOnly
-                tabIndex={-1}
-                onFocus={(e) => e.target.blur()}
-              />
-              <span style={{ marginLeft: 5 }}>
-                <svg
-                  className={styles.icon}
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                >
-                  <use href={`${sprite}#icon-select_arrow`} />
-                </svg>
-              </span>
-            </div>
+          <select
+            className={styles.filterSelect}
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="">Category</option>
+            {categories.map((cat) => (
+              <option key={cat._id} value={cat.name}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
 
-            {showCategoryDropdown && (
-              <ul className={styles.dropdown}>
-                {categories.length === 0 ? (
-                  <li className={styles.dropdownItem}>No categories</li>
-                ) : (
-                  categories.map((cat) => (
-                    <li
-                      key={cat._id}
-                      onClick={() => handleCategorySelect(cat.name)}
-                      className={styles.dropdownItem}
-                    >
-                      {cat.name}
-                    </li>
-                  ))
-                )}
-              </ul>
-            )}
-          </div>
-          <div className={styles.FormButton} ref={ingredientDropdownRef}>
-            <div
-              className={styles.ButtonInput}
-              onClick={() => setShowIngredientDropdown(!showIngredientDropdown)}
-            >
-              <input
-                type="text"
-                name="Ingredient"
-                placeholder="Ingredient"
-                className={styles.filterInput}
-                value={selectedIngredient}
-                readOnly
-              />
-              <span style={{ marginLeft: 5 }}>
-                <svg
-                  className={styles.icon}
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                >
-                  <use href={`${sprite}#icon-select_arrow`} />
-                </svg>
-              </span>
-            </div>
-            {showIngredientDropdown && (
-              <ul className={styles.dropdown}>
-                {ingredientOptions.map((ing) => (
-                  <li
-                    key={ing}
-                    onClick={() => handleIngredientSelect(ing)}
-                    className={styles.dropdownItem}
-                  >
-                    {ing}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <select
+            className={styles.filterSelect}
+            value={selectedIngredient}
+            onChange={(e) => setSelectedIngredient(e.target.value)}
+          >
+            <option value="">Ingredient</option>
+            {ingredientOptions.map((ingredient) => (
+              <option key={ingredient} value={ingredient}>
+                {ingredient}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       {recipes.length === 0 && <p>No recipes found.</p>}
@@ -241,5 +155,4 @@ const RecipesList = () => {
     </div>
   );
 };
-
 export default RecipesList;
