@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { register, logIn, logOut, refreshUser } from "./operations";
-
+import { toggleFavoriteRecipeAsync } from "../recipes/operations";
 const handlePending = (state) => {
   state.loading = true;
   state.error = false;
@@ -25,6 +25,7 @@ const authSlice = createSlice({
     user: {
       name: null,
       email: null,
+      favoriteRecipes: [],
     },
     token: null,
     isLoggedIn: false,
@@ -64,11 +65,15 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = false;
       })
-      .addCase(refreshUser.rejected, (state, action) => {
-        state.isRefreshing = false;
-        state.loading = false;
-        state.isLoggedIn = false;
-        state.error = action.payload || true;
+      .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
+        const { recipeId, add } = action.payload;
+        if (add) {
+          state.user.favoriteRecipes.push(recipeId);
+        } else {
+          state.user.favoriteRecipes = state.user.favoriteRecipes.filter(
+            (id) => id !== recipeId
+          );
+        }
       });
   },
 });

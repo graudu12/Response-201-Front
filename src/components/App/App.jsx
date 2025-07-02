@@ -77,7 +77,6 @@ export default function App() {
       </Layout>
 
       <NotificationToast />
-
       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
