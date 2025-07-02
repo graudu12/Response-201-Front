@@ -17,7 +17,7 @@ export default function SaveFavoriteButton({ small, recipeId }) {
 
   const handleToggle = () => {
     if (!isLoggedIn) {
-      navigate("/auth/login");
+      navigate("/login");
       return;
     }
     dispatch(toggleFavoriteRecipeAsync(recipeId));
