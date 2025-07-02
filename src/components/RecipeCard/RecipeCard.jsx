@@ -4,6 +4,7 @@ import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import SaveFavoriteButton from "../SaveFavoriteButton/SaveFavoriteButton";
 
 const RecipeCard = ({ recipe }) => {
   const navigate = useNavigate();
@@ -18,13 +19,6 @@ const RecipeCard = ({ recipe }) => {
     cookingTime = recipe.time,
   } = recipe;
 
-   const handleFavoriteClick = () => {
-    if (!isLoggedIn) {
-      navigate("/register");
-      return;
-    }
-    // Если залогинен, FavoriteButton должен обработать событие сам
-  };
   return (
     <div className={styles.recipeCard}>
       <img src={dishPhoto} alt={nameRecipe} className={styles.imageCard} />
@@ -55,11 +49,11 @@ const RecipeCard = ({ recipe }) => {
         >
           Learn More
         </button>
-        <FavoriteButton recipeId={_id} onClick={handleFavoriteClick} />
+        <SaveFavoriteButton small recipeId={_id} />
+        {isLoggedIn && <FavoriteButton recipeId={_id} />}
       </div>
     </div>
   );
 };
 
 export default RecipeCard;
-
