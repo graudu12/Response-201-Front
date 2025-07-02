@@ -1,22 +1,10 @@
 import styles from "./RecipeCard.module.css";
 import sprite from "../../svg/sprite.svg";
-import { useSelector } from "react-redux";
+import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useNavigate } from "react-router-dom";
-// import { selectIsLoggedIn } from '../../redux/auth/selectors';
-
-const RecipeCard = ({ recipe, onToggleFavorite }) => {
-  const { _id, thumb, title, description, calories, isFavorite, time } = recipe;
-  const isLoggedIn = useSelector(() => true); // потом добавь вместо функции true, selectIsLoggedIn
+const RecipeCard = ({ recipe }) => {
+  const { _id, thumb, title, description, calories, time } = recipe;
   const navigate = useNavigate();
-
-  const handleFavoriteClick = () => {
-    if (!isLoggedIn) {
-      navigate("/auth/login");
-      return;
-    }
-    onToggleFavorite(_id, !isFavorite);
-  };
-
   return (
     <div className={styles.recipeCard}>
       <img src={thumb} alt={title} className={styles.imageCard} />
@@ -39,7 +27,7 @@ const RecipeCard = ({ recipe, onToggleFavorite }) => {
       <div className={styles.recipeDescCal}>
         <p className={styles.recipeDescriptioncss}>{description}</p>
 
-        <p className={styles.recipeDescriptioncss}> - {calories  ?? "?"} cals</p>
+        <p className={styles.recipeDescriptioncss}> - {calories ?? "?"} cals</p>
       </div>
       <div className={styles.formButton}>
         <button
@@ -48,27 +36,9 @@ const RecipeCard = ({ recipe, onToggleFavorite }) => {
         >
           Learn More
         </button>
-
-        <button
-          className={isFavorite ? styles.favoriteActive : styles.favorite}
-          onClick={handleFavoriteClick}
-          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-        >
-          <svg
-            className={styles.icon}
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-          >
-            <use
-              href={`${sprite}#${isFavorite ? "icon-delete" : "icon-saved"}`}
-            />
-          </svg>
-        </button>
+        <FavoriteButton recipeId={recipe._id} />
       </div>
     </div>
-    
-
   );
 };
 
