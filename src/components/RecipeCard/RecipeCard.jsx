@@ -2,15 +2,36 @@ import styles from "./RecipeCard.module.css";
 import sprite from "../../svg/sprite.svg";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+
 const RecipeCard = ({ recipe }) => {
-  const { _id, thumb, title, description, calories, time } = recipe;
   const navigate = useNavigate();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  const {
+    _id,
+    dishPhoto,
+    nameRecipe,
+    recipeDescription,
+    calories,
+    cookingTime,
+  } = recipe;
+
+  const handleFavoriteClick = () => {
+    if (!isLoggedIn) {
+      navigate("/register");
+      return;
+    }
+    // Если залогинен, FavoriteButton должен обработать событие сам
+  };
+
   return (
     <div className={styles.recipeCard}>
-      <img src={thumb} alt={title} className={styles.imageCard} />
+      <img src={dishPhoto} alt={nameRecipe} className={styles.imageCard} />
       <div className={styles.recipeForm}>
-        <h3 className={styles.recipeTitle}>{title}</h3>
-        {time && (
+        <h3 className={styles.recipeTitle}>{nameRecipe}</h3>
+        {cookingTime && (
           <div className={styles.recipeTitleTime}>
             <svg
               className={styles.icon}
@@ -20,14 +41,13 @@ const RecipeCard = ({ recipe }) => {
             >
               <use href={`${sprite}#icon-cooktime`} />
             </svg>
-            <span className={styles.yourSpan}>{time}</span>
+            <span className={styles.yourSpan}>{cookingTime}</span>
           </div>
         )}
       </div>
       <div className={styles.recipeDescCal}>
-        <p className={styles.recipeDescriptioncss}>{description}</p>
-
-        <p className={styles.recipeDescriptioncss}> - {calories ?? "?"} cals</p>
+        <p className={styles.descriptioncss}>{recipeDescription}</p>
+        <p className={styles.descriptioncss}> - {calories ?? "?"} cals</p>
       </div>
       <div className={styles.formButton}>
         <button
@@ -36,7 +56,7 @@ const RecipeCard = ({ recipe }) => {
         >
           Learn More
         </button>
-        <FavoriteButton recipeId={recipe._id} />
+        <FavoriteButton recipeId={_id} onClick={handleFavoriteClick} />
       </div>
     </div>
   );

@@ -1,9 +1,7 @@
 .container {
   position: relative;
   width: 100%;
-
-  max-width: 600px;
-  margin: 0 auto 30px;
+  margin: 0 auto;
   padding: 0 10px;
 }
 
@@ -25,6 +23,7 @@
   outline: none;
   color: #333;
   margin-right: 12px;
+  min-width: 459px;
 }
 
 .searchInput::placeholder {
@@ -40,11 +39,18 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  min-width: 190px;
 }
 
 .searchButton:hover {
   background-color: #6D554B;
 }
+
+
+
+
+
+
 
 
 

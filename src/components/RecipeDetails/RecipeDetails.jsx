@@ -1,18 +1,12 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-// import { addToFavorites, removeFromFavorites } from "../../redux/recipes/operations.js";
 import styles from "./RecipeDetails.module.css";
-import Loading from "../Loading/Loading.jsx";
-import sprite from "../../svg/sprite.svg";
+import SaveFavoriteButton from "../SaveFavoriteButton/SaveFavoriteButton.jsx";
 
 const RecipeDetails = ({ recipe }) => {
   console.log("🧪 Получен recipe в компоненте:", recipe);
 
-  const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const [isFavorite] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (recipe && isAuthenticated) {
@@ -21,15 +15,6 @@ const RecipeDetails = ({ recipe }) => {
     }
   }, [recipe, isAuthenticated]);
 
-  const handleFavoriteClick = async () => {
-    if (!isAuthenticated) {
-      navigate("/login");
-      return;
-    }
-
-    setIsLoading(true);
-  };
-
   if (!recipe) {
     return <div className={styles.notFound}>Рецепт не найден</div>;
   }
@@ -37,15 +22,19 @@ const RecipeDetails = ({ recipe }) => {
   return (
     <div className={styles.container}>
       <div className={styles.headerSection}>
-        <h1 className={styles.title}>{recipe.title}</h1>
-        <img src={recipe.thumb} alt={recipe.title} className={styles.image} />
+        <h1 className={styles.title}>{recipe.nameRecipe}</h1>
+        <img
+          src={recipe.dishPhoto}
+          alt={recipe.nameRecipe}
+          className={styles.image}
+        />
       </div>
 
       <div className={styles.contentWrapper}>
         <div className={styles.mainContent}>
           <section className={styles.section}>
             <h2>About recipe</h2>
-            <p>{recipe.description}</p>
+            <p>{recipe.recipeDescription}</p>
           </section>
 
           <section className={styles.section}>
@@ -81,10 +70,10 @@ const RecipeDetails = ({ recipe }) => {
           <section className={styles.info}>
             <h2 className={styles.infoTitle}>General information</h2>
             <p>
-              <strong>Category:</strong> {recipe.category || "—"}
+              <strong>Category:</strong> {recipe.recipeCategory || "—"}
             </p>
             <p>
-              <strong>Cooking time:</strong> {recipe.time || "—"} minutes
+              <strong>Cooking time:</strong> {recipe.cookingTime || "—"} minutes
             </p>
 
             <p>
@@ -92,31 +81,7 @@ const RecipeDetails = ({ recipe }) => {
               {recipe.calories || ""} kcal per serving
             </p>
           </section>
-
-          <button
-            onClick={handleFavoriteClick}
-            disabled={isLoading}
-            className={`${styles.favoriteButton} ${
-              isFavorite ? styles.active : ""
-            }`}
-          >
-            {isLoading ? (
-              <Loading size="20px" />
-            ) : (
-              <>
-                <svg
-                  className={`${styles.icon} ${
-                    isFavorite ? styles.iconFilled : styles.iconOutline
-                  }`}
-                  width="24"
-                  height="24"
-                >
-                  <use href={`${sprite}#icon-saved`} />
-                </svg>
-                {isFavorite ? "Remove from favorites" : "Save"}
-              </>
-            )}
-          </button>
+          <SaveFavoriteButton recipeId={recipe.id} />
         </div>
       </div>
     </div>
