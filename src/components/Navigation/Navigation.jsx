@@ -28,7 +28,7 @@ export default function Navigation() {
             </li>
 
             <li className={css.navItem}>
-              <NavLink to="/add" className={clsx(css.mobileButton)}>
+              <NavLink to="/add-recipe" className={clsx(css.mobileButton)}>
                 Add Recipe
               </NavLink>
             </li>

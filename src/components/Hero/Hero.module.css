@@ -1,48 +1,30 @@
 .hero {
   background-color: #3d2218;
-  background-image: url("../../images/hero/hero-mobile.jpg"); /* mobile за замовчуванням */
+  background-image: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.9) 100%
+    ),
+    url("../../images/Hero/Banner.webp");
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top center;
   background-size: cover;
-  padding: 60px 20px;
+  padding: 128px 32px;
 }
 
 @media (min-resolution: 192dpi) {
   .hero {
-    background-image: url("../../images/hero/hero-mobile@2x.jpg");
-  }
-}
-
-/* Tablet 768px+ */
-@media (min-width: 768px) {
-  .hero {
-    background-image: url("../../images/hero/hero-tablet.jpg");
-    padding: 80px 32px;
-  }
-
-  @media (min-resolution: 192dpi) {
-    .hero {
-      background-image: url("../../images/hero/hero-tablet@2x.jpg");
-    }
-  }
-}
-
-/* Desktop 1440px+ */
-@media (min-width: 1440px) {
-  .hero {
-    background-image: url("../../images/hero/hero-desktop.jpg");
-    padding: 100px 64px;
-  }
-
-  @media (min-resolution: 192dpi) {
-    .hero {
-      background-image: url("../../images/hero/hero-desktop@2x.jpg");
-    }
+    background-image: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.9) 100%
+      ),
+      url("../../images/Hero/Banner@2x.webp");
   }
 }
 
 .container {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 

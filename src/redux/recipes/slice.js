@@ -1,66 +1,3 @@
-// import { createSlice } from "@reduxjs/toolkit";
-// import {
-//   fetchRecipes,
-//   toggleFavoriteRecipeAsync,
-//   fetchRecipeById,
-// } from "./operations";
-
-// const recipesSlice = createSlice({
-//   name: "recipes",
-//   initialState: {
-//     items: [],
-//     favorites: [],
-//     currentRecipe: null,
-//     loading: false,
-//     error: null,
-//     totalItems: 0,
-//   },
-//   reducers: {
-//     toggleFavoriteRecipe: (state, action) => {
-//       const { id, add } = action.payload;
-//       const recipe = state.items.find((r) => r._id === id);
-//       if (recipe) {
-//         recipe.isFavorite = add;
-//       }
-//     },
-//     setRecipes: (state, action) => {
-//       state.items = action.payload;
-//     },
-//   },
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(fetchRecipes.fulfilled, (state, action) => {
-//         state.items = [...state.items, ...action.payload.data.enrichedRecipes];
-//         state.totalItems = action.payload.data.totalItems;
-//       })
-//       .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
-//         const { id, add } = action.payload;
-//         const recipe = state.items.find((r) => r._id === id);
-//         if (recipe) {
-//           recipe.isFavorite = add;
-//         }
-//       })
-//       .addCase(fetchRecipeById.pending, (state) => {
-//         state.loading = true;
-//         state.error = null;
-//         state.currentRecipe = null;
-//       })
-//       .addCase(fetchRecipeById.fulfilled, (state, action) => {
-//         console.log("📦 Reducer получил рецепт:", action.payload);
-//         state.loading = false;
-//         state.currentRecipe = action.payload;
-//       })
-//       .addCase(fetchRecipeById.rejected, (state, action) => {
-//         state.loading = false;
-//         state.error = action.payload || "Ошибка при загрузке рецепта";
-//       });
-//   },
-// });
-
-// export const { toggleFavoriteRecipe, setRecipes } = recipesSlice.actions;
-
-// export const recipesReducer = recipesSlice.reducer;
-
 //src/redux/recipes/slice.js
 import { createSlice } from "@reduxjs/toolkit";
 import {
@@ -106,16 +43,28 @@ const recipesSlice = createSlice({
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         if (action.payload.append) {
-          // Добавляем новые рецепты к уже загруженным
+          
           state.items = [...state.items, ...action.payload.items];
         } else {
-          // Заменяем список рецептов
+          
           state.items = action.payload.items;
         }
         state.totalItems = action.payload.totalItems;
         state.loading = false;
         state.notFound = action.payload.items.length === 0;
       })
+      
+  //     const recipes = action.payload.items;
+  // if (action.payload.append) {
+  //   state.items = [...state.items, ...recipes];
+  // } else {
+  //   state.items = recipes;
+  // }
+
+  // state.totalItems = action.payload.totalItems;
+  // state.loading = false;
+      // state.notFound = recipes.length === 0;
+      
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
@@ -151,3 +100,4 @@ export const { toggleFavoriteRecipe, setSearchQuery, clearNotFound } =
   recipesSlice.actions;
 
 export const recipesReducer = recipesSlice.reducer;
+

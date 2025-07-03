@@ -1,0 +1,54 @@
+.filters {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    user-select: none;
+    width: 1225px;
+    height: 33px;
+  }
+  .recipes {
+    font-weight: 600;
+    font-size: 18px;
+    color: #000;
+  }
+  .inputWithIcon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 24px;
+    margin-left: auto;
+  }
+  .filtersRight {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .buttonReset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 4px;
+    border-bottom: 1px solid #000;
+    padding: 0px 0px 4px 0px;
+    user-select: none;
+  }
+  .resetFilters {
+    font-weight: 600;
+    font-size: 12px;
+    border: none;
+  }
+ .filterSelect {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 4px 8px;
+    width: 179px;
+    height: 33px;
+  }
+  .filterSelect option {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+  }

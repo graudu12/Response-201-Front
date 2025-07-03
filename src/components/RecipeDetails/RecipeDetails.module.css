@@ -81,7 +81,11 @@ li::marker {
 }
 
 .favoriteButton {
-  display: block;
+  align-items: center;
+  display: flex;
+  gap: 16px;
+  flex-direction: row-reverse;
+  justify-content: center;
   width: 100%;
   padding: 10px;
   background: #9b6c43;
@@ -101,6 +105,25 @@ li::marker {
 .favoriteButton:active {
   background: #9b6c43;
   border: 2px solid white;
+}
+.icon {
+  --icon-stroke: white;
+  --icon-fill: none;
+  color: inherit;
+}
+
+.iconActive {
+  --icon-stroke: #fff;
+  --icon-fill: #fff;
+}
+
+.favoriteButton .icon {
+  transition: all 0.3s ease;
+}
+
+.favoriteButton.active .icon {
+  --icon-stroke: #fff;
+  --icon-fill: #fff;
 }
 
 @media screen and (min-width: 768px) {
