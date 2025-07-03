@@ -48,7 +48,7 @@ export const logIn = createAsyncThunk(
       const accessToken = res.data.data.accessToken;
       setAuthHeader(accessToken);
       localStorage.setItem("token", accessToken);
-      return { token: accessToken, user: res.data.user || null };
+      return { accessToken, user: res.data.user || null };
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -68,22 +68,27 @@ export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 export const refreshUser = createAsyncThunk(
   "/auth/refresh",
   async (_, thunkAPI) => {
-    const reduxState = thunkAPI.getState();
-    const persistedToken =
-      reduxState.auth.token || localStorage.getItem("token");
+    try {
+      const reduxState = thunkAPI.getState();
+      const persistedToken =
+        reduxState.auth.token || localStorage.getItem("token");
 
-    if (!persistedToken) {
-      return thunkAPI.rejectWithValue("Unable to fetch user");
-    }
-    setAuthHeader(persistedToken);
+      if (!persistedToken) {
+        return thunkAPI.rejectWithValue("No token found");
+      }
+      setAuthHeader(persistedToken);
 
-    const res = await axios.get("/auth/refresh");
-    return res.data;
-  },
-  {
+      //const res = await axios.get("/auth/refresh");
+      const res = await axios.get("/users/current");
+      return res.data.data;
+    } catch (error) {
+      /*{
     condition(_, thunkAPI) {
       const reduxState = thunkAPI.getState();
       return reduxState.auth.token !== null;
     },
+  }*/
+      return thunkAPI.rejectWithValue("Unable to fetch current user");
+    }
   }
 );

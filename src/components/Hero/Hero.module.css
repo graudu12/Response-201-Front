@@ -5,7 +5,7 @@
       rgba(0, 0, 0, 0.3) 0%,
       rgba(0, 0, 0, 0.9) 100%
     ),
-    url("../../images/Hero/Bannermobile.webp");
+    url("../../images/Hero/Banner.webp");
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
@@ -19,57 +19,7 @@
         rgba(0, 0, 0, 0.3) 0%,
         rgba(0, 0, 0, 0.9) 100%
       ),
-      url("../../images/Hero/Banner@2xmobile.webp");
-  }
-}
-
-/* Tablet 768px+ */
-@media (min-width: 768px) {
-  .hero {
-    background-image: linear-gradient(
-        to left,
-        rgba(0, 0, 0, 0.3) 0%,
-        rgba(0, 0, 0, 0.9) 100%
-      ),
-      url("../../images/Hero/Bannertablet.webp");
-    background-position: top center;
-  }
-
-  @media (min-resolution: 192dpi) {
-    .hero {
-      background-image: linear-gradient(
-          to left,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0.9) 100%
-        ),
-        url("../../images/Hero/Banner@2xtablet.webp");
-    }
-  }
-}
-
-/* Desktop 1440px+ */
-@media (min-width: 1440px) {
-  .hero {
-    padding: 128px 108px;
-    background-image: linear-gradient(
-        to left,
-        rgba(0, 0, 0, 0.3) 0%,
-        rgba(0, 0, 0, 0.9) 100%
-      ),
-      url("../../images/Hero/Banner.webp");
-    background-position: top center;
-  }
-
-  @media (min-resolution: 192dpi) {
-    .hero {
-      background-image: linear-gradient(
-          to left,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0.9) 100%
-        ),
-        url("../../images/Hero/Banner@2x.webp");
-      background-position: top center;
-    }
+      url("../../images/Hero/Banner@2x.webp");
   }
 }
 

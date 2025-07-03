@@ -74,6 +74,7 @@ export const toggleFavoriteRecipeAsync = createAsyncThunk(
       const isCurrentlyFavorite = favoriteIds.includes(recipeId);
 
       const url = /*`http://localhost:3000/api/recipes/${recipeId}/favorites`;*/ `https://response-201-back.onrender.com/api/recipes/${recipeId}/favorites`;
+
       if (isCurrentlyFavorite) {
         await axios.delete(url);
       } else {
@@ -96,6 +97,7 @@ export const fetchRecipesByIngredients = createAsyncThunk(
           params: { names: ingredientQuery },
         }
       );
+
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
