@@ -22,7 +22,7 @@
 </symbol>
 
 <symbol id="icon-delete" viewBox="0 0 32 32">
-<path fill="none" stroke="#fff" style="stroke: var(--color1, #fff)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="1.3333" d="M16 21.846v-8.769M6.5 9.423h2.192M25.5 9.423h-2.192M19.654 9.423h-7.308M19.654 9.423v-1.462c0-0.807-0.654-1.462-1.462-1.462h-4.385c-0.807 0-1.462 0.654-1.462 1.462v1.462M19.654 9.423h3.654M12.346 9.423h-3.654M23.308 9.423v13.154c0 1.614-1.309 2.923-2.923 2.923h-8.769c-1.614 0-2.923-1.309-2.923-2.923v-13.154"></path>
+<path fill="none" stroke="#000" style="stroke: var(--color1, #000)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="1.3333" d="M16 21.846v-8.769M6.5 9.423h2.192M25.5 9.423h-2.192M19.654 9.423h-7.308M19.654 9.423v-1.462c0-0.807-0.654-1.462-1.462-1.462h-4.385c-0.807 0-1.462 0.654-1.462 1.462v1.462M19.654 9.423h3.654M12.346 9.423h-3.654M23.308 9.423v13.154c0 1.614-1.309 2.923-2.923 2.923h-8.769c-1.614 0-2.923-1.309-2.923-2.923v-13.154"></path>
 </symbol>
 
 <symbol id="icon-filter" viewBox="0 0 34 32">
