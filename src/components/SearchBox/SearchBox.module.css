@@ -1,11 +1,6 @@
-.container {
+/* .container {
   position: relative;
   width: 100%;
-<<<<<<< HEAD
-
-=======
-  max-width: 300px;
->>>>>>> main
   max-width: 600px;
 }
 
@@ -47,9 +42,77 @@
 .searchButton:hover {
   background-color: #6D554B;
 }
+ */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
 
+.searchBox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  width: 100%;
+}
 
+.searchInput {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  color: #333;
+}
 
+.searchInput::placeholder {
+  color: #aaa;
+}
 
+.searchButton {
+  width: 100%;
+  padding: 13px 0;
+  font-size: 16px;
+  background-color: #9B6C43;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  white-space: nowrap;
+}
 
+.searchButton:hover {
+  background-color: #6D554B;
+}
 
+@media only screen and (min-width: 768px) {
+  .searchBox {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .searchInput {
+    max-width: 471px;
+  }
+
+  .searchButton {
+    width: 176px;
+    padding: 13px 0;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .searchInput {
+    max-width: 459px;
+  }
+
+  .searchButton {
+    width: 190px;
+  }
+}
