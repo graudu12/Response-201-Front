@@ -67,80 +67,17 @@
     font-size: 12px;
     border: none;
   }
-  .FormButton {
-    display: inline-block;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 4px;
-    position: relative; /* Важно! Нужно для абсолютного позиционирования dropdown */
-  }
-  .ButtonInput {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: row;
-    gap: 8px;
+ .filterSelect {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
     padding: 4px 8px;
-
-    background-color: #fff;
-    cursor: pointer;
+    width: 179px;
+    height: 33px;
   }
-  .filterInput {
+  .filterSelect option {
     font-weight: 400;
     font-size: 16px;
     line-height: 1.55;
-    border: none;
-
-    outline: none;
-    user-select: none; /* нельзя выделять текст */
-    outline: none; /* убрать обводку при фокусе */
-    cursor: pointer; /* курсор стрелка */
-  }
-
-  .recipeslist {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: row;
-    gap: 24px;
-  }
-  .dropdown {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 0px;
-    border-radius: 12px;
-    padding: 8px;
-    position: absolute;
-    background: #fff;
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.4),
-      0 8px 24px -6px rgba(0, 0, 0, 0.16);
-    min-width: 100%;
-  }
-
-  .dropdownItem {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 8px;
-    border-radius: 4px;
-    padding: 8px 8px 8px 12px;
-    background: #fff;
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.4),
-      0 8px 24px -6px rgba(0, 0, 0, 0.16);
-
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-
-  .dropdownItem:hover {
-    background: #d3d3d3;
   }
   .recipeslist {
     display: flex;
@@ -164,14 +101,5 @@
     gap: 16px;
     border-radius: 8px;
     cursor: pointer;
-  }
-
-  .icon {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    stroke-width: 0;
-    stroke: currentColor;
-    fill: currentColor;
   }
 }

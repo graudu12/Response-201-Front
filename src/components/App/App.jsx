@@ -1,5 +1,5 @@
 import css from "../App/App.module.css";
-import { lazy, useEffect, useState } from "react";
+import { lazy, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,7 +14,7 @@ import Loading from "../Loading/Loading";
 import NotificationToast from "../NotificationToast/NotificationToast";
 import RecipeDetailsPage from "../../pages/recipeDetailsPage/recipeDetailsPage";
 // 👉 Імпортуємо NotFound модалку для тесту
-import NotFound from "../NotFound/NotFound";
+// import NotFound from "../NotFound/NotFound";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,24 +33,23 @@ export default function App() {
   const dispatch = useDispatch();
   const { isRefreshing } = useSelector(selectRefreshing);
   console.log("App render, isRefreshing:", isRefreshing);
-  const [showError, setShowError] = useState(false); // стан для модалки
+  // const [showError, setShowError] = useState(false); // стан для модалки
 
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
 
   return isRefreshing ? (
-  <Loading />
+    <Loading />
   ) : (
     <div className={css.app}>
       <Layout>
         {/* 👉 Тимчасова кнопка для перегляду модалки NotFound */}
-        <button onClick={() => setShowError(true)} style={{ margin: 20 }}>
+        {/* <button onClick={() => setShowError(true)} style={{ margin: 20 }}>
           Показати помилку (NotFound)
-        </button>
-
-        {showError && <NotFound onRetry={() => setShowError(false)} />}
-
+        </button> */}
+        {/* 
+        {showError && <NotFound onRetry={() => setShowError(false)} />} */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
@@ -77,7 +76,6 @@ export default function App() {
       </Layout>
 
       <NotificationToast />
-
       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
