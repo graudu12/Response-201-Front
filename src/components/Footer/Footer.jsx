@@ -28,7 +28,7 @@ const Footer = () => {
         </div>
 
         <nav className={css.nav}>
-          <NavLink className={css.link} to="/recipes">
+          <NavLink className={css.link} to="/">
             Recipes
           </NavLink>
           <button className={css.link} onClick={handleProfileClick}>
