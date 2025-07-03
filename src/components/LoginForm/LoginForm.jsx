@@ -1,11 +1,12 @@
 import css from "../LoginForm/LoginForm.module.css";
-import toast from "react-hot-toast";
+import { logIn } from "../../redux/auth/operations";
+import { selectRefreshing } from "../../redux/auth/selectors";
 
+import toast from "react-hot-toast";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useId } from "react";
-import { useDispatch } from "react-redux";
-import { logIn } from "../../redux/auth/operations";
+import { useId, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +25,14 @@ export default function LoginForm() {
   const passwordFieldId = useId();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isRefreshing } = useSelector(selectRefreshing);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+
+  useEffect(() => {
+    if (shouldRedirect && !isRefreshing) {
+      navigate("/");
+    }
+  }, [shouldRedirect, isRefreshing, navigate]);
 
   return (
     <div className={css.pageWrapper}>
@@ -38,7 +47,9 @@ export default function LoginForm() {
               .then(() => {
                 toast.success("Login successful");
                 actions.resetForm();
-                navigate("/");
+                //navigate("/");
+                setShouldRedirect(true);
+                //window.location.href = "/";
               })
               .catch(() => {
                 toast.error("Login failed");
