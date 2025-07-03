@@ -4,9 +4,9 @@ import sprite from "../../svg/sprite.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleFavoriteRecipeAsync } from "../../redux/recipes/operations";
-
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
 export default function SaveFavoriteButton({ small, recipeId }) {
-  const isLoggedIn = useSelector(() => true); // потом добавь вместо функции true, selectIsLoggedIn
+  const isLoggedIn = useSelector(selectIsLoggedIn); // потом добавь вместо функции true, selectIsLoggedIn
   const isLoading = useSelector(() => false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ export default function SaveFavoriteButton({ small, recipeId }) {
       className={`${
         small ? styles.smallFavoriteButton : styles.favoriteButton
       } ${isFavorite ? styles.active : ""}`}
+      aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
     >
       {isLoading ? (
         <Loading size="20px" />

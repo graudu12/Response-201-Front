@@ -1,14 +1,10 @@
 import styles from "./RecipeCard.module.css";
 import sprite from "../../svg/sprite.svg";
-import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import SaveFavoriteButton from "../SaveFavoriteButton/SaveFavoriteButton";
 
 const RecipeCard = ({ recipe }) => {
   const navigate = useNavigate();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const {
     _id,
@@ -50,7 +46,6 @@ const RecipeCard = ({ recipe }) => {
           Learn More
         </button>
         <SaveFavoriteButton small recipeId={_id} />
-        {isLoggedIn && <FavoriteButton recipeId={_id} />}
       </div>
     </div>
   );

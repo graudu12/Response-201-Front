@@ -19,9 +19,12 @@ export const fetchRecipes = createAsyncThunk(
       if (category) params.category = category;
       if (ingredient) params.ingredient = ingredient;
 
-      const response = await axios.get("https://response-201-back.onrender.com/api/recipes", {
-        params,
-      });
+      const response = await axios.get(
+        "https://response-201-back.onrender.com/api/recipes",
+        {
+          params,
+        }
+      );
 
       console.log("Response from API:", response.data);
 
@@ -43,7 +46,9 @@ export const fetchRecipesByQuery = createAsyncThunk(
   async (query, thunkAPI) => {
     try {
       const response = await axios.get(
-        `https://response-201-back.onrender.com/api/recipes?name=${encodeURIComponent(query)}`
+        `https://response-201-back.onrender.com/api/recipes?name=${encodeURIComponent(
+          query
+        )}`
       );
 
       return {
@@ -68,7 +73,7 @@ export const toggleFavoriteRecipeAsync = createAsyncThunk(
       const favoriteIds = state.auth.user.favoriteRecipes;
       const isCurrentlyFavorite = favoriteIds.includes(recipeId);
 
-      const url = `https://response-201-back.onrender.com/api/recipes/${recipeId}/favorites`;
+      const url = /*`http://localhost:3000/api/recipes/${recipeId}/favorites`;*/ `https://response-201-back.onrender.com/api/recipes/${recipeId}/favorites`;
       if (isCurrentlyFavorite) {
         await axios.delete(url);
       } else {
@@ -85,9 +90,12 @@ export const fetchRecipesByIngredients = createAsyncThunk(
   "recipes/fetchRecipesByIngredients",
   async (ingredientQuery, thunkAPI) => {
     try {
-      const response = await axios.get("https://response-201-back.onrender.com/api/recipes", {
-        params: { names: ingredientQuery },
-      });
+      const response = await axios.get(
+        "https://response-201-back.onrender.com/api/recipes",
+        {
+          params: { names: ingredientQuery },
+        }
+      );
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -97,4 +105,3 @@ export const fetchRecipesByIngredients = createAsyncThunk(
     }
   }
 );
-
