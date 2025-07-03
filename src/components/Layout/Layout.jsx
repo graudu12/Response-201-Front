@@ -8,7 +8,9 @@ export const Layout = ({ children }) => {
   return (
     <div className={css.container}>
       <Header />
-      <Suspense fallback={null}>{children}</Suspense>
+      <main className={css.main}>
+        <Suspense fallback={null}>{children}</Suspense>
+      </main>
       <Footer />
     </div>
   );
