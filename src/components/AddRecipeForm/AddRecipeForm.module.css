@@ -51,7 +51,7 @@
     margin-top: 8px;
     font-weight: 400;
     font-size: 18px;
-    color: #595d62;
+    color: #000;
 }
 
 .field_textarea {
@@ -63,7 +63,7 @@
     margin-top: 8px;
     font-weight: 400;
     font-size: 18px;
-    color: #595d62;
+    color: #000;
     height: 144px;
     resize: none;
     overflow-y: auto;
@@ -177,7 +177,81 @@
         margin-bottom: 32px;
     }
 
+    .icon_photo {
+        width: 52px;
+        height: 52px;
+    }
+
+    .cont_ingred {
+        display: flex;
+    }
+
     .label {
         margin-bottom: 32px;
+    }
+
+    .label_name {
+        width: 431px;
+        margin-right: 24px;
+        flex: none;
+    }
+
+    .label_amount {
+        width: 249px;
+    }
+
+    .btn_cont{
+        display: flex;
+    }
+
+    .btn_add {
+        width: 249px; 
+        margin-left: auto; 
+    }
+
+    .btn_remove {
+        width: 249px; 
+        margin-left: auto; 
+    }
+
+    .cont_ing {
+        width: 431px;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .cont_form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+        "form img"
+        "form btn";
+        grid-template-rows: auto auto;
+        gap: 8px 24px;
+    }
+
+    .cont_img {
+        grid-area: img;
+        align-self: start;
+        position: relative;
+        width: 391px;
+    }
+
+    .cont_for_pc {
+        grid-area: form;
+        width: 809px;
+    }
+
+    .cont_push_btn {
+        grid-area: btn;
+        position: absolute;
+        top: 652px;
+        right: 107px;
+        width: 391px;
+    }
+
+    .icon_photo {
+        width: 82px;
+        height: 82px;
     }
 }

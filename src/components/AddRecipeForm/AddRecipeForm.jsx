@@ -1,5 +1,6 @@
 import css from "./AddRecipeForm.module.css";
 import sprite from "../../svg/sprite.svg";
+import clsx from 'clsx';
 import axios from "axios";
 import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
@@ -16,6 +17,7 @@ const [ingredients, setIngredients] = useState([]);
 const [categories, setCategories] = useState([]);
 const [addedIngredients, setAddedIngredients] = useState([]);
 const [preview, setPreview] = useState(null);
+const [imageFile, setImageFile] = useState(null);
   
 useEffect(() => {
   axios.get('http://localhost:4000/api/categories')
@@ -29,19 +31,21 @@ useEffect(() => {
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
 
-const handleSubmit = async (values, actions) => {
+const handleSubmit = async (values, addedIngredients, actions) => {
   const formData = new FormData();
+
   for (let key in values) {
-    if (key === 'ingredients')// перевірить 
-    {
-      formData.append('ingredients', JSON.stringify(values.ingredients)); 
-    } else {
-      formData.append(key, values[key])
-    }
+    formData.append(key, values[key]);
   }
+  formData.append('ingredients', JSON.stringify(addedIngredients));
+
+  if (imageFile) {
+    formData.append('thumb', imageFile);
+  }
+
     try {
-      const res = await axios.post('api/recipes', formData, {
-        headers: { 'Content-Type': "multipart/form-data" },
+      const res = await axios.post('http://localhost:4000/api/recipes', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
      console.log('Рецепт додано');
       navigate(`/recipes/${res.data.id}`);
@@ -50,6 +54,9 @@ const handleSubmit = async (values, actions) => {
       
     }
   actions.resetForm();
+  setImageFile(null);
+  setPreview(null);
+  setAddedIngredients([]);
 };
 
 const handleImageClick = () => {
@@ -59,8 +66,8 @@ const handleImageClick = () => {
 const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setPreview(imageUrl);
+      setPreview(URL.createObjectURL(file));
+      setImageFile(file);
     }
   };
   
@@ -87,9 +94,9 @@ const handleRemoveIng = (index) => {
 }
     
 const initialValues = {
-    recipe_title: "",
-    recipe_desc: "",
-    recipe_time: "",
+    title: "",
+    description: "",
+    time: "",
     calories: "",
     category: "",
     name_ingredients: "",
@@ -98,9 +105,9 @@ const initialValues = {
 };
 
   const validationSchema = Yup.object().shape({
-    recipe_title: Yup.string().min(3, 'Too short!').max(30, 'Too long!').required('Required'),
-    recipe_desc: Yup.string().min(3, 'Too short!').max(100, 'Too long!').required('Required'),
-    recipe_time: Yup.number().required('Required'),
+    title: Yup.string().min(3, 'Too short!').max(30, 'Too long!').required('Required'),
+    description: Yup.string().min(3, 'Too short!').max(100, 'Too long!').required('Required'),
+    time: Yup.number().required('Required'),
     calories: Yup.number().nullable(),
     category: Yup.string().required('Required'),
     name_ingredients: Yup.string().min(3, 'Too short!').max(30, 'Too long!').required('Required'),
@@ -109,18 +116,16 @@ const initialValues = {
 })
   
   return (
-      <div className={css.container}>
       <div>
-        <h2 className={css.title}>General Information</h2>
-
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values) => handleSubmit(values, addedIngredients)}
+          onSubmit={(values, actions) => handleSubmit(values, addedIngredients, actions)}
         >
           {({ values, setFieldValue }) => (
           <Form>
-            
+            <div className={css.cont_form}>
+
             <div className={css.cont_img}>
                 <h2 className={css.title}>Upload Photo</h2>
                 <div
@@ -144,37 +149,40 @@ const initialValues = {
                 onChange={handleImageChange}
                 />
             </div>
+
+            <div className={css.cont_for_pc}>
+            <h2 className={css.title}>General Information</h2>
             
-            <label className={css.label} htmlFor="recipe_title">
+            <label className={css.label} htmlFor="title">
               Recipe Title
               <Field
                 className={css.field}
-                id="recipe_title"
-                name="recipe_title"
+                id="title"
+                name="title"
                 type="text"
                 placeholder="Enter the name of your recipe"
               />
             </label>
 
            
-            <label className={css.label} htmlFor="recipe_desc">
+            <label className={css.label} htmlFor="description">
               Recipe Description
               <Field
                 className={css.field_textarea}
-                id="recipe_desc"
-                name="recipe_desc"
+                id="description"
+                name="description"
                 as="textarea"
                 placeholder="Enter a brief description of your recipe"
               />
             </label>
 
             
-            <label className={css.label} htmlFor="recipe_time">
+            <label className={css.label} htmlFor="time">
               Cooking time in minutes
               <Field
                 className={css.field}
-                id="recipe_time"
-                name="recipe_time"
+                id="time"
+                name="time"
                 type="number"
                 placeholder="10"
               />
@@ -211,8 +219,8 @@ const initialValues = {
 
             <h2 className={css.title}>Ingredients</h2>
 
-           
-            <label className={css.label} htmlFor="name_ingredients">
+            <div className={css.cont_ingred}>
+            <label className={clsx(css.label, css.label_name)} htmlFor="name_ingredients">
               Name
               <Field
                     className={css.field}
@@ -225,7 +233,7 @@ const initialValues = {
               </Field>
             </label>
 
-            <label className={css.label} htmlFor="amount_ingredients">
+            <label className={clsx(css.label, css.label_amount)} htmlFor="amount_ingredients">
               Amount
               <Field
                 className={css.field}
@@ -234,17 +242,21 @@ const initialValues = {
                 placeholder="100g"
               />
             </label>
-
-            {addedIngredients.length > 0 && (
-            <button type="button" className={css.btn_remove} onClick={handleRemoveLastIngredient}>
-            Remove last Ingredient
-            </button> 
-            )}
+            </div>
             
-
-            <button type="button" className={css.btn_add} onClick={() => handleAddIngridient(values, setFieldValue)}>
-              Add new Ingredient
-            </button>
+            <div className={css.btn_cont}>
+              {addedIngredients.length > 0 && (
+              <button type="button" className={css.btn_remove} onClick={handleRemoveLastIngredient}>
+              Remove last Ingredient
+              </button> 
+              )}
+            </div>
+            
+            <div className={css.btn_cont}>
+              <button type="button" className={css.btn_add} onClick={() => handleAddIngridient(values, setFieldValue)}>
+                Add new Ingredient
+              </button>
+            </div>
             
             {addedIngredients.length > 0 && (
               <div className={css.cont_ing}> 
@@ -254,7 +266,7 @@ const initialValues = {
               </div>
             <ul>
             {addedIngredients.map((ing, index) => (
-                <li className={css.ing_list} key={index}>
+                <li className={css.ing_list} key={ing.name}>
                   <p className={css.ing_sel}>{ing.name}</p>
                   <p className={css.ing_sel}>{ing.amount}</p>
                   <button
@@ -270,9 +282,7 @@ const initialValues = {
             </ul>
             </div>
             )}
-            
            
-
             <h2 className={css.title}>Instructions</h2>
 
             <Field
@@ -281,14 +291,20 @@ const initialValues = {
               name="instructions"
               placeholder="Enter a text"
             />
+            
+            </div>
 
+            <div className={css.cont_push_btn}>
             <button type="submit" className={css.btn_submit}>
               Publish Recipe
             </button>
+            </div>
+            
+            </div>
+
             </Form>
           )}
         </Formik>
       </div>
-    </div>
   );
 }
