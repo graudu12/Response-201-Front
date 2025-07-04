@@ -85,7 +85,7 @@ const RecipeDetails = ({ recipe }) => {
               {recipe.calories || ""} kcal per serving
             </p>
           </section>
-          <SaveFavoriteButton recipeId={recipe.id} />
+          <SaveFavoriteButton recipeId={recipe._id} />
         </div>
       </div>
     </div>
