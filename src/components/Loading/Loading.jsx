@@ -14,8 +14,8 @@ export default function Loading() {
         ariaLabel="comment-loading"
         wrapperStyle={{}}
         wrapperClass="comment-wrapper"
-        color="#fff"
-        backgroundColor="#F4442E"
+      color="#4A90E2"            // приятный синий
+backgroundColor="transparent" 
       />
     </div>
   );

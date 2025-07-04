@@ -29,6 +29,9 @@ const NotFoundPage = lazy(() =>
   import("../../pages/NotFoundPage/NotFoundPage")
 );
 
+const AddRecipePage = lazy(() => import("../../pages/AddRecipePage/AddRecipePage"));
+
+
 export default function App() {
   const dispatch = useDispatch();
   const { isRefreshing } = useSelector(selectRefreshing);
@@ -70,6 +73,12 @@ export default function App() {
               />
             }
           />
+          <Route
+            path="/add"
+            element={<AddRecipePage/>}
+          />
+
+          {/* <Route path="/recipes" element={<RecipesList />} /> */}
           <Route path="/recipes/:recipeId" element={<RecipeDetailsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

@@ -1,3 +1,42 @@
+/*.favorite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 8px;
+
+
+.favorite:hover {
+  background: #9b6c43;
+  color: #fff;
+}
+
+.favoriteActive {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 8px;
+  color: red;
+}
+
+.favoriteActive:hover {
+  background: #c80000;
+  color: #fff;
+}
+
+.icon {
+  display: inline-block;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}}*/
+
 .favoriteButton {
   align-items: center;
   display: flex;
@@ -30,30 +69,45 @@
 .smallFavoriteButton:hover,
 .smallFavoriteButton:focus {
   background: #6d554b;
+  border: none;
 }
 
 .favoriteButton:active {
   background: #9b6c43;
   border: 2px solid white;
 }
+.smallFavoriteButton.active {
+  background: #9b6c43;
+  border: none;
+  color: white;
+}
 .icon {
-  --icon-stroke: white;
+  --icon-stroke: currentColor;
   --icon-fill: none;
   color: inherit;
-}
-
-.iconActive {
-  --icon-stroke: #fff;
-  --icon-fill: #fff;
-}
-
-.favoriteButton .icon {
   transition: all 0.3s ease;
 }
+.favoriteButton .icon {
+  color: white;
+}
+.smallFavoriteButton .icon {
+  color: black;
+}
 
-.favoriteButton.active .icon {
-  --icon-stroke: #fff;
-  --icon-fill: #fff;
+.favoriteButton.active .icon,
+.smallFavoriteButton.active .icon {
+  color: white;
+}
+.smallFavoriteButton:hover .icon {
+  color: white;
+}
+.smallFavoriteButton.active:hover {
+  background-color: #c80000;
+  border: none;
+}
+
+.smallFavoriteButton.active:hover .icon {
+  color: white; /* щоб іконка залишалась видимою */
 }
 @media screen and (min-width: 768px) {
   .favoriteButton {

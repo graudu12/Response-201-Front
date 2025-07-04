@@ -82,7 +82,6 @@
   text-overflow: ellipsis;
 }
 
-
 .formButton {
   display: flex;
   align-items: flex-start;
@@ -105,43 +104,4 @@
   font-size: 16px;
   color: #000;
   flex-grow: 1;
-}
-
-.favorite {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 8px;
-  border: 1px solid #000;
-  border-radius: 8px;
-  padding: 8px;
-}
-
-.favorite:hover {
-  background: #9b6c43;
-  color: #fff;
-}
-
-.favoriteActive {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 8px;
-  border-radius: 8px;
-  padding: 8px;
-  color: red;
-}
-
-.favoriteActive:hover {
-  background: #c80000;
-  color: #fff;
-}
-
-.icon {
-  display: inline-block;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
 }
