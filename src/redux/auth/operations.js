@@ -50,7 +50,8 @@ export const logIn = createAsyncThunk(
       const accessToken = res.data.data.accessToken;
       setAuthHeader(accessToken);
       localStorage.setItem("token", accessToken);
-      return { accessToken, user: res.data.user || null };
+      const userRes = await axios.get("/user/current");
+      return { accessToken, user: userRes.data || null };
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -81,7 +82,7 @@ export const refreshUser = createAsyncThunk(
       setAuthHeader(persistedToken);
 
       //const res = await axios.get("/auth/refresh");
-      const res = await axios.get("/users/current");
+      const res = await axios.get("/user/current");
       return res.data.data;
     } catch (error) {
       /*{
