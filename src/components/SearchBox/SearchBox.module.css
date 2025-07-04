@@ -1,29 +1,27 @@
 .container {
   position: relative;
   width: 100%;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 0 10px;
 }
 
 .searchBox {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
 }
 
 .searchInput {
-  flex: 1;
-  padding: 12px 12px;
+  width: 100%;
+  padding: 12px;
   font-size: 16px;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
   outline: none;
   color: #333;
-  margin-right: 12px;
-  min-width: 459px;
 }
 
 .searchInput::placeholder {
@@ -31,29 +29,45 @@
 }
 
 .searchButton {
-  padding: 13px 66.5px;
+  width: 100%;
+  padding: 13px 0;
   font-size: 16px;
-  background-color: #9B6C43; 
+  background-color: #9B6C43;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  min-width: 190px;
+  white-space: nowrap;
 }
 
 .searchButton:hover {
   background-color: #6D554B;
 }
 
+@media only screen and (min-width: 768px) {
+  .searchBox {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 
+  .searchInput {
+    max-width: 471px;
+  }
 
+  .searchButton {
+    width: 176px;
+    padding: 13px 0;
+  }
+}
 
+@media only screen and (min-width: 1280px) {
+  .searchInput {
+    max-width: 459px;
+  }
 
-
-
-
-
-
-
-
+  .searchButton {
+    width: 190px;
+  }
+}

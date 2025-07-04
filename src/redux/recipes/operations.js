@@ -1,4 +1,4 @@
-// src/redux/recipes/operations.js
+//src/redux/recipes/operations.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -18,6 +18,7 @@ export const fetchRecipes = createAsyncThunk(
       const params = { page, perPage };
       if (category) params.category = category;
       if (ingredient) params.ingredient = ingredient;
+
 
       const response = await axios.get(
         "https://response-201-back.onrender.com/api/recipes",
