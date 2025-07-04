@@ -1,8 +1,9 @@
-//src/redux/recipes/slice.js
 import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchRecipes,
   fetchRecipesByQuery,
+  fetchOwnRecipes,
+  fetchFavoriteRecipes,
   toggleFavoriteRecipeAsync,
 } from "./operations";
 
@@ -35,6 +36,7 @@ const recipesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // 🟢 Усі рецепти
     builder
       .addCase(fetchRecipes.pending, (state) => {
         state.loading = true;
@@ -42,48 +44,68 @@ const recipesSlice = createSlice({
         state.notFound = false;
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-        if (action.payload.append) {
-          state.items = [...state.items, ...action.payload.items];
-        } else {
-          state.items = action.payload.items;
-        }
-        state.totalItems = action.payload.totalItems;
+        const { items, totalItems, append } = action.payload;
+        state.items = append ? [...state.items, ...items] : items;
+        state.totalItems = totalItems;
         state.loading = false;
-        state.notFound = action.payload.items.length === 0;
+        state.notFound = items.length === 0;
       })
-
-      //     const recipes = action.payload.items;
-      // if (action.payload.append) {
-      //   state.items = [...state.items, ...recipes];
-      // } else {
-      //   state.items = recipes;
-      // }
-
-      // state.totalItems = action.payload.totalItems;
-      // state.loading = false;
-      // state.notFound = recipes.length === 0;
-
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
 
+      // 🟠 Пошук рецептів
       .addCase(fetchRecipesByQuery.pending, (state) => {
         state.loading = true;
         state.error = null;
         state.notFound = false;
       })
       .addCase(fetchRecipesByQuery.fulfilled, (state, action) => {
-        state.items = action.payload.items;
-        state.totalItems = action.payload.totalItems;
+        const { items, totalItems } = action.payload;
+        state.items = items;
+        state.totalItems = totalItems;
         state.loading = false;
-        state.notFound = action.payload.items.length === 0;
+        state.notFound = items.length === 0;
       })
       .addCase(fetchRecipesByQuery.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
 
+      // 🔵 Власні рецепти
+      .addCase(fetchOwnRecipes.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchOwnRecipes.fulfilled, (state, action) => {
+        const { items, totalItems, append } = action.payload;
+        state.items = append ? [...state.items, ...items] : items;
+        state.totalItems = totalItems;
+        state.loading = false;
+      })
+      .addCase(fetchOwnRecipes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      // 🟣 Улюблені рецепти
+      .addCase(fetchFavoriteRecipes.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
+        const { items, totalItems, append } = action.payload;
+        state.items = append ? [...state.items, ...items] : items;
+        state.totalItems = totalItems;
+        state.loading = false;
+      })
+      .addCase(fetchFavoriteRecipes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      // 💛 Toggle favorite
       .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
         const { id, add } = action.payload;
         const recipe = state.items.find((r) => r._id === id);

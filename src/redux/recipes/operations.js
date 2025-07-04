@@ -19,7 +19,6 @@ export const fetchRecipes = createAsyncThunk(
       if (category) params.category = category;
       if (ingredient) params.ingredient = ingredient;
 
-
       const response = await axios.get(
         "https://response-201-back.onrender.com/api/recipes",
         {
@@ -104,6 +103,32 @@ export const fetchRecipesByIngredients = createAsyncThunk(
         error.response?.data?.message ||
           "Помилка при пошуку рецептів за інгредієнтами"
       );
+    }
+  }
+);
+export const fetchOwnRecipes = createAsyncThunk(
+  "recipes/fetchOwnRecipes",
+  async ({ page, perPage }, thunkAPI) => {
+    try {
+      const res = await axios.get(`/users/own-recipes`, {
+        params: { page, perPage },
+      });
+      return res.data; // залежить від структури відповіді, можливо треба res.data.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const fetchFavoriteRecipes = createAsyncThunk(
+  "recipes/fetchFavoriteRecipes",
+  async ({ page, perPage }, thunkAPI) => {
+    try {
+      const res = await axios.get(`/users/favorite-recipes`, {
+        params: { page, perPage },
+      });
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
