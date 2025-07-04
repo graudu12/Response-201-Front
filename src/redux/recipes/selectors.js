@@ -17,8 +17,9 @@ export const selectFilteredRecipes = createSelector(
   [selectRecipes, selectNameFilter],
   (recipes, nameFilter) => {
     return recipes.filter((recipe) =>
-      recipe.nameRecipe.toLowerCase().includes(nameFilter.toLowerCase())
+      recipe.title.toLowerCase().includes(nameFilter.toLowerCase())
     );
   }
 );
+
 

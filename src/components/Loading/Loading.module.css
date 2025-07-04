@@ -1,6 +1,11 @@
+/* Loading.module.css */
 .loader {
   display: flex;
   justify-content: center;
   align-items: center;
-	margin-bottom: 30px;
+}
+.comment-wrapper {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }

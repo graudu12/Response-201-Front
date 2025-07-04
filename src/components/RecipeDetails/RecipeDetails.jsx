@@ -7,6 +7,10 @@ const RecipeDetails = ({ recipe }) => {
   console.log("🧪 Получен recipe в компоненте:", recipe);
 
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const largeImageUrl = recipe.dishPhoto?.replace(
+    "/preview/",
+    "/preview/large/"
+  );
 
   useEffect(() => {
     if (recipe && isAuthenticated) {
@@ -24,7 +28,7 @@ const RecipeDetails = ({ recipe }) => {
       <div className={styles.headerSection}>
         <h1 className={styles.title}>{recipe.nameRecipe}</h1>
         <img
-          src={recipe.dishPhoto}
+          src={largeImageUrl}
           alt={recipe.nameRecipe}
           className={styles.image}
         />
@@ -81,7 +85,7 @@ const RecipeDetails = ({ recipe }) => {
               {recipe.calories || ""} kcal per serving
             </p>
           </section>
-          <SaveFavoriteButton recipeId={recipe.id} />
+          <SaveFavoriteButton recipeId={recipe._id} />
         </div>
       </div>
     </div>
