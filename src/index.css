@@ -1,11 +1,33 @@
-body {
-  color: #444444;
-  font-family: 'Montserrat', sans-serif;
-  background-color: var(--background);
-  margin: 0 auto;
-  padding: 0;
+/* Box-sizing reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+/* Remove default margin and padding */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #fff;
+  color: #222;
+  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+   color: var(--main-text-color);
+  background-color: var(--background-color);
+
+  width: 100%;
+  height: 100vh;
+}
+
+/* Set default font size and line-height */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+}
 h1,
 h2,
 h3,
@@ -14,25 +36,43 @@ h5 {
   color: var(--white);
 }
 
-:root {
-  --black: #000000;
-  --gray: #595d62;
-  --white: #ffffff;
-  --light-brown: #9b6c43;
-  --light-beige: #faf3e0;
-  --light-gray: #d9d9d9;
-  --dark-brown: #3d2218;
-  --background: #fbfcf8;
-  --gray3: #9f9f9f;
-  --brown: #6d554b;
+
+/* Remove list styles */
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.brown-bottom {
-  color: var(--light-brown);
-  border-radius: 8px;
+
+/* Reset anchor styles */
+a {
+  color: inherit;
+  text-decoration: none;
 }
-.brown-button:hover {
-  color: var(--brown);
+
+/* Reset buttons and inputs */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  outline: none;
+   cursor: pointer;
 }
-.brown-button:focus {
-  color: var(--light-brown);
+
+/* Cursor for buttons */
+button {
+  cursor: pointer;
+}
+
+/* Images responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
