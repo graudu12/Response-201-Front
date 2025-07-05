@@ -29,8 +29,9 @@ const NotFoundPage = lazy(() =>
   import("../../pages/NotFoundPage/NotFoundPage")
 );
 
-const AddRecipePage = lazy(() => import("../../pages/AddRecipePage/AddRecipePage"));
-
+const AddRecipePage = lazy(() =>
+  import("../../pages/AddRecipePage/AddRecipePage")
+);
 
 export default function App() {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ export default function App() {
             path="/register"
             element={
               <RestrictedRoute
-                redirectTo="/recipes"
+                redirectTo="/"
                 component={<RegistrationPage />}
               />
             }
@@ -67,16 +68,10 @@ export default function App() {
           <Route
             path="/login"
             element={
-              <RestrictedRoute
-                component={<LoginPage />}
-                redirectTo="/recipes"
-              />
+              <RestrictedRoute component={<LoginPage />} redirectTo="/" />
             }
           />
-          <Route
-            path="/add"
-            element={<AddRecipePage/>}
-          />
+          <Route path="/add" element={<AddRecipePage />} />
 
           {/* <Route path="/recipes" element={<RecipesList />} /> */}
           <Route path="/recipes/:recipeId" element={<RecipeDetailsPage />} />
