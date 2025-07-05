@@ -29,7 +29,7 @@ export const register = createAsyncThunk(
       const currentUserResponse = await axios.get("/user/current");
       //const currentUserResponse = await axios.get("/auth/refresh");
 
-      return { user: currentUserResponse.data, accessToken };
+      return { accessToken, user: currentUserResponse.data.data };
     } catch (e) {
       if (
         e.response &&
@@ -88,7 +88,8 @@ export const refreshUser = createAsyncThunk(
       }
       setAuthHeader(persistedToken);
 
-      //const res = await axios.get("/auth/refresh");
+      //const refreshRes = await axios.get("/auth/refresh");
+
       const res = await axios.get("/user/current");
       return res.data.data;
     } catch (error) {
