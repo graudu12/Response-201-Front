@@ -50,7 +50,7 @@ export default function App() {
             path="/register"
             element={
               <RestrictedRoute
-                redirectTo="/recipes"
+                redirectTo="/"
                 component={<RegistrationPage />}
               />
             }
@@ -58,10 +58,7 @@ export default function App() {
           <Route
             path="/login"
             element={
-              <RestrictedRoute
-                component={<LoginPage />}
-                redirectTo="/recipes"
-              />
+              <RestrictedRoute component={<LoginPage />} redirectTo="/" />
             }
           />
           <Route path="/add-recipe" element={<AddRecipePage />} />

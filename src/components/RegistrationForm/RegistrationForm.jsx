@@ -38,7 +38,7 @@ export default function RegisterForm() {
 
   useEffect(() => {
     if (token) {
-      navigate("/recipes"); // редирект після входу
+      navigate("/"); // редирект після входу
     }
   }, [token, navigate]);
 
