@@ -65,6 +65,13 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = false;
       })
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.loading = false;
+        state.error = action.payload || true;
+        state.isLoggedIn = false;
+        state.user = null;
+      })
       .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
         const { recipeId, add } = action.payload;
         if (add) {
