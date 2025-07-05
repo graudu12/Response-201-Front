@@ -1,25 +1,18 @@
-
- .RecipesList {
-display: flex;
-align-items: flex-start;
-justify-content: flex-start;
-flex-direction: column;
-gap: 16px;
- }
  .recipeListContainer {
-    padding: 0px 16px;
-width: 393px;
-height: 6102px;
+    padding: 48px 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 16px;
   }
    .FormRecipes {
     display: flex;
-align-items: flex-start;
-justify-content: flex-start;
-flex-direction: column;
-gap: 16px;
-width: 361px;
-height: 39px;
-
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    user-select: none;
   }
   .Recipes {
    font-weight: 600;
