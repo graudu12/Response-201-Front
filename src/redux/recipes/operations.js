@@ -121,12 +121,10 @@ export const fetchMyRecipes = createAsyncThunk(
         "https://response-201-back.onrender.com/api/recipes/myRecipes",
         { params }
       );
-
+      console.log("MY RECIPES RESPONSE:", res.data);
       return {
-        //items: response.data.data.enrichedRecipes,
-        totalItems: res.data.data.totalItems,
-        items: res.data.data,
-        //totalItems: res.data.data.length,
+        totalItems: res.data.data.pagination.totalItems,
+        items: res.data.data.recipes,
         append: false,
       };
     } catch (error) {
@@ -144,10 +142,11 @@ export const fetchFavoriteRecipes = createAsyncThunk(
         "https://response-201-back.onrender.com/api/recipes/favorites",
         { params }
       );
+      console.log("MY RECIPES RESPONSE:", res.data);
       return {
-        items: res.data.data,
+        items: res.data.data.recipes,
         append: false,
-        totalItems: res.data.totalItems || res.data.data.length,
+        totalItems: res.data.data.pagination.totalItems,
       };
     } catch (error) {
       return thunkAPI.rejectWithValue("Error fetching favorite recipes");

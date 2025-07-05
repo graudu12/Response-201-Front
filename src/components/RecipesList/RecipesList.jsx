@@ -85,10 +85,16 @@ const RecipesList = ({ mode = "" }) => {
   };
 
   useEffect(() => {
-    if (page > 1 && recipesListRef.current) {
+    if (
+      page > 1 &&
+      recipesListRef.current &&
+      recipesListRef.current.children != null &&
+      recipesListRef.current.children.length > 0
+    ) {
       setTimeout(() => {
         requestAnimationFrame(() => {
           const list = recipesListRef.current;
+          if (!list || !list.children) return;
           // Знаходимо останній елемент в списку
           const lastRecipe = list.children[list.children.length - 1];
           if (lastRecipe) {
@@ -99,8 +105,8 @@ const RecipesList = ({ mode = "" }) => {
     }
   }, [page]);
 
-  //const recipesToShow = recipes.slice(0, page * recipesPerPage);
-  const recipesToShow = recipes;
+  const recipesToShow = recipes.slice(0, page * recipesPerPage);
+  //const recipesToShow = recipes;
   return (
     <div className={styles.recipeListContainer}>
       <div className={styles.FormRecipes}>
