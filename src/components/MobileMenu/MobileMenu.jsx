@@ -73,7 +73,7 @@ const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
               </div>
 
               <NavLink
-                to="/add"
+                to="/add-recipe"
                 className={clsx(css.mobileButton)}
                 onClick={onClose}
               >

@@ -1,7 +1,6 @@
-//src/redux/recipes/operations.js
+//src / redux / recipes / operations.js;
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
   async (
@@ -18,7 +17,6 @@ export const fetchRecipes = createAsyncThunk(
       const params = { page, perPage };
       if (category) params.category = category;
       if (ingredient) params.ingredient = ingredient;
-
 
       const response = await axios.get(
         "https://response-201-back.onrender.com/api/recipes",
@@ -104,6 +102,54 @@ export const fetchRecipesByIngredients = createAsyncThunk(
         error.response?.data?.message ||
           "Помилка при пошуку рецептів за інгредієнтами"
       );
+    }
+  }
+);
+export const fetchMyRecipes = createAsyncThunk(
+  "recipes/fetchMyRecipes",
+  async ({ page = 1, perPage = 12 } = {}, thunkAPI) => {
+    try {
+      /*const reduxState = thunkAPI.getState();
+
+      const token = reduxState.auth.token || localStorage.getItem("token");
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token found");
+      }
+      setAuthHeader(token); // встановлює Authorization в axios*/
+      const params = { page, perPage };
+      const res = await axios.get(
+        "https://response-201-back.onrender.com/api/recipes/myRecipes",
+        { params }
+      );
+      console.log("MY RECIPES RESPONSE:", res.data);
+      return {
+        totalItems: res.data.data.pagination.totalItems,
+        items: res.data.data.recipes,
+        append: false,
+      };
+    } catch (error) {
+      return thunkAPI.rejectWithValue("Error fetching my recipes");
+    }
+  }
+);
+
+export const fetchFavoriteRecipes = createAsyncThunk(
+  "recipes/fetchFavoriteRecipes",
+  async ({ page = 1, perPage = 12 } = {}, thunkAPI) => {
+    try {
+      const params = { page, perPage };
+      const res = await axios.get(
+        "https://response-201-back.onrender.com/api/recipes/favorites",
+        { params }
+      );
+      console.log("MY RECIPES RESPONSE:", res.data);
+      return {
+        items: res.data.data.recipes,
+        append: false,
+        totalItems: res.data.data.pagination.totalItems,
+      };
+    } catch (error) {
+      return thunkAPI.rejectWithValue("Error fetching favorite recipes");
     }
   }
 );

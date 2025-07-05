@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import ProfileNavigation from "../../components/ProfileNavigation/ProfileNavigation";
 import RecipesList from "../../components/RecipesList/RecipesList";
-import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
+//import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
 // import Filters from "../../components/Filters/Filters"; // опціонально
 import css from "./ProfilePage.module.css";
 
@@ -16,8 +16,7 @@ const ProfilePage = () => {
       {/* Якщо потрібен фільтр — розкоментуй */}
       {/* <Filters /> */}
 
-      <RecipesList type={recipeType} />
-      <LoadMoreBtn />
+      <RecipesList mode={recipeType} />
     </section>
   );
 };

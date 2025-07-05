@@ -24,9 +24,9 @@ export default function SaveFavoriteButton({ small, recipeId }) {
       }
       await dispatch(toggleFavoriteRecipeAsync(recipeId)).unwrap();
     } catch (error) {
-      if (!small) {
-        toast.error("Failed to add to favorites 😢");
-      }
+      /*if (!small) {*/
+      toast.error("Failed to add to favorites 😢");
+      /*}*/
     }
   };
   const handleMouseEnter = () => {

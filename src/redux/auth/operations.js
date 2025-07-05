@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 axios.defaults.baseURL =
   /*"http://localhost:3000";*/ "https://response-201-back.onrender.com/api";
 
-const setAuthHeader = (token) => {
+export const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -16,18 +16,21 @@ export const register = createAsyncThunk(
   "/auth/register",
   async (newUser, thunkAPI) => {
     try {
-      /*const res =*/ await axios.post("/auth / register", newUser);
+      await axios.post("/auth/register", newUser);
+
       const loginResponse = await axios.post("/auth/login", {
         email: newUser.email,
         password: newUser.password,
       });
 
       const accessToken = loginResponse.data.data.accessToken;
-      const user = loginResponse.data.data.user;
-
       setAuthHeader(accessToken);
       localStorage.setItem("token", accessToken);
-      return { user, accessToken };
+
+      const currentUserResponse = await axios.get("/user/current");
+      //const currentUserResponse = await axios.get("/auth/refresh");
+
+      return { accessToken, user: currentUserResponse.data.data };
     } catch (e) {
       if (
         e.response &&
@@ -37,7 +40,9 @@ export const register = createAsyncThunk(
         return thunkAPI.rejectWithValue("This email is already in use.");
       }
 
-      return thunkAPI.rejectWithValue(e.message || "Registration failed.");
+      return thunkAPI.rejectWithValue(
+        e.response.data.message || "Registration failed"
+      );
     }
   }
 );
@@ -51,9 +56,12 @@ export const logIn = createAsyncThunk(
       setAuthHeader(accessToken);
       localStorage.setItem("token", accessToken);
       const userRes = await axios.get("/user/current");
+      //const userRes = await axios.get("/auth/refresh");
       return { accessToken, user: userRes.data || null };
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      return thunkAPI.rejectWithValue(
+        e.response.data.message || "Login failed"
+      );
     }
   }
 );
@@ -81,7 +89,8 @@ export const refreshUser = createAsyncThunk(
       }
       setAuthHeader(persistedToken);
 
-      //const res = await axios.get("/auth/refresh");
+      //const refreshRes = await axios.get("/auth/refresh");
+
       const res = await axios.get("/user/current");
       return res.data.data;
     } catch (error) {
