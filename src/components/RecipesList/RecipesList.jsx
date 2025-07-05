@@ -104,8 +104,8 @@ const RecipesList = ({ mode = "" }) => {
   return (
     <div className={styles.recipeListContainer}>
       <div className={styles.FormRecipes}>
-        <Filters totalItems={totalItems} onChange={handleFilterChange} />
         <h2 className={styles.Recipes}>Recipes</h2>
+        <Filters totalItems={totalItems} onChange={handleFilterChange} />
       </div>
 
       {loading ? (
