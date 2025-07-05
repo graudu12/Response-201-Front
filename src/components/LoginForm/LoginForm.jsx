@@ -25,7 +25,7 @@ export default function LoginForm() {
   const passwordFieldId = useId();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isRefreshing } = useSelector(selectRefreshing);
+  const isRefreshing = useSelector(selectRefreshing);
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
