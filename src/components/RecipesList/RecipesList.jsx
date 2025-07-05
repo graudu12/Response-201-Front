@@ -108,29 +108,31 @@ const RecipesList = ({ mode = "" }) => {
   const recipesToShow = recipes.slice(0, page * recipesPerPage);
   //const recipesToShow = recipes;
   return (
-    <div className={styles.recipeListContainer}>
-      <div className={styles.FormRecipes}>
-        <h2 className={styles.Recipes}>Recipes</h2>
-        <Filters totalItems={totalItems} onChange={handleFilterChange} />
-      </div>
+    <section className={styles.RecipesList}>
+  <div className={styles.recipeListContainer}>
+    <div className={styles.FormRecipes}>
+      <h2 className={styles.Recipes}>Recipes</h2>
+    </div>
 
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          {!loading && recipes.length === 0 && (
-            <p className={styles.noRecipesText}>No recipes found.</p>
-          )}
+   <Filters totalItems={totalItems} onChange={handleFilterChange} />
 
-          <div className={styles.recipeslist} ref={recipesListRef}>
-            {recipesToShow.map((recipe) => (
-              <RecipeCard
-                key={recipe._id}
-                recipe={recipe}
-                onToggleFavorite={handleToggleFavorite}
-              />
-            ))}
-          </div>
+    {loading ? (
+      <Loading />
+    ) : (
+      <>
+        {!loading && recipes.length === 0 && (
+  <p className={styles.noRecipesText}>No recipes found.</p>
+)}
+
+        <div className={styles.recipeslist} ref={recipesListRef}>
+          {recipesToShow.map((recipe) => (
+            <RecipeCard
+              key={recipe._id}
+              recipe={recipe}
+              onToggleFavorite={handleToggleFavorite}
+            />
+          ))}
+        </div>
 
           <div className={styles.BtnLoadWrapper}>
             <div className={styles.BtnLoad}>
@@ -139,9 +141,11 @@ const RecipesList = ({ mode = "" }) => {
               )}
             </div>
           </div>
-        </>
-      )}
-    </div>
-  );
-};
+        </div>
+      </>
+    )}
+  </div>
+  </section>
+);
+}
 export default RecipesList;
