@@ -72,6 +72,10 @@ li::marker {
   font-size: x-small;
 }
 
+ol {
+  list-style: none;
+  padding-left: 0;
+}
 .ingredients li:not(:last-child) {
   margin-bottom: 16px;
 }
