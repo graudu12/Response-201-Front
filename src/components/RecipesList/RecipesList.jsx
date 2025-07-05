@@ -81,12 +81,13 @@ useEffect(() => {
   const recipesToShow = recipes.slice(0, page * recipesPerPage);
 
   return (
+    <section className={styles.RecipesList}>
   <div className={styles.recipeListContainer}>
     <div className={styles.FormRecipes}>
       <h2 className={styles.Recipes}>Recipes</h2>
-      <Filters totalItems={totalItems} onChange={handleFilterChange} />
-      
     </div>
+
+   <Filters totalItems={totalItems} onChange={handleFilterChange} />
 
     {loading ? (
       <Loading />
@@ -116,6 +117,7 @@ useEffect(() => {
       </>
     )}
   </div>
+  </section>
 );
 }
 export default RecipesList;

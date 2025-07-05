@@ -10,6 +10,7 @@ const ProfilePage = () => {
 
   return (
     <section className={css.profilePage}>
+      <h1 className={css.title}>My profile</h1>
       <ProfileNavigation />
 
       {/* Якщо потрібен фільтр — розкоментуй */}

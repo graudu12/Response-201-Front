@@ -11,12 +11,12 @@ export default function ProfileNavigation() {
       <ul className={css.navList}>
         <li className={css.navItem}>
           <NavLink to="/profile/own" className={getClassActiveLink}>
-            Own Recipes
+            My Recipes
           </NavLink>
         </li>
         <li className={css.navItem}>
           <NavLink to="/profile/favorites" className={getClassActiveLink}>
-            Favorites Recipes
+            Saved Recipes
           </NavLink>
         </li>
       </ul>

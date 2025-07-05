@@ -3,7 +3,7 @@
   align-items: center;
   gap: 24px;
   list-style: none;
-  padding: 0;
+  padding-bottom: 16px;
   margin: 0;
 }
 
@@ -12,7 +12,7 @@
 }
 .link {
   position: relative;
-  color: #fff;
+  color: #292424;
   text-decoration: none;
   font-size: 12px;
   font-weight: 500;
