@@ -4,14 +4,14 @@ import Logo from "../Logo/Logo";
 import css from "./Footer.module.css";
 
 const Footer = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    if (!isAuthenticated) {
+    if (!isLoggedIn) {
       navigate("/login");
     } else {
-      navigate("/profile");
+      navigate("/profile/own");
     }
   };
 
