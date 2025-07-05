@@ -38,7 +38,9 @@ export const register = createAsyncThunk(
         return thunkAPI.rejectWithValue("This email is already in use.");
       }
 
-      return thunkAPI.rejectWithValue(e.message || "Registration failed.");
+      return thunkAPI.rejectWithValue(
+        e.response.data.message || "Registration failed"
+      );
     }
   }
 );
@@ -54,7 +56,9 @@ export const logIn = createAsyncThunk(
       const userRes = await axios.get("/user/current");
       return { accessToken, user: userRes.data || null };
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      return thunkAPI.rejectWithValue(
+        e.response.data.message || "Login failed"
+      );
     }
   }
 );
