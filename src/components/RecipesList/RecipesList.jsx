@@ -39,21 +39,20 @@ const RecipesList = () => {
     setPage(1);
   }, []);
 
-useEffect(() => {
-  setLoading(true);
-  dispatch(fetchRecipes({
-    page,
-    perPage: recipesPerPage,
-    category: selectedFilters.category,
-    ingredient: selectedFilters.ingredient,
-  }))
-    .unwrap()
-    .then(() => setLoading(false))
-    .catch(() => setLoading(false));
-}, [dispatch, page, selectedFilters]);
-
-
-
+  useEffect(() => {
+    setLoading(true);
+    dispatch(
+      fetchRecipes({
+        page,
+        perPage: recipesPerPage,
+        category: selectedFilters.category,
+        ingredient: selectedFilters.ingredient,
+      })
+    )
+      .unwrap()
+      .then(() => setLoading(false))
+      .catch(() => setLoading(false));
+  }, [dispatch, page, selectedFilters]);
 
   const handleToggleFavorite = (id, add) => {
     dispatch(toggleFavoriteRecipeAsync({ id, add }));
@@ -82,42 +81,42 @@ useEffect(() => {
 
   return (
     <section className={styles.RecipesList}>
-  <div className={styles.recipeListContainer}>
-    <div className={styles.FormRecipes}>
-      <h2 className={styles.Recipes}>Recipes</h2>
-    </div>
-
-   <Filters totalItems={totalItems} onChange={handleFilterChange} />
-
-    {loading ? (
-      <Loading />
-    ) : (
-      <>
-        {!loading && recipes.length === 0 && (
-  <p className={styles.noRecipesText}>No recipes found.</p>
-)}
-
-        <div className={styles.recipeslist} ref={recipesListRef}>
-          {recipesToShow.map((recipe) => (
-            <RecipeCard
-              key={recipe._id}
-              recipe={recipe}
-              onToggleFavorite={handleToggleFavorite}
-            />
-          ))}
+      <div className={styles.recipeListContainer}>
+        <div className={styles.FormRecipes}>
+          <h2 className={styles.Recipes}>Recipes</h2>
         </div>
 
-        <div className={styles.BtnLoadWrapper}>
-          <div className={styles.BtnLoad}>
-            {page * recipesPerPage < totalItems && (
-              <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
+        <Filters totalItems={totalItems} onChange={handleFilterChange} />
+
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            {!loading && recipes.length === 0 && (
+              <p className={styles.noRecipesText}>No recipes found.</p>
             )}
-          </div>
-        </div>
-      </>
-    )}
-  </div>
-  </section>
-);
-}
+
+            <div className={styles.recipeslist} ref={recipesListRef}>
+              {recipesToShow.map((recipe) => (
+                <RecipeCard
+                  key={recipe._id}
+                  recipe={recipe}
+                  onToggleFavorite={handleToggleFavorite}
+                />
+              ))}
+            </div>
+
+            <div className={styles.BtnLoadWrapper}>
+              <div className={styles.BtnLoad}>
+                {page * recipesPerPage < totalItems && (
+                  <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </section>
+  );
+};
 export default RecipesList;

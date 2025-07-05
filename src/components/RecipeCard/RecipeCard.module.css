@@ -1,19 +1,19 @@
 .recipeCard {
   display: flex;
-align-items: flex-start;
-justify-content: flex-start;
-flex-direction: column;
-gap: 16px;
-border-radius: 16px;
-padding: 12px;
-width: 361px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 16px;
+  padding: 12px;
+  width: 361px;
   background: #5e7057;
 }
 
 .imageCard {
   border-radius: 8px;
-width: 337px;
-height: 230px;
+  width: 337px;
+  height: 230px;
 }
 
 .recipeForm {
@@ -87,7 +87,7 @@ height: 230px;
   flex-direction: row;
   gap: 8px;
   width: 100%;
-          margin-top: auto;
+  margin-top: auto;
 }
 
 .learnMoreButton {
@@ -107,112 +107,111 @@ height: 230px;
 }
 
 @media only screen and (min-width: 1280px) {
+  .recipeCard {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 16px;
+    user-select: none;
+    padding: 12px;
+    box-sizing: border-box;
+    width: 288px;
+    background: #5e7057;
+  }
 
-.recipeCard {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 16px;
-  border-radius: 16px;
-  user-select: none;
-  padding: 12px;
-  box-sizing: border-box;
-  width: 288px;
-  background: #5e7057;
-}
-
-.imageCard {
-  border-radius: 8px;
-  width: 264px;
-  height: 178px;
-}
-
-.recipeForm {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  position: relative;
-  align-items: center;
-  gap: 8px;
+  .imageCard {
+    border-radius: 8px;
     width: 264px;
-  height: 58px;
-}
+    height: 178px;
+  }
 
-.recipeTitle {
-  font-weight: 700;
-  font-size: 24px;
-  color: #000;
-  margin-right: auto;
-          margin-top: auto;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  .recipeForm {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    gap: 8px;
+    width: 264px;
+    height: 58px;
+  }
 
-.recipeTitleTime {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 4px;
-  border-radius: 8px;
-  padding: 2px 8px 2px 4px;
-  background: #fff;
-  margin-left: auto;
-  margin-bottom: auto;
-}
+  .recipeTitle {
+    font-weight: 700;
+    font-size: 24px;
+    color: #000;
+    margin-right: auto;
+    margin-top: auto;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-.yourSpan {
-  font-weight: 600;
-  font-size: 12px;
-  color: #000;
-}
+  .recipeTitleTime {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 4px;
+    border-radius: 8px;
+    padding: 2px 8px 2px 4px;
+    background: #fff;
+    margin-left: auto;
+    margin-bottom: auto;
+  }
 
-.recipeDescCal {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 8px;
-}
+  .yourSpan {
+    font-weight: 600;
+    font-size: 12px;
+    color: #000;
+  }
 
-/* Обидва варіанти — залиш один, який використовується в JSX */
-.descriptioncss {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.55;
-  color: #000;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  .recipeDescCal {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
 
-.formButton {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: row;
-  gap: 8px;
-  width: 100%;
-}
+  /* Обидва варіанти — залиш один, який використовується в JSX */
+  .descriptioncss {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #000;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-.learnMoreButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 8px;
-  border: 1px solid #000;
-  border-radius: 8px;
-  padding: 8px;
-  font-weight: 600;
-  font-size: 16px;
-  color: #000;
-  flex-grow: 1;
-}
+  .formButton {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .learnMoreButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    flex-grow: 1;
+  }
 }
