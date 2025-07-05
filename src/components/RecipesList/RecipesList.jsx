@@ -76,8 +76,8 @@ const RecipesList = ({ mode = "" }) => {
     fetch();
   }, [dispatch, page, selectedFilters, mode]);
 
-  const handleToggleFavorite = (id, add) => {
-    dispatch(toggleFavoriteRecipeAsync({ id, add }));
+  const handleToggleFavorite = (id) => {
+    dispatch(toggleFavoriteRecipeAsync({ recipeId: id, mode }));
   };
 
   const loadMore = () => {
@@ -127,6 +127,7 @@ const RecipesList = ({ mode = "" }) => {
               <RecipeCard
                 key={recipe._id}
                 recipe={recipe}
+                mode={mode}
                 onToggleFavorite={handleToggleFavorite}
               />
             ))}
