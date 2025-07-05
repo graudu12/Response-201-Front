@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import styles from "./Filters.module.css";
 import axios from "axios";
+import sprite from "../../svg/sprite.svg";
 
 const Filters = ({ onChange, totalItems }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [categories, setCategories] = useState([]);
   const [ingredientOptions, setIngredientOptions] = useState([]);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
     axios
@@ -41,39 +43,109 @@ const Filters = ({ onChange, totalItems }) => {
     setSelectedIngredient("");
   };
   return (
-    <div className={styles.filters}>
-      <p className={styles.recipes}>{totalItems} recipes</p>
-      <div className={styles.inputWithIcon}>
-        <div className={styles.buttonReset}>
-          <button onClick={handleResetFilters} className={styles.resetFilters}>
-            Reset filters
-          </button>
-        </div>
-        <select
-          className={styles.filterSelect}
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          <option value="">Category</option>
-          {categories.map((cat) => (
-            <option key={cat._id} value={cat.name}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
+    <div className={styles.filtersWrapper}>
+      <p className={`${styles.recipes} ${styles.mobileOnly}`}>
+        {totalItems} recipes
+      </p>
 
-        <select
-          className={styles.filterSelect}
-          value={selectedIngredient}
-          onChange={(e) => setSelectedIngredient(e.target.value)}
-        >
-          <option value="">Ingredient</option>
-          {ingredientOptions.map((ingredient) => (
-            <option key={ingredient} value={ingredient}>
-              {ingredient}
-            </option>
-          ))}
-        </select>
+      <button
+        className={`${styles.mobileToggleBtn} ${styles.mobileOnly}`}
+        onClick={() => setIsMobileOpen(true)}
+      >
+        Filters
+      </button>
+
+      {/* Дропдаун мобільний */}
+      {isMobileOpen && (
+        <div className={styles.mobileDropdown}>
+          <button
+            className={styles.closeBtn}
+            onClick={() => setIsMobileOpen(false)}
+          >
+            <p className={styles.closeP}>Filters</p>
+            <svg
+              className={styles.icon}
+              width="24"
+              height="24"
+              viewBox="0 0 32 32"
+            >
+              <use href={`${sprite}#icon-close_modal`} />
+            </svg>
+          </button>
+
+          <div className={styles.dropdownContent}>
+            <select
+              className={styles.filterSelect}
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value="">Category</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat.name}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+
+            <select
+              className={styles.filterSelect}
+              value={selectedIngredient}
+              onChange={(e) => setSelectedIngredient(e.target.value)}
+            >
+              <option value="">Ingredient</option>
+              {ingredientOptions.map((ingredient) => (
+                <option key={ingredient} value={ingredient}>
+                  {ingredient}
+                </option>
+              ))}
+            </select>
+
+            <button
+              onClick={handleResetFilters}
+              className={styles.resetFilters}
+            >
+              Reset filters
+            </button>
+          </div>
+        </div>
+      )}
+      <div className={`${styles.filters} ${styles.desktopOnly}`}>
+        <p className={styles.recipes}>{totalItems} recipes</p>
+        <div className={styles.inputWithIcon}>
+          <div className={styles.buttonReset}>
+            <button
+              onClick={handleResetFilters}
+              className={styles.resetFilters}
+            >
+              Reset filters
+            </button>
+          </div>
+          <select
+            className={styles.filterSelect}
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="">Category</option>
+            {categories.map((cat) => (
+              <option key={cat._id} value={cat.name}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className={styles.filterSelect}
+            value={selectedIngredient}
+            onChange={(e) => setSelectedIngredient(e.target.value)}
+          >
+            <option value="">Ingredient</option>
+            {ingredientOptions.map((ingredient) => (
+              <option key={ingredient} value={ingredient}>
+                {ingredient}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </div>
   );

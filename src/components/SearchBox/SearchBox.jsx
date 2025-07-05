@@ -1,4 +1,3 @@
-//src/components/SearchBox/SearchBox.jsx
 import { useDispatch, useSelector } from "react-redux";
 import { useId, useState } from "react";
 import { toast } from "react-toastify";
@@ -8,7 +7,6 @@ import { changeFilter } from "../../redux/filters/slice.js";
 import { selectNameFilter } from "../../redux/filters/selectors.js";
 import { fetchRecipesByQuery } from "../../redux/recipes/operations.js";
 import NotFound from "../NotFound/NotFound";
-
 import { selectNotFound } from "../../redux/recipes/selectors";
 
 export default function SearchBox() {
@@ -18,9 +16,7 @@ export default function SearchBox() {
   const notFound = useSelector(selectNotFound);
   const [input, setInput] = useState(name || "");
 
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
-  };
+  const handleInputChange = (e) => setInput(e.target.value);
 
   const handleSubmit = () => {
     const trimmed = input.trim();
@@ -28,7 +24,6 @@ export default function SearchBox() {
       toast.error("Введіть назву рецепта");
       return;
     }
-
     dispatch(changeFilter({ name: trimmed }));
     dispatch(fetchRecipesByQuery(trimmed));
   };
@@ -37,17 +32,15 @@ export default function SearchBox() {
     if (e.key === "Enter") handleSubmit();
   };
 
-   const handleRetry = () => {
-     dispatch(changeFilter({ name: "" })); 
-     setInput(""); 
-   };
+  const handleRetry = () => {
+    dispatch(changeFilter({ name: "" }));
+    setInput("");
+  };
 
-   if (notFound) {
-     return <NotFound onRetry={handleRetry} />;
-   }
+  if (notFound) return <NotFound onRetry={handleRetry} />;
 
   return (
-    <div className={css.container}>
+    <div className={css.searchBox}>
       <input
         id={`${fieldId}-name`}
         className={css.searchInput}

@@ -1,14 +1,13 @@
 import css from "../LoginForm/LoginForm.module.css";
-import { logIn } from "../../redux/auth/operations";
-import { selectRefreshing } from "../../redux/auth/selectors";
+import { logIn, refreshUser } from "../../redux/auth/operations";
+import { selectRefreshing, selectLoggedIn } from "../../redux/auth/selectors";
 
 import toast from "react-hot-toast";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useId, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserSchema = Yup.object().shape({
   email: Yup.string()
@@ -25,14 +24,16 @@ export default function LoginForm() {
   const passwordFieldId = useId();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const isRefreshing = useSelector(selectRefreshing);
+  const isLoggedIn = useSelector(selectLoggedIn);
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
-    if (shouldRedirect && !isRefreshing) {
+    if (shouldRedirect && !isRefreshing && isLoggedIn) {
       navigate("/");
     }
-  }, [shouldRedirect, isRefreshing, navigate]);
+  }, [shouldRedirect, isRefreshing, isLoggedIn, navigate]);
 
   return (
     <div className={css.pageWrapper}>
@@ -44,12 +45,11 @@ export default function LoginForm() {
           onSubmit={(values, actions) => {
             dispatch(logIn(values))
               .unwrap()
-              .then(() => {
+              .then(async () => {
+                await dispatch(refreshUser()).unwrap(); // ⬅️ ГАРАНТІЯ оновлення user
                 toast.success("Login successful");
                 actions.resetForm();
-                //navigate("/");
-                setShouldRedirect(true);
-                //window.location.href = "/";
+                setShouldRedirect(true); // useEffect → navigate("/")
               })
               .catch(() => {
                 toast.error("Login failed");

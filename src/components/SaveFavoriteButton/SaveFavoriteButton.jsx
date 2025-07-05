@@ -12,7 +12,7 @@ export default function SaveFavoriteButton({ small, recipeId }) {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(false);
   const favoriteRecipes = useSelector(
-    (state) => state.auth.user.favoriteRecipes
+    (state) => state.auth.user?.favoriteRecipes ?? []
   );
   const isFavorite = favoriteRecipes.includes(recipeId);
 
