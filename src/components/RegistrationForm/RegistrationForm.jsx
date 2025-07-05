@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { register } from "../../redux/auth/operations";
+import { selectLoggedIn, selectRefreshing } from "../../redux/auth/selectors";
 
 const RegisterSchema = Yup.object().shape({
   name: Yup.string()
@@ -35,14 +36,23 @@ export default function RegisterForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+  const isLoggedIn = useSelector(selectLoggedIn);
+  const isRefreshing = useSelector(selectRefreshing);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  const { token } = useSelector((state) => state.auth);
+  //const { token } = useSelector((state) => state.auth);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (token) {
       navigate("/"); // редирект після входу
     }
-  }, [token, navigate]);
+  }, [token, navigate]);*/
+
+  useEffect(() => {
+    if (shouldRedirect && !isRefreshing && isLoggedIn) {
+      navigate("/");
+    }
+  }, [shouldRedirect, isRefreshing, isLoggedIn, navigate]);
 
   return (
     <div className={css.pageWrapper}>
@@ -63,12 +73,13 @@ export default function RegisterForm() {
           validationSchema={RegisterSchema}
           onSubmit={(values, actions) => {
             const { name, email, password } = values;
+
             dispatch(register({ name, email, password }))
               .unwrap()
               .then(() => {
                 toast.success("Registration successful");
                 actions.resetForm();
-                navigate("/");
+                setShouldRedirect(true);
               })
               .catch((err) => {
                 toast.error(err || "Registration failed");
