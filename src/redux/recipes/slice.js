@@ -4,6 +4,8 @@ import {
   fetchRecipes,
   fetchRecipesByQuery,
   toggleFavoriteRecipeAsync,
+  fetchMyRecipes,
+  fetchFavoriteRecipes,
 } from "./operations";
 
 const initialState = {
@@ -90,6 +92,32 @@ const recipesSlice = createSlice({
         if (recipe) {
           recipe.isFavorite = add;
         }
+      })
+      .addCase(fetchMyRecipes.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchMyRecipes.fulfilled, (state, action) => {
+        state.items = action.payload.items;
+        state.totalItems = action.payload.totalItems;
+        state.loading = false;
+      })
+      .addCase(fetchMyRecipes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchFavoriteRecipes.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
+        state.items = action.payload.items;
+        state.totalItems = action.payload.totalItems;
+        state.loading = false;
+      })
+      .addCase(fetchFavoriteRecipes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
