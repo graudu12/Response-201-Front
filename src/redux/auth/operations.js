@@ -27,6 +27,7 @@ export const register = createAsyncThunk(
       localStorage.setItem("token", accessToken);
 
       const currentUserResponse = await axios.get("/user/current");
+      //const currentUserResponse = await axios.get("/auth/refresh");
 
       return { user: currentUserResponse.data, accessToken };
     } catch (e) {
@@ -38,7 +39,9 @@ export const register = createAsyncThunk(
         return thunkAPI.rejectWithValue("This email is already in use.");
       }
 
-      return thunkAPI.rejectWithValue(e.message || "Registration failed.");
+      return thunkAPI.rejectWithValue(
+        e.response.data.message || "Registration failed"
+      );
     }
   }
 );
@@ -52,9 +55,12 @@ export const logIn = createAsyncThunk(
       setAuthHeader(accessToken);
       localStorage.setItem("token", accessToken);
       const userRes = await axios.get("/user/current");
+      //const userRes = await axios.get("/auth/refresh");
       return { accessToken, user: userRes.data || null };
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      return thunkAPI.rejectWithValue(
+        e.response.data.message || "Login failed"
+      );
     }
   }
 );
