@@ -1,4 +1,119 @@
-.filters {
+.filtersWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 208px;
+  width: 100%;
+  position: relative;
+  margin-top: 16px;
+}
+.recipes {
+  font-weight: 600;
+  font-size: 18px;
+  color: #000;
+}
+.mobileToggleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4px;
+  border-radius: 8px;
+  padding: 0px 0px 4px 0px;
+  width: 67px;
+  height: 28px;
+  font-weight: 600;
+  font-size: 12px;
+  color: #000;
+  border: none;
+}
+.mobileDropdown {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 8px;
+  padding: 16px 12px;
+  width: 100%;
+  max-width: 320px;
+  background: #fff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4px;
+  border-radius: 8px;
+  padding: 0px 0px 4px 0px;
+  margin-left: auto;
+  border: none;
+}
+.closeP {
+  font-weight: 600;
+  font-size: 12px;
+  color: #000;
+}
+.dropdownContent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+  width: 296px;
+  height: 133px;
+}
+.filterSelect {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 8px;
+  width: 296px;
+  height: 33px;
+  color: #595d62;
+}
+.resetFilters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4px;
+  border-bottom: 1px solid #000;
+  padding: 0px 0px 4px 0px;
+  user-select: none;
+  font-weight: 600;
+  font-size: 12px;
+  border: none;
+}
+.desktopOnly {
+  display: none;
+}
+
+.mobileOnly {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .desktopOnly {
+    display: block;
+  }
+  .mobileOnly {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .filters {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -40,7 +155,7 @@
     font-size: 12px;
     border: none;
   }
- .filterSelect {
+  .filterSelect {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
     padding: 4px 8px;
@@ -52,3 +167,7 @@
     font-size: 16px;
     line-height: 1.55;
   }
+  .filtersWrapper {
+    position: relative;
+  }
+}
