@@ -1,67 +1,55 @@
-/* .recipeListContainer {
-  padding: 0px 16px;
-} */
-/* .RecipesList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
-  gap: 24px;
-  margin: 0 auto;
-} */
+.recipeListContainer {
+  padding: 64px 20px;
+  background-color: #f6f6f6;
+}
 
-/* .Recipes {
+.FormRecipes {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.Recipes {
   font-weight: 600;
   font-size: 32px;
   color: #000;
   margin-bottom: 8px;
-} */
-
-@media only screen and (min-width: 768px) {
 }
 
-@media only screen and (min-width: 1280px) {
-  .recipeListContainer {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 16px;
-  }
+.recipeslist {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
+  gap: 24px;
+  justify-content: center;
+}
 
-  .FormRecipes {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 16px;
-    user-select: none;
-  }
-  .Recipes {
-    font-weight: 600;
-    font-size: 40px;
-    color: #000;
-  }
+.noRecipesText {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
+}
 
-  .recipeslist {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: row;
-    gap: 24px;
-  }
-  .BtnLoadWrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 24px;
-  }
-  .BtnLoad {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    gap: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
+.BtnLoadWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.BtnLoad button {
+  background-color: #9b6c43;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.BtnLoad button:hover {
+  background-color: #855834;
 }
