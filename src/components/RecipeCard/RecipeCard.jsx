@@ -1,6 +1,6 @@
-import styles from './RecipeCard.module.css';
-import SaveFavoriteButton from '../SaveFavoriteButton/SaveFavoriteButton';
-import { useNavigate } from 'react-router-dom';
+import styles from "./RecipeCard.module.css";
+import SaveFavoriteButton from "../SaveFavoriteButton/SaveFavoriteButton";
+import { useNavigate } from "react-router-dom";
 
 const RecipeCard = ({ recipe, mode }) => {
   const navigate = useNavigate();
@@ -25,7 +25,8 @@ const RecipeCard = ({ recipe, mode }) => {
               className={styles.icon}
               width="24"
               height="24"
-              viewBox="0 0 32 32">
+              viewBox="0 0 32 32"
+            >
               <use href="/svg/sprite.svg#icon-cooktime" />
             </svg>
             <span className={styles.yourSpan}>{cookingTime}</span>
@@ -34,15 +35,16 @@ const RecipeCard = ({ recipe, mode }) => {
       </div>
       <div className={styles.recipeDescCal}>
         <p className={styles.descriptioncss}>{recipeDescription}</p>
-        <p className={styles.descriptioncss}> - {calories ?? '?'} cals</p>
+        <p className={styles.descriptioncss}>- {calories} cals</p>
       </div>
       <div className={styles.formButton}>
         <button
           className={styles.learnMoreButton}
-          onClick={() => navigate(`/recipes/${_id}`)}>
+          onClick={() => navigate(`/recipes/${_id}`)}
+        >
           Learn More
         </button>
-        {mode !== 'own' && (
+        {mode !== "own" && (
           <SaveFavoriteButton small mode={mode} recipeId={_id} />
         )}
       </div>

@@ -1,10 +1,13 @@
+.filtersWrapper {
+  position: relative;
+}
+
 .mobTab {
   max-width: 393px;
   display: flex;
   position: relative;
   margin-bottom: 16px;
   justify-content: space-between;
-  position: relative;
 }
 .recipes {
   display: block;
@@ -29,7 +32,7 @@
 }
 .mobileDropdown {
   position: absolute;
-  /* top: 0; */
+  top: 0;
   right: 0;
   z-index: 10;
   display: flex;
@@ -40,7 +43,7 @@
   width: 100%;
   max-width: 320px;
   background: #fff;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: -10px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .closeBtn {
@@ -53,6 +56,10 @@
   padding: 0px 0px 4px 0px;
   margin-left: auto;
   border: none;
+}
+.iconClose {
+  stroke: currentColor;
+  color: #000000;
 }
 .closeP {
   font-weight: 600;
@@ -172,8 +179,5 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 1.55;
-  }
-  .filtersWrapper {
-    position: relative;
   }
 }

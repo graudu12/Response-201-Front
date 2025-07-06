@@ -64,12 +64,8 @@ const Filters = ({ onChange, totalItems }) => {
             onClick={() => setIsMobileOpen(false)}
           >
             <p className={styles.closeP}>Filters</p>
-            <svg
-              className={styles.icon}
-              width="24"
-              height="24"
-              viewBox="0 0 32 32"
-            >
+
+            <svg className={styles.iconClose} width="24" height="24">
               <use href={`/svg/sprite.svg#icon-close_modal`} />
             </svg>
           </button>
