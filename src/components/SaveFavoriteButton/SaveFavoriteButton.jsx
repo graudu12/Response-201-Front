@@ -2,26 +2,31 @@ import { useState } from "react";
 import styles from "./SaveFavoriteButton.module.css";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { toggleFavoriteRecipeAsync } from "../../redux/recipes/operations";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import AuthPromptModal from "../AuthPromptModal/AuthPromptModal";
+
 function SaveFavoriteButton({ small, recipeId, mode }) {
-  const isLoggedIn = useSelector(selectIsLoggedIn); // потом добавь вместо функции true, selectIsLoggedIn
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [hovered, setHovered] = useState(false);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const favoriteRecipes = useSelector(
     (state) => state.auth.user?.favoriteRecipes ?? []
   );
+
+  const [hovered, setHovered] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   const isFavorite = favoriteRecipes.includes(recipeId);
 
   const handleToggle = async () => {
     const wasFavorite = isFavorite;
+
+    if (!isLoggedIn) {
+      setShowModal(true);
+      return;
+    }
+
     try {
-      if (!isLoggedIn) {
-        navigate("/login");
-        return;
-      }
       await dispatch(toggleFavoriteRecipeAsync({ recipeId, mode })).unwrap();
     } catch (error) {
       if (!wasFavorite) {
@@ -31,30 +36,36 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
       }
     }
   };
+
   const handleMouseEnter = () => {
     if (small && isFavorite) setHovered(true);
   };
+
   const handleMouseLeave = () => {
     setHovered(false);
   };
+
   const iconId = hovered ? "icon-delete" : "icon-saved";
+
   return (
-    <button
-      onClick={handleToggle}
-      className={`${
-        small ? styles.smallFavoriteButton : styles.favoriteButton
-      } ${isFavorite ? styles.active : ""}`}
-      aria-label={isFavorite ? "Remove" : "Add to favorites"}
-      onMouseEnter={small ? handleMouseEnter : undefined}
-      onMouseLeave={small ? handleMouseLeave : undefined}
-    >
-      <>
-        <svg className={`${styles.icon}`} width="24" height="24">
+    <>
+      <button
+        onClick={handleToggle}
+        className={`${
+          small ? styles.smallFavoriteButton : styles.favoriteButton
+        } ${isFavorite ? styles.active : ""}`}
+        aria-label={isFavorite ? "Remove" : "Add to favorites"}
+        onMouseEnter={small ? handleMouseEnter : undefined}
+        onMouseLeave={small ? handleMouseLeave : undefined}
+      >
+        <svg className={styles.icon} width="24" height="24">
           <use href={`/svg/sprite.svg#${iconId}`} />
         </svg>
         {!small && (isFavorite ? "Remove from favorites" : "Save")}
-      </>
-    </button>
+      </button>
+
+      <AuthPromptModal isOpen={showModal} onClose={() => setShowModal(false)} />
+    </>
   );
 }
 
