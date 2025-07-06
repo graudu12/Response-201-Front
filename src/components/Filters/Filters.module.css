@@ -1,32 +1,37 @@
-.filtersWrapper {
+.mobTab {
+  max-width: 393px;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: row;
-  gap: 208px;
-  width: 100%;
+  /* align-items: center; */
+  /* justify-content: flex-start; */
+  /* flex-direction: row; */
+  /* gap: 208px; */
+  /* width: 100%; */
   position: relative;
-  margin-top: 16px;
+  margin-bottom: 16px;
+  justify-content: space-between;
 }
 .recipes {
+  display: block;
   font-weight: 600;
   font-size: 18px;
   color: #000;
+  margin: 0;
+  /* margin-bottom: 16px; */
+  padding: 6px 0;
 }
 .mobileToggleBtn {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: row;
   gap: 4px;
-  border-radius: 8px;
-  padding: 0px 0px 4px 0px;
-  width: 67px;
-  height: 28px;
+  background-color: transparent;
   font-weight: 600;
   font-size: 12px;
   color: #000;
   border: none;
+}
+.filterIcon {
+  fill: transparent;
+  stroke: #000;
 }
 .mobileDropdown {
   position: absolute;
@@ -99,31 +104,38 @@
   display: none;
 }
 
-.mobileOnly {
+/* .mobileOnly {
   display: block;
-}
+} */
 
-@media (min-width: 768px) {
-  .desktopOnly {
+@media screen and (min-width: 768px) {
+  /* .desktopOnly {
     display: block;
   }
   .mobileOnly {
     display: none;
+  } */
+  .mobTab {
+    min-width: 768px;
   }
 }
 
-@media only screen and (min-width: 1280px) {
+@media only screen and (min-width: 1440px) {
+  .mobTab {
+    display: none;
+  }
   .filters {
     display: flex;
-    align-items: center;
+    margin-bottom: 16px;
+    /* align-items: center;
     justify-content: flex-start;
     flex-direction: row;
     user-select: none;
-    width: 1225px;
-    height: 33px;
+    max-width: 1440px; */
+    /* height: 33px; */
   }
   .recipes {
-    font-weight: 600;
+    /* font-weight: 600; */
     font-size: 18px;
     color: #000;
   }
@@ -167,7 +179,7 @@
     font-size: 16px;
     line-height: 1.55;
   }
-  .filtersWrapper {
+  /* .filtersWrapper {
     position: relative;
-  }
+  } */
 }
