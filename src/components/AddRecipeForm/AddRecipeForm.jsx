@@ -1,10 +1,10 @@
 import css from "./AddRecipeForm.module.css";
-
+import toast from "react-hot-toast";
 import clsx from 'clsx';
 import axios from "axios";
 import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
-import { Formik, Form, Field} from "formik";
+import { Formik, Form, Field, ErrorMessage} from "formik";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addNewRecipe } from "../../redux/recipes/slice";
@@ -68,14 +68,14 @@ const handleSubmit = async (values, addedIngredients, actions) => {
 
       dispatch(addNewRecipe(newRecipe));
 
-     console.log('Рецепт додано');
+      toast.success("Recipe added!");
       navigate(`/recipes/${res.data.id}`);
       actions.resetForm();
       setImageFile(null);
       setPreview(null);
       setAddedIngredients([]);
     } catch (err) {
-      console.error('Помилка');
+      toast.error("Something went wrong.");
       
     }
 };
@@ -97,7 +97,7 @@ const handleAddIngridient = (values, setFieldValue) => {
     return;
 
   const newIngredient = {
-    id: { name: values.name_ingredients },
+    name: values.name_ingredients ,
     measure: values.amount_ingredients,
   };
 
@@ -121,17 +121,19 @@ const initialValues = {
     calories: "",
     recipeCategory: "",
     instructions: "",
+    amount_ingredients: ""
+    
 };
 
   const validationSchema = Yup.object().shape({
-    nameRecipe: Yup.string().min(3, "Too short!").max(30, "Too long!").required("Required"),
-    recipeDescription: Yup.string().min(3, "Too short!").max(100, "Too long!").required("Required"),
-    cookingTime: Yup.number().required("Required"),
-    calories: Yup.number().required("Required"),
-    recipeCategory: Yup.string().required("Required"),
-    name_ingredients: Yup.string().min(3, "Too short!").max(30, "Too long!"),
-    amount_ingredients: Yup.string().min(1, "Too short!").max(30, "Too long!"),
-    instructions: Yup.string().required("Required"),
+    nameRecipe: Yup.string().min(3, "Must be min 3 chars").max(30, "Must be max 50 chars").required("This field is required"),
+    recipeDescription: Yup.string().min(3, "Must be min 3 chars").max(100, "Must be max 100 chars").required("This field is required"),
+    cookingTime: Yup.number().required("This field is required"),
+    calories: Yup.number(),
+    recipeCategory: Yup.string().required("This field is required"),
+    name_ingredients: Yup.string().required("This field is required"),
+    amount_ingredients: Yup.string().min(1, "Must be min 1 chars").max(20, "Must be max 20 chars"),
+    instructions: Yup.string().required("This field is required"),
 })
   
   return (
@@ -181,6 +183,7 @@ const initialValues = {
                 type="text"
                 placeholder="Enter the name of your recipe"
               />
+              <ErrorMessage className={css.error} name="nameRecipe" component="span"></ErrorMessage>
             </label>
 
            
@@ -193,6 +196,7 @@ const initialValues = {
                 as="textarea"
                 placeholder="Enter a brief description of your recipe"
               />
+              <ErrorMessage className={css.error} name="recipeDescription" component="span"></ErrorMessage>
             </label>
 
             
@@ -205,6 +209,7 @@ const initialValues = {
                 type="number"
                 placeholder="10"
               />
+              <ErrorMessage className={css.error} name="cookingTime" component="span"></ErrorMessage>
             </label>
 
             
@@ -218,6 +223,7 @@ const initialValues = {
                   type="number"
                   placeholder="150 cals"
                 />
+                <ErrorMessage className={css.error} name="calories" component="span"></ErrorMessage>
               </label>
 
            
@@ -233,6 +239,7 @@ const initialValues = {
                     <option value={cat.name} key={cat._id}>{cat.name}</option>
                 ))}
                 </Field>
+                <ErrorMessage className={css.error} name="recipeCategory" component="span"></ErrorMessage>
                 </label>             
             </div>
 
@@ -246,10 +253,12 @@ const initialValues = {
                     id="name_ingredients"
                     name="name_ingredients"
                 as="select">
+                  <option value={ingredients[0]}></option>
                 {ingredients.map((ing) => (
                   <option value={ing} key={ing}>{ing}</option>
                 ))}
               </Field>
+              <ErrorMessage className={css.error} name="name_ingredients" component="span"></ErrorMessage>
             </label>
 
             <label className={clsx(css.label, css.label_amount)} htmlFor="amount_ingredients">
@@ -260,6 +269,7 @@ const initialValues = {
                 name="amount_ingredients"
                 placeholder="100g"
               />
+              <ErrorMessage className={css.error} name="amount_ingredients" component="span"></ErrorMessage>
             </label>
             </div>
             
@@ -287,7 +297,7 @@ const initialValues = {
             {addedIngredients.map((ing, index) => (
                 <li className={css.ing_list} key={ing.name}>
                   <p className={css.ing_sel}>{ing.name}</p>
-                  <p className={css.ing_sel}>{ing.amount}</p>
+                  <p className={css.ing_sel}>{ing.measure}</p>
                   <button
                   type="button"
                   className={css.icon_btn}
@@ -310,6 +320,7 @@ const initialValues = {
               name="instructions"
               placeholder="Enter a text"
             />
+            <ErrorMessage className={css.error} name="instructions" component="span"></ErrorMessage>
             
             </div>
 
