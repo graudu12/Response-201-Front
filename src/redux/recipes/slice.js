@@ -87,10 +87,16 @@ const recipesSlice = createSlice({
       })
 
       .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
-        const { id, add } = action.payload;
-        const recipe = state.items.find((r) => r._id === id);
-        if (recipe) {
-          recipe.isFavorite = add;
+        const { recipeId, add, mode } = action.payload;
+        if (mode === "favorites" && !add) {
+          // Якщо ми в режимі "favorites" і юзер видалив рецепт з улюблених — видаляємо зі списку
+          state.items = state.items.filter((recipe) => recipe._id !== recipeId);
+          state.totalItems -= 1;
+        } else {
+          const recipe = state.items.find((r) => r._id === recipeId);
+          if (recipe) {
+            recipe.isFavorite = add;
+          }
         }
       })
       .addCase(fetchMyRecipes.pending, (state) => {

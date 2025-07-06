@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleFavoriteRecipeAsync } from "../../redux/recipes/operations";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
-export default function SaveFavoriteButton({ small, recipeId }) {
+function SaveFavoriteButton({ small, recipeId, mode }) {
   const isLoggedIn = useSelector(selectIsLoggedIn); // потом добавь вместо функции true, selectIsLoggedIn
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,16 +17,19 @@ export default function SaveFavoriteButton({ small, recipeId }) {
   const isFavorite = favoriteRecipes.includes(recipeId);
 
   const handleToggle = async () => {
+    const wasFavorite = isFavorite;
     try {
       if (!isLoggedIn) {
         navigate("/login");
         return;
       }
-      await dispatch(toggleFavoriteRecipeAsync(recipeId)).unwrap();
+      await dispatch(toggleFavoriteRecipeAsync({ recipeId, mode })).unwrap();
     } catch (error) {
-      /*if (!small) {*/
-      toast.error("Failed to add to favorites 😢");
-      /*}*/
+      if (!wasFavorite) {
+        toast.error("Failed to add to favorites 😢");
+      } else if (wasFavorite) {
+        toast.error("Failed to remove from favorites 😢");
+      }
     }
   };
   const handleMouseEnter = () => {
@@ -55,3 +58,5 @@ export default function SaveFavoriteButton({ small, recipeId }) {
     </button>
   );
 }
+
+export default SaveFavoriteButton;

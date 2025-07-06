@@ -66,7 +66,7 @@ export const fetchRecipesByQuery = createAsyncThunk(
 
 export const toggleFavoriteRecipeAsync = createAsyncThunk(
   "recipes/toggleFavoriteAsync",
-  async (recipeId, thunkAPI) => {
+  async ({ recipeId, mode }, thunkAPI) => {
     try {
       const state = thunkAPI.getState();
       const favoriteIds = state.auth.user.favoriteRecipes;
@@ -79,7 +79,7 @@ export const toggleFavoriteRecipeAsync = createAsyncThunk(
       } else {
         await axios.patch(url);
       }
-      return { recipeId, add: !isCurrentlyFavorite };
+      return { recipeId, add: !isCurrentlyFavorite, mode };
     } catch (error) {
       return thunkAPI.rejectWithValue("Помилка при зміні улюблених рецептів");
     }
