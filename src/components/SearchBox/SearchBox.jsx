@@ -6,8 +6,9 @@ import css from "./SearchBox.module.css";
 import { changeFilter } from "../../redux/filters/slice.js";
 import { selectNameFilter } from "../../redux/filters/selectors.js";
 import { fetchRecipesByQuery } from "../../redux/recipes/operations.js";
-import NotFound from "../NotFound/NotFound";
+import { clearNotFound } from "../../redux/recipes/slice";
 import { selectNotFound } from "../../redux/recipes/selectors";
+import NotFound from "../NotFound/NotFound";
 
 export default function SearchBox() {
   const dispatch = useDispatch();
@@ -33,8 +34,9 @@ export default function SearchBox() {
   };
 
   const handleRetry = () => {
-    dispatch(changeFilter({ name: "" }));
-    setInput("");
+    dispatch(clearNotFound()); // ✅ прибирає модалку
+    dispatch(changeFilter({ name: "" })); // ✅ скидає фільтр
+    setInput(""); // ✅ очищує поле
   };
 
   if (notFound) return <NotFound onRetry={handleRetry} />;
