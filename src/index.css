@@ -10,13 +10,13 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   background-color: #fff;
   color: #222;
-  
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-   color: var(--main-text-color);
+  color: var(--main-text-color);
   background-color: var(--background-color);
 
   width: 100%;
@@ -28,14 +28,15 @@ body {
   font-size: 16px;
   line-height: 1.5;
 }
+
+p,
 h1,
 h2,
 h3,
 h4,
 h5 {
-  color: var(--white);
+  margin: 0;
 }
-
 
 /* Remove list styles */
 ul,
@@ -62,7 +63,7 @@ textarea {
   border: none;
   background: none;
   outline: none;
-   cursor: pointer;
+  cursor: pointer;
 }
 
 /* Cursor for buttons */

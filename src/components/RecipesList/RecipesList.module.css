@@ -1,16 +1,17 @@
 .RecipesList {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  /* align-items: flex-start; */
+  /* justify-content: flex-start; */
   flex-direction: column;
   gap: 16px;
+  margin: 0 auto;
 }
 .recipeListContainer {
   padding: 0px 16px;
-  width: 393px;
-  height: 6102px;
+  /* width: 393px; */
+  /* height: 6102px; */
 }
-.FormRecipes {
+/* .FormRecipes {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -18,7 +19,7 @@
   gap: 16px;
   width: 361px;
   height: 39px;
-}
+} */
 .Recipes {
   font-weight: 600;
   font-size: 32px;
@@ -27,8 +28,8 @@
 .recipeslist {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
+  /* align-items: center; */
+  /* justify-content: flex-start; */
   flex-direction: row;
   gap: 24px;
 }
@@ -36,14 +37,14 @@
 @media only screen and (min-width: 768px) {
 }
 
-@media only screen and (min-width: 1280px) {
-  .recipeListContainer {
+@media only screen and (min-width: 1440px) {
+  /* .recipeListContainer {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
     gap: 16px;
-  }
+  } */
 
   .FormRecipes {
     display: flex;

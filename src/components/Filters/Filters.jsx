@@ -44,16 +44,18 @@ const Filters = ({ onChange, totalItems }) => {
   };
   return (
     <div className={styles.filtersWrapper}>
-      <p className={`${styles.recipes} ${styles.mobileOnly}`}>
-        {totalItems} recipes
-      </p>
-
-      <button
-        className={`${styles.mobileToggleBtn} ${styles.mobileOnly}`}
-        onClick={() => setIsMobileOpen(true)}
-      >
-        Filters
-      </button>
+      <div className={styles.mobTab}>
+        <p className={`${styles.recipes}`}>{totalItems} recipes</p>
+        <button
+          className={`${styles.mobileToggleBtn} ${styles.mobileOnly}`}
+          onClick={() => setIsMobileOpen(true)}
+        >
+          Filters
+          <svg className={styles.filterIcon} width="24" height="24">
+            <use href={`${sprite}#icon-filter`} />
+          </svg>
+        </button>
+      </div>
 
       {/* Дропдаун мобільний */}
       {isMobileOpen && (
