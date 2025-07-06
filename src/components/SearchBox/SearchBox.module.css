@@ -9,7 +9,7 @@
 /* Mobile */
 .searchInput {
   width: 100%;
-  padding: 14px 20px;
+  padding: 12px 16px;
   font-size: 16px;
   background-color: #fff;
   border: none;
@@ -24,7 +24,7 @@
 
 .searchButton {
   width: 100%;
-  padding: 14px 20px;
+  padding: 12px 16px;
   font-size: 16px;
   font-weight: 500;
   background-color: #9b6c43;
@@ -59,7 +59,7 @@
   .searchButton {
     width: 176px;
     padding: 16px 0;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 16px;
   }
 }
@@ -67,14 +67,14 @@
 /* Desktop */
 @media screen and (min-width: 1440px) {
   .searchInput {
-    padding: 18px 28px;
-    font-size: 20px;
+    padding: 12px 16px;
+    font-size: 16px;
   }
 
   .searchButton {
     width: 190px;
-    padding: 18px 0;
-    font-size: 20px;
+    padding: 12px 16px;
+    font-size: 16px;
   }
   .searchBox {
     gap: 12px;

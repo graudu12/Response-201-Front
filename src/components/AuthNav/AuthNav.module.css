@@ -16,7 +16,7 @@
   color: #fff;
   text-decoration: none;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 0;
   line-height: 1.2;
   display: inline-block;
@@ -29,7 +29,7 @@
   bottom: -4px;
   left: 0;
   width: 0;
-  height: 2px;
+  height: 1px;
   background-color: #fff;
   transition: width 0.3s ease;
   border-radius: 1px;
@@ -45,10 +45,10 @@
 .authRegister {
   background-color: #9b6c43;
   color: #fff;
-  padding: 8px 20px;
+  padding: 12px 16px;
   border: none;
   border-radius: 12px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
