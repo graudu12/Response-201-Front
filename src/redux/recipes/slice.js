@@ -154,13 +154,12 @@ import {
   fetchFavoriteRecipes,
 } from "./operations";
 
-// убрала лишние поля (favorites, myRecipes, searchQuery)
 const initialState = {
   items: [],
   totalItems: 0,
-  //  favorites: [], 
-  //  myRecipes: [], 
-  //  searchQuery: "", // поиск сделала через filters
+  favorites: [], 
+  myRecipes: [], 
+  searchQuery: "", 
   loading: false,
   error: null,
   notFound: false,
@@ -177,11 +176,17 @@ const recipesSlice = createSlice({
         recipe.isFavorite = add;
       }
     },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
     clearNotFound: (state) => {
       state.notFound = false;
     },
-
-    // добавила экшн для очистки рецептов при новом поиске
+    addNewRecipe: (state, action) => {
+      state.items.unshift(action.payload);
+      state.myRecipes.unshift(action.payload);
+      state.totalItems += 1;
+    },
     clearRecipes: (state) => {
       state.items = [];
       state.totalItems = 0;
@@ -209,7 +214,6 @@ const recipesSlice = createSlice({
       })
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.loading = false;
-        // сделала безопасную проверку payload или error.message
         state.error = action.payload || action.error.message;
       })
 
@@ -272,11 +276,12 @@ const recipesSlice = createSlice({
   },
 });
 
-// убрала setSearchQuery, но добавлен clearRecipes
 export const {
   toggleFavoriteRecipe,
+  setSearchQuery,
   clearNotFound,
-  clearRecipes, // ✨
+  addNewRecipe,
+  clearRecipes,
 } = recipesSlice.actions;
 
 export const recipesReducer = recipesSlice.reducer;
