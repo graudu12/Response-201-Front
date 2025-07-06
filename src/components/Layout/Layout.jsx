@@ -6,9 +6,9 @@ import Footer from "../Footer/Footer";
 
 export const Layout = ({ children }) => {
   return (
-    <div className={css.container}>
+    <div className={css.layout}>
       <Header />
-      <main className={css.main}>
+      <main className={css.container}>
         <Suspense fallback={null}>{children}</Suspense>
       </main>
       <Footer />
