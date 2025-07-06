@@ -47,7 +47,9 @@ const RecipeDetails = ({ recipe }) => {
               <ul className={styles.ingredients}>
                 {recipe.ingredients.map((item, index) => (
                   <li key={index}>
-                    Ingredient ID: <code>{item.id}</code> — {item.measure}
+                    {typeof item.id === "object" && item.id.name
+                      ? `${item.id.name} — ${item.measure}`
+                      : `${item.id} — ${item.measure}`}
                   </li>
                 ))}
               </ul>
@@ -81,7 +83,7 @@ const RecipeDetails = ({ recipe }) => {
             </p>
 
             <p>
-              <strong>Caloric content:</strong> Approximately ~
+              <strong>Caloric content:</strong> Approximately
               {recipe.calories || ""} kcal per serving
             </p>
           </section>

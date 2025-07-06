@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 axios.defaults.baseURL =
   /*"http://localhost:3000";*/ "https://response-201-back.onrender.com/api";
 
-const setAuthHeader = (token) => {
+export const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -17,6 +17,7 @@ export const register = createAsyncThunk(
   async (newUser, thunkAPI) => {
     try {
       await axios.post("/auth/register", newUser);
+
       const loginResponse = await axios.post("/auth/login", {
         email: newUser.email,
         password: newUser.password,
@@ -29,7 +30,7 @@ export const register = createAsyncThunk(
       const currentUserResponse = await axios.get("/user/current");
       //const currentUserResponse = await axios.get("/auth/refresh");
 
-      return { user: currentUserResponse.data, accessToken };
+      return { accessToken, user: currentUserResponse.data.data };
     } catch (e) {
       if (
         e.response &&
@@ -88,7 +89,8 @@ export const refreshUser = createAsyncThunk(
       }
       setAuthHeader(persistedToken);
 
-      //const res = await axios.get("/auth/refresh");
+      //const refreshRes = await axios.get("/auth/refresh");
+
       const res = await axios.get("/user/current");
       return res.data.data;
     } catch (error) {
