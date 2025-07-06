@@ -29,7 +29,7 @@ useEffect(() => {
 }, []);
   
 useEffect(() => {
-  axios.get('https://response-201-back.onrender.com/api/ingredients')
+  axios.get('http://localhost:4000/api/ingredients')
     .then((res) => setIngredients(res.data.ingredients))
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
@@ -96,8 +96,11 @@ const handleAddIngridient = (values, setFieldValue) => {
   if (!values.name_ingredients || !values.amount_ingredients)
     return;
 
+  const selectedIngredient = ingredients.find(ing => ing.name === values.name_ingredients);
+  if (!selectedIngredient) return;
+
   const newIngredient = {
-    name: values.name_ingredients ,
+    id: selectedIngredient._id,
     measure: values.amount_ingredients,
   };
 
@@ -253,9 +256,9 @@ const initialValues = {
                     id="name_ingredients"
                     name="name_ingredients"
                 as="select">
-                  <option value={ingredients[0]}></option>
+                  {/* <option value={ingredients[0]}></option> */}
                 {ingredients.map((ing) => (
-                  <option value={ing} key={ing}>{ing}</option>
+                  <option value={ing.name} key={ing._id}>{ing.name}</option>
                 ))}
               </Field>
               <ErrorMessage className={css.error} name="name_ingredients" component="span"></ErrorMessage>
