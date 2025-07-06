@@ -3,7 +3,6 @@ import { useState } from "react";
 import { selectUser } from "../../redux/auth/selectors";
 import { logOut } from "../../redux/auth/operations";
 import LogoutModal from "../LogoutModal/LogoutModal";
-import sprite from "../../svg/sprite.svg";
 import css from "./UserMenu.module.css";
 
 const UserMenu = () => {
@@ -32,7 +31,7 @@ const UserMenu = () => {
           aria-label="Logout"
         >
           <svg className={css.logoutIcon}>
-            <use href={`${sprite}#icon-logout`} />
+            <use href={`/svg/sprite.svg#icon-logout`} />
           </svg>
         </button>
       </div>

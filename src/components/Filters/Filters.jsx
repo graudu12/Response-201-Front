@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "./Filters.module.css";
 import axios from "axios";
-import sprite from "../../svg/sprite.svg";
 
 const Filters = ({ onChange, totalItems }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -52,7 +51,7 @@ const Filters = ({ onChange, totalItems }) => {
         >
           Filters
           <svg className={styles.filterIcon} width="24" height="24">
-            <use href={`${sprite}#icon-filter`} />
+            <use href={`/svg/sprite.svg#icon-filter`} />
           </svg>
         </button>
       </div>
@@ -71,7 +70,7 @@ const Filters = ({ onChange, totalItems }) => {
               height="24"
               viewBox="0 0 32 32"
             >
-              <use href={`${sprite}#icon-close_modal`} />
+              <use href={`/svg/sprite.svg#icon-close_modal`} />
             </svg>
           </button>
 
