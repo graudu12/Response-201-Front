@@ -1,4 +1,4 @@
-.text {
+/* .text {
   padding: 50px;
   font-weight: 500;
   font-size: 25px;
@@ -8,4 +8,27 @@
 .link {
   font-weight: 500;
   color: whitesmoke;
+} */
+.notFoundContainer {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  height: 100vh; /* Займає всю висоту вікна */
+  text-align: center;
+}
+.text {
+  padding: 50px;
+  font-weight: 500;
+  font-size: 25px;
+  color: #3d2218;
+}
+
+.link {
+  font-weight: 500;
+  color: #9b6c43;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+.link:hover {
+  color: #c2854d;
 }

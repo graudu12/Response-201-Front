@@ -10,7 +10,7 @@
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
-  padding: 64px 0;
+  padding: 128px 0 98px;
 }
 
 @media (min-resolution: 192dpi) {
@@ -26,15 +26,15 @@
 
 /* Контейнер */
 .heroContainer {
-  max-width: 1440px;
+  max-width: 393px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 32px;
 }
 
 /* Внутрішній контент */
 .content {
-  max-width: 700px;
   display: flex;
+  gap: 24px;
   flex-direction: column;
   align-items: flex-start;
 }
@@ -45,29 +45,27 @@
   font-size: 40px;
   font-weight: 600;
   line-height: 1.2;
-  margin-bottom: 24px;
   text-align: left;
 }
 
 /* Tablet 768px+ */
 @media screen and (min-width: 768px) {
   .hero {
-    padding: 96px 0;
+    padding: 128px 0;
   }
 
   .heroContainer {
-    padding: 0 32px;
+    padding: 0 65px 0 32px;
+  }
+  .heroContainer {
+    max-width: 768px;
   }
 }
 
 /* Desktop 1280px+ */
 @media screen and (min-width: 1440px) {
-  .hero {
-    padding: 128px 0;
-    padding: 128px 108px;
-  }
-
   .heroContainer {
-    padding: 0 108px;
+    min-width: 1440px;
+    padding-left: 108px;
   }
 }

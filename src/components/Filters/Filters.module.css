@@ -1,14 +1,10 @@
 .mobTab {
   max-width: 393px;
   display: flex;
-  /* align-items: center; */
-  /* justify-content: flex-start; */
-  /* flex-direction: row; */
-  /* gap: 208px; */
-  /* width: 100%; */
   position: relative;
   margin-bottom: 16px;
   justify-content: space-between;
+  position: relative;
 }
 .recipes {
   display: block;
@@ -16,8 +12,6 @@
   font-size: 18px;
   color: #000;
   margin: 0;
-  /* margin-bottom: 16px; */
-  padding: 6px 0;
 }
 .mobileToggleBtn {
   display: flex;
