@@ -116,7 +116,7 @@
     display: none;
   } */
   .mobTab {
-    min-width: 768px;
+    max-width: 768px;
   }
 }
 
@@ -179,7 +179,7 @@
     font-size: 16px;
     line-height: 1.55;
   }
-  /* .filtersWrapper {
+  .filtersWrapper {
     position: relative;
-  } */
+  }
 }

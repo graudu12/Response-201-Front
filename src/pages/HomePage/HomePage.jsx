@@ -91,7 +91,7 @@ export default function HomePage() {
     <div className={css.homePage}>
       <Hero />
 
-      <section>
+      <section className={css.container}>
         <div>
           <h2>Recipes</h2>
         </div>
