@@ -93,7 +93,7 @@ export default function HomePage() {
 
       <section className={css.container}>
         <div>
-          <h2>Recipes</h2>
+          <h2 className={css.title}>Recipes</h2>
         </div>
 
         <Filters totalItems={totalItems} onChange={handleFilterChange} />
