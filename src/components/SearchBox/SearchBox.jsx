@@ -1,4 +1,3 @@
-//src/components/SearchBox/SearchBox.jsx
 import { useDispatch, useSelector } from "react-redux";
 import { useId, useState } from "react";
 import { toast } from "react-toastify";
@@ -35,9 +34,9 @@ export default function SearchBox() {
   };
 
   const handleRetry = () => {
-    dispatch(clearNotFound()); 
-    dispatch(changeFilter({ name: "" })); 
-    setInput(""); 
+    dispatch(clearNotFound()); // ✅ прибирає модалку
+    dispatch(changeFilter({ name: "" })); // ✅ скидає фільтр
+    setInput(""); // ✅ очищує поле
   };
 
   if (notFound) return <NotFound onRetry={handleRetry} />;
