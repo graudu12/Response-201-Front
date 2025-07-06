@@ -4,6 +4,7 @@
   position: relative;
   margin-bottom: 16px;
   justify-content: space-between;
+  position: relative;
 }
 .recipes {
   display: block;
