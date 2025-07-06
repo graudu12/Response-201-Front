@@ -1,14 +1,17 @@
 import css from "./AddRecipeForm.module.css";
-
+import toast from "react-hot-toast";
 import clsx from 'clsx';
 import axios from "axios";
 import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
-import { Formik, Form, Field} from "formik";
+import { Formik, Form, Field, ErrorMessage} from "formik";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addNewRecipe } from "../../redux/recipes/slice";
 
 
 export default function AddRecipeForm() {
+const dispatch = useDispatch();
 const navigate = useNavigate(); 
 
 const inputRef = useRef(null);
@@ -20,43 +23,73 @@ const [preview, setPreview] = useState(null);
 const [imageFile, setImageFile] = useState(null);
   
 useEffect(() => {
-  axios.get('http://localhost:4000/api/categories')
+  axios.get('https://response-201-back.onrender.com/api/categories')
     .then((res) => setCategories(res.data))
     .catch((err) => console.error("Error loading categories:", err));
 }, []);
   
 useEffect(() => {
-  axios.get('http://localhost:4000/api/ingredients')
-    .then((res) => setIngredients(res.data.ingredients))
+  axios.get('https://response-201-back.onrender.com/api/ingredients')
+    // .then((res) => setIngredients(res.data.ingredients))
+    .then((res) => {
+      const formatted = res.data.ingredients.map((name, index) => ({
+        _id: index.toString(), // просто унікальний key
+        name,
+      }));
+      setIngredients(formatted);
+    })
+
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
 
 const handleSubmit = async (values, addedIngredients, actions) => {
+  if (addedIngredients.length === 0) {
+    toast.warning("Please add at least one ingredient.");
+    return;
+  }
+
   const formData = new FormData();
 
-  for (let key in values) {
-    formData.append(key, values[key]);
+  formData.append('nameRecipe', values.nameRecipe);
+  formData.append('recipeDescription', values.recipeDescription);
+  formData.append('cookingTime', values.cookingTime);
+  if (values.calories) {
+    formData.append('calories', values.calories);
   }
+  formData.append('recipeCategory', values.recipeCategory);
+  formData.append('instructions', values.instructions);
   formData.append('ingredients', JSON.stringify(addedIngredients));
 
   if (imageFile) {
-    formData.append('thumb', imageFile);
+    formData.append('dishPhoto', imageFile);
   }
 
+  const token = localStorage.getItem('token');
+
+  console.log("VALUES", values);
+console.log("ADDED INGREDIENTS", addedIngredients);
     try {
-      const res = await axios.post('http://localhost:4000/api/recipes', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      const res = await axios.post('https://response-201-back.onrender.com/api/recipes', formData, {
+        headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
       });
-     console.log('Рецепт додано');
+
+      const newRecipe = res.data;
+
+      dispatch(addNewRecipe(newRecipe));
+
+      toast.success("Recipe added!");
       navigate(`/recipes/${res.data.id}`);
+      actions.resetForm();
+      setImageFile(null);
+      setPreview(null);
+      setAddedIngredients([]);
     } catch (err) {
-      console.error('Помилка');
+      toast.error("Something went wrong.");
       
     }
-  actions.resetForm();
-  setImageFile(null);
-  setPreview(null);
-  setAddedIngredients([]);
 };
 
 const handleImageClick = () => {
@@ -75,9 +108,20 @@ const handleAddIngridient = (values, setFieldValue) => {
   if (!values.name_ingredients || !values.amount_ingredients)
     return;
 
+  const selectedIngredient = ingredients.find(ing => ing.name === values.name_ingredients);
+  if (!selectedIngredient) return;
+
+  const isDuplicate = addedIngredients.some(
+    (ing) => ing.name === values.name_ingredients
+  );
+  if (isDuplicate) {
+    toast.error("Ingredient already added!");
+    return;
+  }
+
   const newIngredient = {
     name: values.name_ingredients,
-    amount: values.amount_ingredients,
+    measure: values.amount_ingredients,
   };
 
   setAddedIngredients(prev => [...prev, newIngredient]);
@@ -94,25 +138,25 @@ const handleRemoveIng = (index) => {
 }
     
 const initialValues = {
-    title: "",
-    description: "",
-    time: "",
+    nameRecipe: "",
+    recipeDescription: "",
+    cookingTime: "",
     calories: "",
-    category: "",
-    name_ingredients: "",
-    amount_ingredients: "",
+    recipeCategory: "",
     instructions: "",
+    amount_ingredients: "",
+    name_ingredients: ""
 };
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().min(3, 'Too short!').max(30, 'Too long!').required('Required'),
-    description: Yup.string().min(3, 'Too short!').max(100, 'Too long!').required('Required'),
-    time: Yup.number().required('Required'),
-    calories: Yup.number().nullable(),
-    category: Yup.string().required('Required'),
-    name_ingredients: Yup.string().min(3, 'Too short!').max(30, 'Too long!').required('Required'),
-    amount_ingredients: Yup.string().min(3, 'Too short!').max(30, 'Too long!').required('Required'),
-    instructions: Yup.string().required('Required'),
+    nameRecipe: Yup.string().min(3, "Must be min 3 chars").max(30, "Must be max 50 chars").required("This field is required"),
+    recipeDescription: Yup.string().min(3, "Must be min 3 chars").max(100, "Must be max 100 chars").required("This field is required"),
+    cookingTime: Yup.number().required("This field is required"),
+    calories: Yup.number(),
+    recipeCategory: Yup.string().required("This field is required"),
+    name_ingredients: Yup.string().required("This field is required"),
+    amount_ingredients: Yup.string().min(1, "Must be min 1 chars").max(20, "Must be max 20 chars"),
+    instructions: Yup.string().required("This field is required"),
 })
   
   return (
@@ -153,39 +197,42 @@ const initialValues = {
             <div className={css.cont_for_pc}>
             <h2 className={css.title}>General Information</h2>
             
-            <label className={css.label} htmlFor="title">
+            <label className={css.label} htmlFor="nameRecipe">
               Recipe Title
               <Field
                 className={css.field}
-                id="title"
-                name="title"
+                id="nameRecipe"
+                name="nameRecipe"
                 type="text"
                 placeholder="Enter the name of your recipe"
               />
+              <ErrorMessage className={css.error} name="nameRecipe" component="span"></ErrorMessage>
             </label>
 
            
-            <label className={css.label} htmlFor="description">
+            <label className={css.label} htmlFor="recipeDescription">
               Recipe Description
               <Field
                 className={css.field_textarea}
-                id="description"
-                name="description"
+                id="recipeDescription"
+                name="recipeDescription"
                 as="textarea"
                 placeholder="Enter a brief description of your recipe"
               />
+              <ErrorMessage className={css.error} name="recipeDescription" component="span"></ErrorMessage>
             </label>
 
             
-            <label className={css.label} htmlFor="time">
+            <label className={css.label} htmlFor="cookingTime">
               Cooking time in minutes
               <Field
                 className={css.field}
-                id="time"
-                name="time"
+                id="cookingTime"
+                name="cookingTime"
                 type="number"
                 placeholder="10"
               />
+              <ErrorMessage className={css.error} name="cookingTime" component="span"></ErrorMessage>
             </label>
 
             
@@ -199,21 +246,23 @@ const initialValues = {
                   type="number"
                   placeholder="150 cals"
                 />
+                <ErrorMessage className={css.error} name="calories" component="span"></ErrorMessage>
               </label>
 
            
-                <label className={css.label} htmlFor="category">
+                <label className={css.label} htmlFor="recipeCategory">
                 Category
                 <Field 
                     className={css.field} 
-                    id="category" 
-                    name="category" 
+                    id="recipeCategory" 
+                    name="recipeCategory" 
                     as="select" 
                     >
                 {categories.map((cat) => (
                     <option value={cat.name} key={cat._id}>{cat.name}</option>
                 ))}
                 </Field>
+                <ErrorMessage className={css.error} name="recipeCategory" component="span"></ErrorMessage>
                 </label>             
             </div>
 
@@ -227,10 +276,12 @@ const initialValues = {
                     id="name_ingredients"
                     name="name_ingredients"
                 as="select">
+                  {/* <option value={ingredients[0]}></option> */}
                 {ingredients.map((ing) => (
-                  <option value={ing} key={ing}>{ing}</option>
+                  <option value={ing.name} key={ing._id}>{ing.name}</option>
                 ))}
               </Field>
+              <ErrorMessage className={css.error} name="name_ingredients" component="span"></ErrorMessage>
             </label>
 
             <label className={clsx(css.label, css.label_amount)} htmlFor="amount_ingredients">
@@ -241,6 +292,7 @@ const initialValues = {
                 name="amount_ingredients"
                 placeholder="100g"
               />
+              <ErrorMessage className={css.error} name="amount_ingredients" component="span"></ErrorMessage>
             </label>
             </div>
             
@@ -265,20 +317,22 @@ const initialValues = {
               <p className={css.ing}>Amount:</p>
               </div>
             <ul>
-            {addedIngredients.map((ing, index) => (
-                <li className={css.ing_list} key={ing.name}>
+              {addedIngredients.map((ing, index) =>
+              (
+                <li className={css.ing_list} key={`${ing.name}-${ing.measure}`}>
                   <p className={css.ing_sel}>{ing.name}</p>
-                  <p className={css.ing_sel}>{ing.amount}</p>
+                  <p className={css.ing_sel}>{ing.measure}</p>
                   <button
-                  type="button"
-                  className={css.icon_btn}
-                  onClick={() => handleRemoveIng(index)}>
-                    <svg className={css.icon_delete}>
-                      <use href={`/svg/sprite.svg#icon-delete`} />
-                    </svg>
+                    type="button"
+                    className={css.icon_btn}
+                    onClick={() => handleRemoveIng(index)}>
+                      <svg className={css.icon_delete}>
+                        <use href={`/svg/sprite.svg#icon-delete`} />
+                      </svg>
                   </button>
                 </li>
-             ))}
+              )
+            )}
             </ul>
             </div>
             )}
@@ -291,6 +345,7 @@ const initialValues = {
               name="instructions"
               placeholder="Enter a text"
             />
+            <ErrorMessage className={css.error} name="instructions" component="span"></ErrorMessage>
             
             </div>
 

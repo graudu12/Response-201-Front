@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectRefreshing } from "../../redux/auth/selectors";
 import { refreshUser } from "../../redux/auth/operations";
 
+import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
 import { RestrictedRoute } from "../RestrictedRoute/RestrictedRoute";
 import { Layout } from "../Layout/Layout";
 
@@ -61,7 +62,8 @@ export default function App() {
               <RestrictedRoute component={<LoginPage />} redirectTo="/" />
             }
           />
-          <Route path="/add-recipe" element={<AddRecipePage />} />
+          <Route path="/add-recipe" element={<PrivateRoute component={<AddRecipePage />} redirectTo="/"/>} />
+        
           <Route path="/recipes/:recipeId" element={<RecipeDetailsPage />} />
 
           {/* ✅ Profile */}
