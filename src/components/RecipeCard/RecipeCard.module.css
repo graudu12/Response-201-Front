@@ -84,3 +84,9 @@
 .learnMoreButton:hover {
   background-color: #f0f0f0;
 }
+.icon {
+  stroke: currentColor;
+  color: #000000; /* or any visible color */
+  width: 24px;
+  height: 24px;
+}
