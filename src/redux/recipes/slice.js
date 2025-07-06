@@ -12,6 +12,7 @@ const initialState = {
   items: [],
   totalItems: 0,
   favorites: [],
+  myRecipes: [],
   searchQuery: "",
   loading: false,
   error: null,
@@ -34,6 +35,11 @@ const recipesSlice = createSlice({
     },
     clearNotFound: (state) => {
       state.notFound = false;
+    },
+    addNewRecipe: (state, action) => {
+      state.items.unshift(action.payload);
+      state.myRecipes.unshift(action.payload);
+      state.totalItems += 1;
     },
   },
   extraReducers: (builder) => {
@@ -128,7 +134,7 @@ const recipesSlice = createSlice({
   },
 });
 
-export const { toggleFavoriteRecipe, setSearchQuery, clearNotFound } =
+export const { toggleFavoriteRecipe, setSearchQuery, clearNotFound, addNewRecipe } =
   recipesSlice.actions;
 
 export const recipesReducer = recipesSlice.reducer;

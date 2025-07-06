@@ -228,6 +228,7 @@
         "form btn";
         grid-template-rows: auto auto;
         gap: 8px 24px;
+        position: relative;
     }
 
     .cont_img {
@@ -245,9 +246,13 @@
     .cont_push_btn {
         grid-area: btn;
         position: absolute;
-        top: 652px;
-        right: 107px;
+        /* top: 652px; */
+        /* right: 107px; */
         width: 391px;
+    }
+
+    .btn_submit {
+        margin: 0;
     }
 
     .icon_photo {

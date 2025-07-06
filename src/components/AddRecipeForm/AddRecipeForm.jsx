@@ -6,9 +6,12 @@ import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
 import { Formik, Form, Field} from "formik";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addNewRecipe } from "../../redux/recipes/slice";
 
 
 export default function AddRecipeForm() {
+const dispatch = useDispatch();
 const navigate = useNavigate(); 
 
 const inputRef = useRef(null);
@@ -32,31 +35,49 @@ useEffect(() => {
 }, []);
 
 const handleSubmit = async (values, addedIngredients, actions) => {
+  if (addedIngredients.length === 0) {
+    alert("Please add at least one ingredient.");
+    return;
+  }
+
   const formData = new FormData();
 
-  for (let key in values) {
-    formData.append(key, values[key]);
-  }
+  formData.append('nameRecipe', values.nameRecipe);
+  formData.append('recipeDescription', values.recipeDescription);
+  formData.append('cookingTime', values.cookingTime);
+  formData.append('calories', values.calories);
+  formData.append('recipeCategory', values.recipeCategory);
+  formData.append('instructions', values.instructions);
   formData.append('ingredients', JSON.stringify(addedIngredients));
 
   if (imageFile) {
-    formData.append('thumb', imageFile);
+    formData.append('dishPhoto', imageFile);
   }
 
+  const token = localStorage.getItem('token');
+
     try {
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
       const res = await axios.post('https://response-201-back.onrender.com/api/recipes', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
       });
+
+      const newRecipe = res.data;
+
+      dispatch(addNewRecipe(newRecipe));
+
      console.log('Рецепт додано');
       navigate(`/recipes/${res.data.id}`);
+      actions.resetForm();
+      setImageFile(null);
+      setPreview(null);
+      setAddedIngredients([]);
     } catch (err) {
       console.error('Помилка');
       
     }
-  actions.resetForm();
-  setImageFile(null);
-  setPreview(null);
-  setAddedIngredients([]);
 };
 
 const handleImageClick = () => {
@@ -76,8 +97,8 @@ const handleAddIngridient = (values, setFieldValue) => {
     return;
 
   const newIngredient = {
-    name: values.name_ingredients,
-    amount: values.amount_ingredients,
+    id: { name: values.name_ingredients },
+    measure: values.amount_ingredients,
   };
 
   setAddedIngredients(prev => [...prev, newIngredient]);
@@ -94,25 +115,23 @@ const handleRemoveIng = (index) => {
 }
     
 const initialValues = {
-    title: "",
-    description: "",
-    time: "",
+    nameRecipe: "",
+    recipeDescription: "",
+    cookingTime: "",
     calories: "",
-    category: "",
-    name_ingredients: "",
-    amount_ingredients: "",
+    recipeCategory: "",
     instructions: "",
 };
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().min(3, 'Too short!').max(30, 'Too long!').required('Required'),
-    description: Yup.string().min(3, 'Too short!').max(100, 'Too long!').required('Required'),
-    time: Yup.number().required('Required'),
-    calories: Yup.number().nullable(),
-    category: Yup.string().required('Required'),
-    name_ingredients: Yup.string().min(3, 'Too short!').max(30, 'Too long!'),
-    amount_ingredients: Yup.string().min(3, 'Too short!').max(30, 'Too long!'),
-    instructions: Yup.string().required('Required'),
+    nameRecipe: Yup.string().min(3, "Too short!").max(30, "Too long!").required("Required"),
+    recipeDescription: Yup.string().min(3, "Too short!").max(100, "Too long!").required("Required"),
+    cookingTime: Yup.number().required("Required"),
+    calories: Yup.number().required("Required"),
+    recipeCategory: Yup.string().required("Required"),
+    name_ingredients: Yup.string().min(3, "Too short!").max(30, "Too long!"),
+    amount_ingredients: Yup.string().min(1, "Too short!").max(30, "Too long!"),
+    instructions: Yup.string().required("Required"),
 })
   
   return (
@@ -153,36 +172,36 @@ const initialValues = {
             <div className={css.cont_for_pc}>
             <h2 className={css.title}>General Information</h2>
             
-            <label className={css.label} htmlFor="title">
+            <label className={css.label} htmlFor="nameRecipe">
               Recipe Title
               <Field
                 className={css.field}
-                id="title"
-                name="title"
+                id="nameRecipe"
+                name="nameRecipe"
                 type="text"
                 placeholder="Enter the name of your recipe"
               />
             </label>
 
            
-            <label className={css.label} htmlFor="description">
+            <label className={css.label} htmlFor="recipeDescription">
               Recipe Description
               <Field
                 className={css.field_textarea}
-                id="description"
-                name="description"
+                id="recipeDescription"
+                name="recipeDescription"
                 as="textarea"
                 placeholder="Enter a brief description of your recipe"
               />
             </label>
 
             
-            <label className={css.label} htmlFor="time">
+            <label className={css.label} htmlFor="cookingTime">
               Cooking time in minutes
               <Field
                 className={css.field}
-                id="time"
-                name="time"
+                id="cookingTime"
+                name="cookingTime"
                 type="number"
                 placeholder="10"
               />
@@ -202,12 +221,12 @@ const initialValues = {
               </label>
 
            
-                <label className={css.label} htmlFor="category">
+                <label className={css.label} htmlFor="recipeCategory">
                 Category
                 <Field 
                     className={css.field} 
-                    id="category" 
-                    name="category" 
+                    id="recipeCategory" 
+                    name="recipeCategory" 
                     as="select" 
                     >
                 {categories.map((cat) => (
