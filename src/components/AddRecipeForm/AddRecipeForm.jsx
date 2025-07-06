@@ -29,7 +29,7 @@ useEffect(() => {
 }, []);
   
 useEffect(() => {
-  axios.get('http://localhost:4000/api/ingredients')
+  axios.get('https://response-201-back.onrender.com/api/ingredients')
     .then((res) => setIngredients(res.data.ingredients))
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
@@ -124,8 +124,8 @@ const initialValues = {
     calories: "",
     recipeCategory: "",
     instructions: "",
-    amount_ingredients: ""
-    
+    amount_ingredients: "",
+    name_ingredients: ""
 };
 
   const validationSchema = Yup.object().shape({
@@ -297,20 +297,23 @@ const initialValues = {
               <p className={css.ing}>Amount:</p>
               </div>
             <ul>
-            {addedIngredients.map((ing, index) => (
-                <li className={css.ing_list} key={ing.name}>
-                  <p className={css.ing_sel}>{ing.name}</p>
+              {addedIngredients.map((ing, index) => {
+              const fullIngredient = ingredients.find(i => i._id === ing.id);
+              return (
+                <li className={css.ing_list} key={ing.id + ing.measure}>
+                  <p className={css.ing_sel}>{fullIngredient?.name || "Unknown"}</p>
                   <p className={css.ing_sel}>{ing.measure}</p>
                   <button
-                  type="button"
-                  className={css.icon_btn}
-                  onClick={() => handleRemoveIng(index)}>
-                    <svg className={css.icon_delete}>
-                      <use href={`/svg/sprite.svg#icon-delete`} />
-                    </svg>
+                    type="button"
+                    className={css.icon_btn}
+                    onClick={() => handleRemoveIng(index)}>
+                      <svg className={css.icon_delete}>
+                        <use href={`/svg/sprite.svg#icon-delete`} />
+                      </svg>
                   </button>
                 </li>
-             ))}
+              );
+            })}
             </ul>
             </div>
             )}
