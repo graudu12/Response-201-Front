@@ -20,13 +20,13 @@ const [preview, setPreview] = useState(null);
 const [imageFile, setImageFile] = useState(null);
   
 useEffect(() => {
-  axios.get('http://localhost:4000/api/categories')
+  axios.get('https://response-201-back.onrender.com/api/categories')
     .then((res) => setCategories(res.data))
     .catch((err) => console.error("Error loading categories:", err));
 }, []);
   
 useEffect(() => {
-  axios.get('http://localhost:4000/api/ingredients')
+  axios.get('https://response-201-back.onrender.com/api/ingredients')
     .then((res) => setIngredients(res.data.ingredients))
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
@@ -44,7 +44,7 @@ const handleSubmit = async (values, addedIngredients, actions) => {
   }
 
     try {
-      const res = await axios.post('http://localhost:4000/api/recipes', formData, {
+      const res = await axios.post('https://response-201-back.onrender.com/api/recipes', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
      console.log('Рецепт додано');
@@ -110,8 +110,8 @@ const initialValues = {
     time: Yup.number().required('Required'),
     calories: Yup.number().nullable(),
     category: Yup.string().required('Required'),
-    name_ingredients: Yup.string().min(3, 'Too short!').max(30, 'Too long!').required('Required'),
-    amount_ingredients: Yup.string().min(3, 'Too short!').max(30, 'Too long!').required('Required'),
+    name_ingredients: Yup.string().min(3, 'Too short!').max(30, 'Too long!'),
+    amount_ingredients: Yup.string().min(3, 'Too short!').max(30, 'Too long!'),
     instructions: Yup.string().required('Required'),
 })
   
