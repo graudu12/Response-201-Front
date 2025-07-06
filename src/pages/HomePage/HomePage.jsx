@@ -115,7 +115,6 @@
 //   );
 // }
 
-
 //src/pages/HomePage/HomePage.jsx
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -210,22 +209,13 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    if (
-      page > 1 &&
-      recipesListRef.current &&
-      recipesListRef.current.children != null &&
-      recipesListRef.current.children.length > 0
-    ) {
-      setTimeout(() => {
-        requestAnimationFrame(() => {
-          const list = recipesListRef.current;
-          if (!list || !list.children) return;
-          const lastRecipe = list.children[list.children.length - 1];
-          if (lastRecipe) {
-            lastRecipe.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
+    if (page > 1 && recipesListRef.current) {
+      requestAnimationFrame(() => {
+        recipesListRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
         });
-      }, 100);
+      });
     }
   }, [page]);
 
@@ -254,11 +244,10 @@ export default function HomePage() {
 
         <div>
           {!searchQuery && page * recipesPerPage < totalItems && !loading && (
-            <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
+            <LoadMoreBtn onClick={loadMore} />
           )}
         </div>
       </section>
     </div>
   );
 }
-

@@ -29,5 +29,4 @@ const RecipesList = forwardRef(
   }
 );
 RecipesList.displayName = "RecipesList";
-
 export default RecipesList;

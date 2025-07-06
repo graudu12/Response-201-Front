@@ -65,9 +65,7 @@
   transition: background 0.3s;
 }
 .favoriteButton:hover,
-.favoriteButton:focus,
-.smallFavoriteButton:hover,
-.smallFavoriteButton:focus {
+.smallFavoriteButton:hover {
   background: #6d554b;
   border: none;
 }
@@ -85,7 +83,7 @@
   --icon-stroke: currentColor;
   --icon-fill: none;
   color: inherit;
-  transition: all 0.3s ease;
+  /*transition: all 0.3s ease;*/
 }
 .favoriteButton .icon {
   color: white;
