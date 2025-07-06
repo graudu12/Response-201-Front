@@ -30,13 +30,21 @@ useEffect(() => {
   
 useEffect(() => {
   axios.get('https://response-201-back.onrender.com/api/ingredients')
-    .then((res) => setIngredients(res.data.ingredients))
+    // .then((res) => setIngredients(res.data.ingredients))
+    .then((res) => {
+      const formatted = res.data.ingredients.map((name, index) => ({
+        _id: index.toString(), // просто унікальний key
+        name,
+      }));
+      setIngredients(formatted);
+    })
+
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
 
 const handleSubmit = async (values, addedIngredients, actions) => {
   if (addedIngredients.length === 0) {
-    alert("Please add at least one ingredient.");
+    toast.warning("Please add at least one ingredient.");
     return;
   }
 
@@ -45,7 +53,9 @@ const handleSubmit = async (values, addedIngredients, actions) => {
   formData.append('nameRecipe', values.nameRecipe);
   formData.append('recipeDescription', values.recipeDescription);
   formData.append('cookingTime', values.cookingTime);
-  formData.append('calories', values.calories);
+  if (values.calories) {
+    formData.append('calories', values.calories);
+  }
   formData.append('recipeCategory', values.recipeCategory);
   formData.append('instructions', values.instructions);
   formData.append('ingredients', JSON.stringify(addedIngredients));
@@ -56,6 +66,8 @@ const handleSubmit = async (values, addedIngredients, actions) => {
 
   const token = localStorage.getItem('token');
 
+  console.log("VALUES", values);
+console.log("ADDED INGREDIENTS", addedIngredients);
     try {
       for (let [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
@@ -99,8 +111,16 @@ const handleAddIngridient = (values, setFieldValue) => {
   const selectedIngredient = ingredients.find(ing => ing.name === values.name_ingredients);
   if (!selectedIngredient) return;
 
+  const isDuplicate = addedIngredients.some(
+    (ing) => ing.name === values.name_ingredients
+  );
+  if (isDuplicate) {
+    toast.error("Ingredient already added!");
+    return;
+  }
+
   const newIngredient = {
-    id: selectedIngredient._id,
+    name: values.name_ingredients,
     measure: values.amount_ingredients,
   };
 
@@ -297,11 +317,10 @@ const initialValues = {
               <p className={css.ing}>Amount:</p>
               </div>
             <ul>
-              {addedIngredients.map((ing, index) => {
-              const fullIngredient = ingredients.find(i => i._id === ing.id);
-              return (
-                <li className={css.ing_list} key={ing.id + ing.measure}>
-                  <p className={css.ing_sel}>{fullIngredient?.name || "Unknown"}</p>
+              {addedIngredients.map((ing, index) =>
+              (
+                <li className={css.ing_list} key={`${ing.name}-${ing.measure}`}>
+                  <p className={css.ing_sel}>{ing.name}</p>
                   <p className={css.ing_sel}>{ing.measure}</p>
                   <button
                     type="button"
@@ -312,8 +331,8 @@ const initialValues = {
                       </svg>
                   </button>
                 </li>
-              );
-            })}
+              )
+            )}
             </ul>
             </div>
             )}
