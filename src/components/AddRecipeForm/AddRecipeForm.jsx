@@ -1,5 +1,5 @@
 import css from "./AddRecipeForm.module.css";
-import sprite from "../../svg/sprite.svg";
+
 import clsx from 'clsx';
 import axios from "axios";
 import * as Yup from 'yup';
@@ -137,7 +137,7 @@ const initialValues = {
                 >
                 {!preview && (
                     <svg className={css.icon_photo}>
-                                <use href={`${sprite}#icon-default_photo`} />
+                                <use href={`/svg/sprite.svg#icon-default_photo`} />
                     </svg>
                 )}
                 </div> 
@@ -274,7 +274,7 @@ const initialValues = {
                   className={css.icon_btn}
                   onClick={() => handleRemoveIng(index)}>
                     <svg className={css.icon_delete}>
-                      <use href={`${sprite}#icon-delete`} />
+                      <use href={`/svg/sprite.svg#icon-delete`} />
                     </svg>
                   </button>
                 </li>

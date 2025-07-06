@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styles from "./SaveFavoriteButton.module.css";
-import sprite from "../../svg/sprite.svg";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +50,7 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
     >
       <>
         <svg className={`${styles.icon}`} width="24" height="24">
-          <use href={`${sprite}#${iconId}`} />
+          <use href={`/svg/sprite.svg#${iconId}`} />
         </svg>
         {!small && (isFavorite ? "Remove from favorites" : "Save")}
       </>
