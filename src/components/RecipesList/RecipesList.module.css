@@ -1,86 +1,55 @@
-.RecipesList {
-  display: flex;
-  /* align-items: flex-start; */
-  /* justify-content: flex-start; */
-  flex-direction: column;
-  gap: 16px;
-  margin: 0 auto;
-}
 .recipeListContainer {
-  padding: 0px 16px;
-  /* width: 393px; */
-  /* height: 6102px; */
+  padding: 64px 20px;
+  background-color: #f6f6f6;
 }
-/* .FormRecipes {
+
+.FormRecipes {
   display: flex;
+  justify-content: space-between;
   align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 16px;
-  width: 361px;
-  height: 39px;
-} */
+  margin-bottom: 32px;
+}
+
 .Recipes {
   font-weight: 600;
   font-size: 32px;
   color: #000;
+  margin-bottom: 8px;
 }
+
 .recipeslist {
-  display: flex;
-  flex-wrap: wrap;
-  /* align-items: center; */
-  /* justify-content: flex-start; */
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
   gap: 24px;
+  justify-content: center;
 }
 
-@media only screen and (min-width: 768px) {
+.noRecipesText {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
 }
 
-@media only screen and (min-width: 1440px) {
-  /* .recipeListContainer {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 16px;
-  } */
+.BtnLoadWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
 
-  .FormRecipes {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 16px;
-    user-select: none;
-  }
-  .Recipes {
-    font-weight: 600;
-    font-size: 40px;
-    color: #000;
-  }
+.BtnLoad button {
+  background-color: #9b6c43;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-  .recipeslist {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: row;
-    gap: 24px;
-  }
-  .BtnLoadWrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Центрируем содержимое по горизонтали */
-    margin-top: 24px; /* Отступ сверху, чтобы отделить от карточек */
-  }
-  .BtnLoad {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    gap: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
+.BtnLoad button:hover {
+  background-color: #855834;
 }
