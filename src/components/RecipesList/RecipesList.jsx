@@ -1,11 +1,11 @@
 // RecipesList.jsx
-import  { forwardRef } from "react";
+import { forwardRef } from "react";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import styles from "./RecipesList.module.css";
 import Loading from "../Loading/Loading";
 
 const RecipesList = forwardRef(
-  ({ recipes, loading, onToggleFavorite }, ref) => {
+  ({ recipes, loading, onToggleFavorite, mode }, ref) => {
     if (loading) {
       return <Loading />;
     }
@@ -21,6 +21,7 @@ const RecipesList = forwardRef(
             key={recipe._id}
             recipe={recipe}
             onToggleFavorite={onToggleFavorite}
+            mode={mode}
           />
         ))}
       </div>
@@ -28,4 +29,5 @@ const RecipesList = forwardRef(
   }
 );
 RecipesList.displayName = "RecipesList";
+
 export default RecipesList;

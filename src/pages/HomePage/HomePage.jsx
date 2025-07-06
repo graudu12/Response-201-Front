@@ -13,7 +13,9 @@ import {
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const recipes = useSelector((state) => state.recipes.items);
+  const recipes = useSelector((state) =>
+    Array.isArray(state.recipes.items) ? state.recipes.items : []
+  );
   const totalItems = useSelector((state) => state.recipes.totalItems);
 
   const [page, setPage] = useState(1);
@@ -54,8 +56,8 @@ export default function HomePage() {
       .catch(() => setLoading(false));
   }, [dispatch, page, selectedFilters]);
 
-  const handleToggleFavorite = (id, add) => {
-    dispatch(toggleFavoriteRecipeAsync({ id, add }));
+  const handleToggleFavorite = (id) => {
+    dispatch(toggleFavoriteRecipeAsync({ recipeId: id }));
   };
 
   const loadMore = () => {
@@ -63,16 +65,23 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    if (page > 1 && recipesListRef.current) {
+    if (
+      page > 1 &&
+      recipesListRef.current &&
+      recipesListRef.current.children != null &&
+      recipesListRef.current.children.length > 0
+    ) {
       setTimeout(() => {
         requestAnimationFrame(() => {
           const list = recipesListRef.current;
+          if (!list || !list.children) return;
+          // Знаходимо останній елемент в списку
           const lastRecipe = list.children[list.children.length - 1];
           if (lastRecipe) {
             lastRecipe.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         });
-      }, 200);
+      }, 100);
     }
   }, [page]);
 

@@ -3,7 +3,7 @@ import sprite from "../../svg/sprite.svg";
 import SaveFavoriteButton from "../SaveFavoriteButton/SaveFavoriteButton";
 import { useNavigate } from "react-router-dom";
 
-const RecipeCard = ({ recipe }) => {
+const RecipeCard = ({ recipe, mode }) => {
   const navigate = useNavigate();
 
   const {
@@ -45,7 +45,9 @@ const RecipeCard = ({ recipe }) => {
         >
           Learn More
         </button>
-        <SaveFavoriteButton small recipeId={_id} />
+        {mode !== "own" && (
+          <SaveFavoriteButton small mode={mode} recipeId={_id} />
+        )}
       </div>
     </div>
   );
