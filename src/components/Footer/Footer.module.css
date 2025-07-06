@@ -3,7 +3,7 @@
   left: 0;
   width: 100%;
   height: auto;
-  background: #3d2218;
+  background-color: #3d2218;
   color: #ffffff;
 }
 .footerContainer {
@@ -54,8 +54,6 @@
 }
 .link:hover {
   color: #c2854d;
-  font-size: 20px;
-  text-decoration: underline;
 }
 
 @media only screen and (min-width: 768px) {
