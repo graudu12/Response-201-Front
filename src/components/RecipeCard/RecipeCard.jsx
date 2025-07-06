@@ -1,5 +1,4 @@
 import styles from "./RecipeCard.module.css";
-import sprite from "../../svg/sprite.svg";
 import SaveFavoriteButton from "../SaveFavoriteButton/SaveFavoriteButton";
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +27,7 @@ const RecipeCard = ({ recipe, mode }) => {
               height="24"
               viewBox="0 0 32 32"
             >
-              <use href={`${sprite}#icon-cooktime`} />
+              <use href={`/svg/sprite.svg#icon-cooktime`} />
             </svg>
             <span className={styles.yourSpan}>{cookingTime}</span>
           </div>

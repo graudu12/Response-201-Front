@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import css from "./MobileMenu.module.css";
 import clsx from "clsx";
 import Logo from "../Logo/Logo";
-import sprite from "../../svg/sprite.svg";
 
 const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
   // Закриття по Escape
@@ -38,7 +37,7 @@ const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
             aria-label="Close menu"
           >
             <svg className={css.icon} width="32" height="32">
-              <use href={`${sprite}#icon-close_modal`} />
+              <use href={`/svg/sprite.svg#icon-close_modal`} />
             </svg>
           </button>
         </div>
@@ -67,7 +66,7 @@ const MobileMenu = ({ isLoggedIn, user, onClose, onLogout }) => {
                 >
                   <div className={css.separator}></div>
                   <svg className={css.icon} width="32" height="32">
-                    <use href={`${sprite}#icon-logout`} />
+                    <use href={`/svg/sprite.svg#icon-logout`} />
                   </svg>
                 </button>
               </div>
