@@ -1,6 +1,6 @@
 .header {
   background-color: #3d2218;
-  padding: 14px 16px;
+
   position: relative;
   z-index: 100;
 }
@@ -9,6 +9,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 393px;
+  margin: 0 auto;
+  padding: 14px 16px;
 }
 
 .logo {
@@ -169,8 +172,9 @@
 }
 
 /* === Tablet (768px+) === */
-@media (min-width: 768px) {
-  .header {
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
     padding: 14px 32px;
   }
   .logo {
@@ -196,10 +200,9 @@
 /* === Desktop (1440px+) === */
 @media (min-width: 1440px) {
   .header {
-    padding: 14px 108px;
   }
   .container {
-    padding: 0px 108px;
+    padding: 14px 108px;
     max-width: 1440px;
     margin: 0 auto;
   }
