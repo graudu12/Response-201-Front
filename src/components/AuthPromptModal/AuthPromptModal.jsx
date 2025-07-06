@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import css from "./AuthPromptModal.module.css";
-import sprite from "../../svg/sprite.svg";
 
 export default function AuthPromptModal({ isOpen, onClose }) {
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ export default function AuthPromptModal({ isOpen, onClose }) {
       <div className={css.modal}>
         <button className={css.closeBtn} onClick={onClose}>
           <svg className={css.closeIcon}>
-            <use href={`${sprite}#icon-close`} />
+            <use href={`/svg/sprite.svg#icon-close`} />
           </svg>
         </button>
         <h2 className={css.title}>Error while saving</h2>
