@@ -67,25 +67,20 @@ export default function HomePage() {
   useEffect(() => {
     if (
       page > 1 &&
-      recipesListRef.current &&
+      recipesListRef.current /*&&
       recipesListRef.current.children != null &&
-      recipesListRef.current.children.length > 0
+      recipesListRef.current.children.length > 0*/
     ) {
-      setTimeout(() => {
-        requestAnimationFrame(() => {
-          const list = recipesListRef.current;
-          if (!list || !list.children) return;
-          // Знаходимо останній елемент в списку
-          const lastRecipe = list.children[list.children.length - 1];
-          if (lastRecipe) {
-            lastRecipe.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
+      requestAnimationFrame(() => {
+        recipesListRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
         });
-      }, 100);
+      });
     }
   }, [page]);
 
-  const recipesToShow = recipes.slice(0, page * recipesPerPage);
+  //const recipesToShow = recipes.slice(0, page * recipesPerPage);
 
   return (
     <div className={css.homePage}>
@@ -99,7 +94,7 @@ export default function HomePage() {
         <Filters totalItems={totalItems} onChange={handleFilterChange} />
 
         <RecipesList
-          recipes={recipesToShow}
+          recipes={recipes /*ToShow*/}
           loading={loading}
           onToggleFavorite={handleToggleFavorite}
           ref={recipesListRef}
@@ -107,7 +102,7 @@ export default function HomePage() {
 
         <div>
           {page * recipesPerPage < totalItems && !loading && (
-            <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
+            <LoadMoreBtn onClick={loadMore} />
           )}
         </div>
       </section>
