@@ -91,8 +91,8 @@ const Filters = ({ onChange, totalItems }) => {
             >
               <option value="">Ingredient</option>
               {ingredientOptions.map((ingredient) => (
-                <option key={ingredient} value={ingredient}>
-                  {ingredient}
+                <option key={ingredient._id} value={ingredient.name}>
+                  {ingredient.name}
                 </option>
               ))}
             </select>
@@ -137,8 +137,8 @@ const Filters = ({ onChange, totalItems }) => {
           >
             <option value="">Ingredient</option>
             {ingredientOptions.map((ingredient) => (
-              <option key={ingredient} value={ingredient}>
-                {ingredient}
+              <option key={ingredient._id} value={ingredient.name}>
+                {ingredient.name}
               </option>
             ))}
           </select>
