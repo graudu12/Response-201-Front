@@ -9,12 +9,14 @@
 }
 
 .modal {
-  background-color: #fdfcdf;
-  padding: 40px 32px;
-  border-radius: 24px;
+  background-color: #faf3e0;
+  padding: 56px 32px;
+  border-radius: 32px;
   position: relative;
-  width: 427px;
+  width: 420px;
+  max-width: 90%;
   text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .closeBtn {
@@ -23,25 +25,38 @@
   right: 14px;
   background: none;
   border: none;
+  padding: 4px;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.closeBtn:hover,
+.closeBtn:focus {
+  transform: scale(1.1);
+  outline: none;
 }
 
 .closeIcon {
-  width: 20px;
-  height: 20px;
-  stroke: #000;
+  width: 24px;
+  height: 24px;
+  color: #000;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 600;
   margin-bottom: 8px;
+  color: #000;
 }
 
 .text {
-  font-size: 16px;
-  color: #000;
-  margin-bottom: 32px;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.7);
+  margin-bottom: 40px;
+  line-height: 1.5;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .buttons {
@@ -51,22 +66,31 @@
   flex-wrap: wrap;
 }
 
-.logoutBtn {
-  background-color: #d80000;
-  color: #fff;
-  padding: 12px 24px;
-  border: none;
+.logoutBtn,
+.cancelBtn {
+  padding: 8px 45px;
   border-radius: 12px;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
   cursor: pointer;
 }
 
 .cancelBtn {
-  background-color: #fff;
   color: #000;
-  padding: 12px 24px;
   border: 1px solid #000;
-  border-radius: 12px;
-  font-weight: 500;
-  cursor: pointer;
+}
+
+.cancelBtn:hover {
+  background-color: #f0f0f0;
+}
+
+.logoutBtn {
+  background-color: #d80000;
+  color: #fff;
+  border: none;
+}
+
+.logoutBtn:hover {
+  background-color: #b30000;
 }

@@ -24,8 +24,24 @@ export default function LogoutModal({ isOpen, onClose, onLogout }) {
     <div className={css.backdrop} onClick={handleBackdropClick}>
       <div className={css.modal}>
         <button className={css.closeBtn} onClick={onClose}>
-          <svg className={css.closeIcon}>
-            <use href={`/svg/sprite.svg#icon-close`} />
+          <svg
+            className={css.closeIcon}
+            viewBox="0 0 32 32"
+            width="24"
+            height="24"
+          >
+            <path
+              d="M10 10L22 22"
+              stroke="black"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M22 10L10 22"
+              stroke="black"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
           </svg>
         </button>
         <h2 className={css.title}>Are you sure?</h2>
