@@ -203,7 +203,7 @@ export const fetchRecipesByQuery = createAsyncThunk(
       const response = await axios.get(
         "https://response-201-back.onrender.com/api/recipes",
         {
-          params: { page: 1, perPage: 288 }, 
+          params: { page: 1, perPage: 500 }, 
         }
       );
 
