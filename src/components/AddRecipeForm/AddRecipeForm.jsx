@@ -29,15 +29,15 @@ useEffect(() => {
 }, []);
   
 useEffect(() => {
-  axios.get('https://response-201-back.onrender.com/api/ingredients')
-    // .then((res) => setIngredients(res.data.ingredients))
-    .then((res) => {
-      const formatted = res.data.ingredients.map((name, index) => ({
-        _id: index.toString(), // просто унікальний key
-        name,
-      }));
-      setIngredients(formatted);
-    })
+  axios.get('http://localhost:5173/ingredients.json')
+    .then((res) => { setIngredients(res.data) })
+    // .then((res) => {
+    //   const formatted = res.data.ingredients.map((name) => ({
+    //     _id: name, // просто унікальний key
+    //     name,
+    //   }));
+    //   setIngredients(formatted);
+    // })
 
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
@@ -108,24 +108,17 @@ const handleAddIngridient = (values, setFieldValue) => {
   if (!values.name_ingredients || !values.amount_ingredients)
     return;
 
-  const selectedIngredient = ingredients.find(ing => ing.name === values.name_ingredients);
+  const selectedIngredient = ingredients.find(ing => ing._id === values.name_ingredients);
   if (!selectedIngredient) return;
 
-  const isDuplicate = addedIngredients.some(
-    (ing) => ing.name === values.name_ingredients
-  );
-  if (isDuplicate) {
-    toast.error("Ingredient already added!");
-    return;
-  }
-
   const newIngredient = {
-    name: values.name_ingredients,
+    id: values.name_ingredients,
     measure: values.amount_ingredients,
   };
 
-  setAddedIngredients(prev => [...prev, newIngredient]);
-
+  const updated = [...addedIngredients, newIngredient];
+  setAddedIngredients(updated);
+  setFieldValue('ingredients', updated);
   setFieldValue('amount_ingredients', '');
 };
 
@@ -139,24 +132,37 @@ const handleRemoveIng = (index) => {
     
 const initialValues = {
     nameRecipe: "",
+    dishPhoto: "",
     recipeDescription: "",
     cookingTime: "",
     calories: "",
     recipeCategory: "",
     instructions: "",
     amount_ingredients: "",
-    name_ingredients: ""
+    name_ingredients: "",
+    ingredients: []
 };
 
   const validationSchema = Yup.object().shape({
     nameRecipe: Yup.string().min(3, "Must be min 3 chars").max(30, "Must be max 50 chars").required("This field is required"),
+    dishPhoto: Yup.mixed(),
     recipeDescription: Yup.string().min(3, "Must be min 3 chars").max(100, "Must be max 100 chars").required("This field is required"),
+    instructions: Yup.string().required("This field is required"),
+    ingredients: Yup.array().of(
+      Yup.object().shape({
+        id: Yup.string()
+          .required('Ingredient ID is required'),
+        measure: Yup.string()
+          .required('Measure is required')
+          .min(1, 'Measure must not be empty'),
+      })
+    )
+    .min(1, 'At least one ingredient is required'),
     cookingTime: Yup.number().required("This field is required"),
     calories: Yup.number(),
     recipeCategory: Yup.string().required("This field is required"),
-    name_ingredients: Yup.string().required("This field is required"),
-    amount_ingredients: Yup.string().min(1, "Must be min 1 chars").max(20, "Must be max 20 chars"),
-    instructions: Yup.string().required("This field is required"),
+    
+    
 })
   
   return (
@@ -164,7 +170,10 @@ const initialValues = {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) => handleSubmit(values, addedIngredients, actions)}
+        onSubmit={(values, actions) => {
+          // values.ingredients = addedIngredients;
+          handleSubmit(values, values.ingredients, actions)}}
+          
         >
           {({ values, setFieldValue }) => (
           <Form>
@@ -277,8 +286,8 @@ const initialValues = {
                     name="name_ingredients"
                 as="select">
                   {/* <option value={ingredients[0]}></option> */}
-                {ingredients.map((ing) => (
-                  <option value={ing.name} key={ing._id}>{ing.name}</option>
+                {ingredients.map(ing => (
+                  <option value={ing._id} key={ing._id}>{ing.name}</option>
                 ))}
               </Field>
               <ErrorMessage className={css.error} name="name_ingredients" component="span"></ErrorMessage>
@@ -317,22 +326,26 @@ const initialValues = {
               <p className={css.ing}>Amount:</p>
               </div>
             <ul>
-              {addedIngredients.map((ing, index) =>
-              (
-                <li className={css.ing_list} key={`${ing.name}-${ing.measure}`}>
-                  <p className={css.ing_sel}>{ing.name}</p>
-                  <p className={css.ing_sel}>{ing.measure}</p>
-                  <button
-                    type="button"
-                    className={css.icon_btn}
-                    onClick={() => handleRemoveIng(index)}>
+                      {addedIngredients.map((ing, index) => {
+                const fullIngredient = ingredients.find((i) => i._id === ing.id);
+                return (
+                  <li className={css.ing_list} key={ing.id + ing.measure}>
+                    <p className={css.ing_sel}>{fullIngredient?.name || "Unknown"}</p>
+                    <p className={css.ing_sel}>{ing.measure}</p>
+                    <button
+                      type="button"
+                      className={css.icon_btn}
+                      onClick={() => handleRemoveIng(index)}
+                    >
                       <svg className={css.icon_delete}>
                         <use href={`/svg/sprite.svg#icon-delete`} />
                       </svg>
-                  </button>
-                </li>
-              )
-            )}
+                    </button>
+                  </li>
+                );
+              })}
+              
+              
             </ul>
             </div>
             )}
