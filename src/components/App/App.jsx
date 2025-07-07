@@ -33,7 +33,7 @@ const ProfilePage = lazy(() => import("../../pages/ProfilePage/ProfilePage"));
 
 export default function App() {
   const dispatch = useDispatch();
-  const { isRefreshing } = useSelector(selectRefreshing);
+  const  isRefreshing  = useSelector(selectRefreshing);
   console.log("App render, isRefreshing:", isRefreshing);
 
   useEffect(() => {
