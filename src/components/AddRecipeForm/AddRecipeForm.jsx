@@ -16,6 +16,8 @@ const navigate = useNavigate();
 
 const inputRef = useRef(null);
 
+const [showModal, setShowModal] = useState(false);
+const [createdRecipeId, setCreatedRecipeId] = useState(null);
 const [ingredients, setIngredients] = useState([]);
 const [categories, setCategories] = useState([]);
 const [addedIngredients, setAddedIngredients] = useState([]);
@@ -123,19 +125,20 @@ useEffect(() => {
       );
   
       dispatch(addNewRecipe(res.data.data));
-      navigate(`/recipes/${res.data.data._id}`);
       toast.success("Recipe added!");
+      setCreatedRecipeId(res.data.data._id);
+      setShowModal(true);
       actions.resetForm();
       setImageFile(null);
       setPreview(null);
       setAddedIngredients([]);
-    } catch (err) {
+    } catch (err) { 
       console.error("BACKEND ERROR:", err.response?.data || err.message);
       toast.error(err.response?.data?.message || "Something went wrong.");
     }
   };
 
-const handleImageClick = () => {
+const handleImageClick = () => {  
     inputRef.current.click();
 };
 
