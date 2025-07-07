@@ -191,17 +191,19 @@ const initialValues = {
     dishPhoto: Yup.mixed(),
     recipeDescription: Yup.string().min(3, "Must be min 3 chars").max(100, "Must be max 100 chars").required("This field is required"),
     instructions: Yup.string().required("This field is required"),
-    ingredients: Yup.array().of(
-      Yup.object().shape({
-        id: Yup.string()
-          .required('Ingredient ID is required'),
-        measure: Yup.string()
-          .required('Measure is required')
-          .min(1, 'Measure must not be empty'),
-      })
-    )
-    .min(1, 'At least one ingredient is required'),
-    cookingTime: Yup.string().required("This field is required"),
+    // ingredients: Yup.array().of(
+    //   Yup.object().shape({
+    //     id: Yup.string()
+    //       .required('Ingredient ID is required'),
+    //     measure: Yup.string()
+    //       .required('Measure is required')
+    //       .min(1, 'Measure must not be empty'),
+    //   })
+    // )
+    // .min(1, 'At least one ingredient is required'),
+    name_ingredients: Yup.string(),
+    amount_ingredients: Yup.string(),
+    cookingTime: Yup.string().max(4,"Must be max 9999 minutes").required("This field is required"),
     calories: Yup.string(),
     recipeCategory: Yup.string().required("This field is required"),
     
@@ -281,7 +283,7 @@ const initialValues = {
                 className={css.field}
                 id="cookingTime"
                 name="cookingTime"
-                type="text"
+                type="number"
                 placeholder="10"
               />
               <ErrorMessage className={css.error} name="cookingTime" component="span"></ErrorMessage>
@@ -295,7 +297,7 @@ const initialValues = {
                   className={css.field}
                   id="calories"
                   name="calories"
-                  type="text"
+                  type="number"
                   placeholder="150 cals"
                 />
                 <ErrorMessage className={css.error} name="calories" component="span"></ErrorMessage>
