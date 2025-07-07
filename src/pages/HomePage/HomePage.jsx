@@ -118,6 +118,7 @@
 //src/pages/HomePage/HomePage.jsx
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom"; 
 import css from "./HomePage.module.css";
 
 import Hero from "../../components/Hero/Hero";
@@ -125,25 +126,22 @@ import RecipesList from "../../components/RecipesList/RecipesList";
 import Filters from "../../components/Filters/Filters";
 import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
 
-// добавила  импорт функции поиска рецептов по названию
 import {
   fetchRecipes,
   fetchRecipesByQuery,
   toggleFavoriteRecipeAsync,
 } from "../../redux/recipes/operations";
-
-// добавила импорт экшена для очистки рецептов при новом поиске
-import { clearRecipes } from "../../redux/recipes/slice";
+import { clearRecipes, clearNotFound } from "../../redux/recipes/slice"; 
+import { changeFilter } from "../../redux/filters/slice"; 
 
 export default function HomePage() {
   const dispatch = useDispatch();
+  const location = useLocation(); 
 
   const recipes = useSelector((state) =>
     Array.isArray(state.recipes.items) ? state.recipes.items : []
   );
   const totalItems = useSelector((state) => state.recipes.totalItems);
-
-  // добавила получение поискового запроса из фильтров
   const searchQuery = useSelector((state) => state.filters.name);
 
   const [page, setPage] = useState(1);
@@ -169,7 +167,14 @@ export default function HomePage() {
     setPage(1);
   }, []);
 
-  // изменила если есть searchQuery — не загружать обычные рецепты
+  // + сброс фильтра, если пользователь вернулся на главную
+  useEffect(() => {
+    if (location.pathname === "/") {
+      dispatch(changeFilter({ name: "" }));
+      dispatch(clearNotFound());
+    }
+  }, [location.pathname, dispatch]);
+
   useEffect(() => {
     if (searchQuery) return;
 
@@ -187,13 +192,12 @@ export default function HomePage() {
       .catch(() => setLoading(false));
   }, [dispatch, page, selectedFilters, searchQuery]);
 
-  // добавила хук для загрузки рецептов по поисковому запросу
   useEffect(() => {
     if (!searchQuery) return;
 
     setLoading(true);
 
-    dispatch(clearRecipes()); // очистка старых рецептов перед новым поиском
+    dispatch(clearRecipes());
     dispatch(fetchRecipesByQuery(searchQuery))
       .unwrap()
       .then(() => setLoading(false))
@@ -219,7 +223,6 @@ export default function HomePage() {
     }
   }, [page]);
 
-  // изменела при наличии searchQuery — отображать все найденные рецепты
   const recipesToShow = searchQuery
     ? recipes
     : recipes.slice(0, page * recipesPerPage);
@@ -251,3 +254,4 @@ export default function HomePage() {
     </div>
   );
 }
+

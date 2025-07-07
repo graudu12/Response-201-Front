@@ -154,7 +154,6 @@
 //   }
 // );
 
-
 // src/redux/recipes/operations.js.
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -175,7 +174,11 @@ export const fetchRecipes = createAsyncThunk(
     try {
       const params = { page, perPage };
       if (category) params.category = category;
-      if (ingredient) params.ingredient = ingredient;
+      if (ingredient && typeof ingredient === "object") {
+        params.ingredient = ingredient.name;
+      } else if (ingredient) {
+        params.ingredient = ingredient; // fallback если вдруг всё же строка
+      }
 
       const response = await axios.get(
         "https://response-201-back.onrender.com/api/recipes",
@@ -203,7 +206,7 @@ export const fetchRecipesByQuery = createAsyncThunk(
       const response = await axios.get(
         "https://response-201-back.onrender.com/api/recipes",
         {
-          params: { page: 1, perPage: 500 }, 
+          params: { page: 1, perPage: 500 },
         }
       );
 
@@ -224,7 +227,6 @@ export const fetchRecipesByQuery = createAsyncThunk(
     }
   }
 );
-
 
 export const toggleFavoriteRecipeAsync = createAsyncThunk(
   "recipes/toggleFavoriteAsync",
@@ -249,7 +251,6 @@ export const toggleFavoriteRecipeAsync = createAsyncThunk(
   }
 );
 
-
 export const fetchRecipesByIngredients = createAsyncThunk(
   "recipes/fetchRecipesByIngredients",
   async (ingredientQuery, thunkAPI) => {
@@ -270,7 +271,6 @@ export const fetchRecipesByIngredients = createAsyncThunk(
     }
   }
 );
-
 
 export const fetchMyRecipes = createAsyncThunk(
   "recipes/fetchMyRecipes",
@@ -293,7 +293,6 @@ export const fetchMyRecipes = createAsyncThunk(
     }
   }
 );
-
 
 export const fetchFavoriteRecipes = createAsyncThunk(
   "recipes/fetchFavoriteRecipes",
