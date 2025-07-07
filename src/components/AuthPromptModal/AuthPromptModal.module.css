@@ -92,3 +92,36 @@
 .registerBtn:hover {
   background-color: #7d5131;
 }
+@media (min-width: 393px) and (max-width: 767px) {
+  .modal {
+    width: 362px;
+    padding: 56px 24px 32px 24px;
+    border-radius: 32px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .text {
+    font-size: 16px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .loginBtn,
+  .registerBtn,
+  .logoutBtn,
+  .cancelBtn,
+  .primaryBtn {
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 12px;
+  }
+}
