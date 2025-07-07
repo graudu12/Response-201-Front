@@ -65,7 +65,16 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
         onMouseEnter={small ? handleMouseEnter : undefined}
         onMouseLeave={small ? handleMouseLeave : undefined}
       >
-        <svg className={styles.icon} width="24" height="24">
+        {/* <svg className={styles.icon} width="24" height="24">
+          <use href={`/svg/sprite.svg#${iconId}`} />
+        </svg> */}
+        <svg
+          className={`${styles.icon} ${
+            !small && isFavorite ? styles.iconFilledWhite : ""
+          }`}
+          width="24"
+          height="24"
+        >
           <use href={`/svg/sprite.svg#${iconId}`} />
         </svg>
         {!small && (isFavorite ? "Remove" : "Save")}
