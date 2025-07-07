@@ -1,11 +1,12 @@
 .recipeCard {
+  min-width: 288px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  background-color: #fff;
+  gap: 16px;
+  background-color: #faf3e0;
   border: 1px solid #e3e3e3;
   border-radius: 16px;
-  padding: 16px;
+  padding: 12px;
   transition: box-shadow 0.3s;
 }
 
@@ -56,17 +57,24 @@
   font-size: 14px;
   color: #555;
   display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  gap: 16px;
+}
+.descriptioncss {
+  display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .formButton {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
+  gap: 8px;
 }
 
 .learnMoreButton {
@@ -86,7 +94,5 @@
 }
 .icon {
   stroke: currentColor;
-  color: #000000; /* or any visible color */
-  width: 24px;
-  height: 24px;
+  color: #000000;
 }

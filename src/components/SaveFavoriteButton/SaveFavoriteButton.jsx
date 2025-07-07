@@ -68,7 +68,7 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
         <svg className={styles.icon} width="24" height="24">
           <use href={`/svg/sprite.svg#${iconId}`} />
         </svg>
-        {!small && (isFavorite ? "Remove from favorites" : "Save")}
+        {!small && (isFavorite ? "Remove" : "Save")}
       </button>
 
       <AuthPromptModal isOpen={showModal} onClose={() => setShowModal(false)} />

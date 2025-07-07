@@ -27,10 +27,9 @@ Create a .env file in the root directory and add the following variables:
 The application will start running on http://localhost:${port}. Please refer to the API documentation using Swagger UI for more details on request and response formats.
 Routes
 
-   Recipes
+Recipes
 
 Operations about users.
-
 
 GET/api/recipes: Get all recipes.
 POST/api/recipes: Create a new recipe.
@@ -41,29 +40,23 @@ DELETE/api/recipes/{recipeId}/favorites: Remove a recipe from favorites.
 DELETE/api/recipes/{recipeId}: Delete my recipe.
 GET/api/recipes/{recipeId}: Get recipe by id.
 
-
 Auth
 
 Auth operations.
-
 
 POST/api/auth/login: Login a user.
 POST/api/auth/register: Register a user.
 POST/api/auth/logout: Logout a user.
 
-
 User
 
 User data.
-
 
 Ingredients
 
 Operations to manage ingredients.
 
-
 GET/api/ingredients: Get all available ingredients.
-
 
 Categories
 

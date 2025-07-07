@@ -76,15 +76,16 @@ const RecipeDetails = ({ recipe }) => {
           <section className={styles.info}>
             <h2 className={styles.infoTitle}>General information</h2>
             <p>
-              <strong>Category:</strong> {recipe.recipeCategory || "—"}
+              <strong>Category: </strong> {recipe.recipeCategory || "—"}
             </p>
             <p>
-              <strong>Cooking time:</strong> {recipe.cookingTime || "—"} minutes
+              <strong>Cooking time: </strong> {recipe.cookingTime || "—"}{" "}
+              minutes
             </p>
 
             <p>
-              <strong>Caloric content:</strong> Approximately
-              {recipe.calories || ""} kcal per serving
+              <strong>Caloric content: </strong>
+              Approximately&nbsp; {recipe.calories || ""} kcal per serving
             </p>
           </section>
           <SaveFavoriteButton recipeId={recipe._id} />
