@@ -52,6 +52,7 @@
 @media screen and (min-width: 768px) {
   .hero {
     padding: 128px 0;
+    background-position: top center, center -40px;
   }
 
   .heroContainer {
@@ -67,5 +68,8 @@
   .heroContainer {
     min-width: 1440px;
     padding-left: 108px;
+  }
+  .hero {
+    background-position: top center, center -120px;
   }
 }
