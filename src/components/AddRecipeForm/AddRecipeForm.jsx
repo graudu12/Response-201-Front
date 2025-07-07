@@ -29,8 +29,8 @@ useEffect(() => {
 }, []);
   
 useEffect(() => {
-  axios.get('http://localhost:5173/ingredients.json')
-    .then((res) => { setIngredients(res.data) })
+  axios.get('https://response-201-back.onrender.com/api/ingredients')
+    .then((res) => { setIngredients(res.data.ingredients || []) })
     // .then((res) => {
     //   const formatted = res.data.ingredients.map((name) => ({
     //     _id: name, // просто унікальний key
@@ -42,55 +42,98 @@ useEffect(() => {
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
 
-const handleSubmit = async (values, addedIngredients, actions) => {
-  if (addedIngredients.length === 0) {
-    toast.warning("Please add at least one ingredient.");
-    return;
-  }
+// const handleSubmit = async (values, addedIngredients, actions) => {
+//   if (addedIngredients.length === 0) {
+//     toast.warning("Please add at least one ingredient.");
+//     return;
+//   }
 
-  const formData = new FormData();
+//   const formData = new FormData();
 
-  formData.append('nameRecipe', values.nameRecipe);
-  formData.append('recipeDescription', values.recipeDescription);
-  formData.append('cookingTime', values.cookingTime);
-  if (values.calories) {
-    formData.append('calories', values.calories);
-  }
-  formData.append('recipeCategory', values.recipeCategory);
-  formData.append('instructions', values.instructions);
-  formData.append('ingredients', JSON.stringify(addedIngredients));
+//   formData.append('nameRecipe', values.nameRecipe);
+//   formData.append('recipeDescription', values.recipeDescription);
+//   formData.append('cookingTime', values.cookingTime);
+//   if (values.calories) {
+//     formData.append('calories', values.calories);
+//   }
+//   formData.append('recipeCategory', values.recipeCategory);
+//   formData.append('instructions', values.instructions);
+//   formData.append('ingredients', JSON.stringify(addedIngredients));
 
-  if (imageFile) {
-    formData.append('dishPhoto', imageFile);
-  }
+//   if (imageFile) {
+//     formData.append('dishPhoto', imageFile);
+//   }
 
-  const token = localStorage.getItem('token');
+//   const token = localStorage.getItem('token');
 
-  console.log("VALUES", values);
-console.log("ADDED INGREDIENTS", addedIngredients);
+//   console.log("VALUES", values);
+// console.log("ADDED INGREDIENTS", addedIngredients);
+//     try {
+//       for (let [key, value] of formData.entries()) {
+//         console.log(`${key}: ${value}`);
+//       }
+//       const res = await axios.post('https://response-201-back.onrender.com/api/recipes', formData, {
+//         headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
+//       });
+
+//       const newRecipe = res.data;
+
+//       dispatch(addNewRecipe(newRecipe));
+
+//       toast.success("Recipe added!");
+//       navigate(`/recipes/${res.data.id}`);
+//       actions.resetForm();
+//       setImageFile(null);
+//       setPreview(null);
+//       setAddedIngredients([]);
+//     } catch (err) {
+//       toast.error("Something went wrong.");
+      
+//     }
+  // };
+  
+  const handleSubmit = async (values, addedIngredients, actions) => {
+    if (addedIngredients.length === 0) {
+      toast.warning("Please add at least one ingredient.");
+      return;
+    }
+  
+    const token = localStorage.getItem('token');
+  
+    const payload = {
+      nameRecipe: values.nameRecipe,
+      recipeDescription: values.recipeDescription,
+      cookingTime: String(values.cookingTime),
+      calories: String(values.calories),
+      recipeCategory: values.recipeCategory,
+      instructions: values.instructions,
+      ingredients: addedIngredients,
+      // dishPhoto: "https://your-image-url.com/photo.jpg" // 
+    };
+  
     try {
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-      const res = await axios.post('https://response-201-back.onrender.com/api/recipes', formData, {
-        headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
-      });
-
-      const newRecipe = res.data;
-
-      dispatch(addNewRecipe(newRecipe));
-
+      const res = await axios.post(
+        'https://response-201-back.onrender.com/api/recipes',
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      dispatch(addNewRecipe(res.data.data));
+      navigate(`/recipes/${res.data.data._id}`);
       toast.success("Recipe added!");
-      navigate(`/recipes/${res.data.id}`);
       actions.resetForm();
       setImageFile(null);
       setPreview(null);
       setAddedIngredients([]);
     } catch (err) {
-      toast.error("Something went wrong.");
-      
+      console.error("BACKEND ERROR:", err.response?.data || err.message);
+      toast.error(err.response?.data?.message || "Something went wrong.");
     }
-};
+  };
 
 const handleImageClick = () => {
     inputRef.current.click();
@@ -158,8 +201,8 @@ const initialValues = {
       })
     )
     .min(1, 'At least one ingredient is required'),
-    cookingTime: Yup.number().required("This field is required"),
-    calories: Yup.number(),
+    cookingTime: Yup.string().required("This field is required"),
+    calories: Yup.string(),
     recipeCategory: Yup.string().required("This field is required"),
     
     
@@ -238,7 +281,7 @@ const initialValues = {
                 className={css.field}
                 id="cookingTime"
                 name="cookingTime"
-                type="number"
+                type="text"
                 placeholder="10"
               />
               <ErrorMessage className={css.error} name="cookingTime" component="span"></ErrorMessage>
@@ -252,7 +295,7 @@ const initialValues = {
                   className={css.field}
                   id="calories"
                   name="calories"
-                  type="number"
+                  type="text"
                   placeholder="150 cals"
                 />
                 <ErrorMessage className={css.error} name="calories" component="span"></ErrorMessage>
