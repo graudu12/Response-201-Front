@@ -5,7 +5,7 @@ import css from "./ProfilePage.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import RecipesList from "../../components/RecipesList/RecipesList";
-
+import { clearRecipes } from "../../redux//recipes/slice";
 import {
   fetchMyRecipes,
   fetchFavoriteRecipes,
@@ -25,7 +25,10 @@ const ProfilePage = () => {
   const recipesPerPage = 12;
   const [loading, setLoading] = useState(false);
   const recipesListRef = useRef(null);
-
+  useEffect(() => {
+    dispatch(clearRecipes());
+    setPage(1); // сбрасываем страницу, иначе будет догружать с текущей
+  }, [mode, dispatch]);
   useEffect(() => {
     setLoading(true);
     const fetch = async () => {
