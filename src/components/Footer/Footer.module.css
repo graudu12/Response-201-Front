@@ -47,6 +47,8 @@
   border: none;
   color: inherit;
   font: inherit;
+  font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
   text-decoration: none;
   padding: 0;
@@ -73,8 +75,5 @@
     padding: 24px 108px;
     flex-direction: row;
     gap: 305px;
-  }
-  .nav {
-    gap: 32px;
   }
 }
