@@ -85,6 +85,11 @@
   color: inherit;
   /*transition: all 0.3s ease;*/
 }
+
+.iconFilledWhite {
+  --icon-fill: #fff;
+}
+
 .favoriteButton .icon {
   color: white;
 }
