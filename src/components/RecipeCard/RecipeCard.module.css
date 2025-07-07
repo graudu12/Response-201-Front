@@ -80,7 +80,7 @@
 .learnMoreButton {
   height: 100%;
   flex: 1;
-  background: #fff;
+  background: transparent;
   border: 1px solid #000;
   border-radius: 8px;
   padding: 8px;
@@ -91,7 +91,8 @@
 }
 
 .learnMoreButton:hover {
-  background-color: #f0f0f0;
+  background-color: #6d554b;
+  color: #fff;
 }
 .icon {
   stroke: currentColor;
