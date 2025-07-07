@@ -81,7 +81,7 @@ export default function LoginForm() {
                       {...field}
                       type={showPassword ? "text" : "password"}
                       id={passwordFieldId}
-                      className={css.input}
+                      className={`${css.input} ${css.inputSpacing}`}
                       placeholder="**********"
                     />
                     <button
