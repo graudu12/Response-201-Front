@@ -69,20 +69,22 @@ const ProfilePage = () => {
   //const recipesToShow = recipes.slice(0, page * recipesPerPage);
   return (
     <section className={css.profilePage}>
-      <h1 className={css.title}>My profile</h1>
-      <ProfileNavigation />
-      <p>{totalItems} recipes</p>
-      <RecipesList
-        mode={mode}
-        recipes={recipes /*ToShow*/}
-        loading={loading}
-        onToggleFavorite={handleToggleFavorite}
-        ref={recipesListRef}
-      />
-      <div>
-        {page * recipesPerPage < totalItems && !loading && (
-          <LoadMoreBtn onClick={loadMore} />
-        )}
+      <div className={css.container}>
+        <h1 className={css.title}>My profile</h1>
+        <ProfileNavigation />
+        <p className={css.totalRecipes}>{totalItems} recipes</p>
+        <RecipesList
+          mode={mode}
+          recipes={recipes /*ToShow*/}
+          loading={loading}
+          onToggleFavorite={handleToggleFavorite}
+          ref={recipesListRef}
+        />
+        <div>
+          {page * recipesPerPage < totalItems && !loading && (
+            <LoadMoreBtn onClick={loadMore} />
+          )}
+        </div>
       </div>
     </section>
   );
