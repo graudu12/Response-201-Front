@@ -64,12 +64,8 @@ const Filters = ({ onChange, totalItems }) => {
             onClick={() => setIsMobileOpen(false)}
           >
             <p className={styles.closeP}>Filters</p>
-            <svg
-              className={styles.icon}
-              width="24"
-              height="24"
-              viewBox="0 0 32 32"
-            >
+
+            <svg className={styles.iconClose} width="24" height="24">
               <use href={`/svg/sprite.svg#icon-close_modal`} />
             </svg>
           </button>
@@ -95,8 +91,8 @@ const Filters = ({ onChange, totalItems }) => {
             >
               <option value="">Ingredient</option>
               {ingredientOptions.map((ingredient) => (
-                <option key={ingredient} value={ingredient}>
-                  {ingredient}
+                <option key={ingredient._id} value={ingredient.name}>
+                  {ingredient.name}
                 </option>
               ))}
             </select>
@@ -141,8 +137,8 @@ const Filters = ({ onChange, totalItems }) => {
           >
             <option value="">Ingredient</option>
             {ingredientOptions.map((ingredient) => (
-              <option key={ingredient} value={ingredient}>
-                {ingredient}
+              <option key={ingredient._id} value={ingredient.name}>
+                {ingredient.name}
               </option>
             ))}
           </select>

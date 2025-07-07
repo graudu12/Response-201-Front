@@ -39,14 +39,6 @@ export default function AuthPromptModal({ isOpen, onClose }) {
             width="24"
             height="24"
           >
-            <circle
-              cx="16"
-              cy="16"
-              r="15"
-              stroke="black"
-              strokeWidth="2"
-              fill="none"
-            />
             <path
               d="M10 10L22 22"
               stroke="black"

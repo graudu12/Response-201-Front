@@ -1,20 +1,69 @@
 ## Tasteorama
 
-## Description:
-The Phonebook is a modern web application designed to help users manage their contacts. It was developed using advanced web technologies.
+Recipe App
 
-## Features:
-The app allows users to easily create, edit, and delete contacts, as well as quickly search for specific contacts. It also provides notifications for successful contact addition, editing, or deletion through react-hot-toast.
+This is a recipe application built with the MERN stack (MongoDB, Express.js, React.js, and Node.js). It allows users to sign up, log in, log out and perform CRUD operations on recipes. The project consists of two controllers: the user controller for authentication and the recipe controller.
+Features
 
-## Technologies Used:
-The Phonebook was built using React.js with Vite for a fast and interactive user interface. Redux and Redux Toolkit were used for efficient state management, while Redux Persist was used to save the application's state between sessions. Data exchange with the server was handled via Axios and the app's UI was styled using Material UI. Formik was used for form management and data validation, and notifications were displayed using React Hot Toast. The core technologies of HTML and CSS were used for building and styling web pages.
+    User authentication (sign up, log in, and log out)
+    Recipe management (create, read, update, and delete recipes)
+    Saving and retrieving saved recipes
+    User authentication middleware for protected routes
+    API documentation using Swagger UI
 
-## Development Tools:
-The main development environment for the project was Microsoft Visual Studio Code, with Git for version control. The app was deployed and hosted on Vercel.
+Dependencies
 
-## Skills Acquired During the Project:
-The project provided the opportunity to develop skills in research, problem solving and analytical thinking.
+kindly check the package.json file for all the dependencies
+Installation
 
-## Design Patterns:
-Adaptive design for desktop (1440px).
-Various design patterns were applied during the development process to ensure clean and understandable code, as well as to enhance the scalability and maintainability of the project.
+Install the dependencies: npm install
+
+Configure the environment variables:
+
+    Update the necessary values in the .env file, such as the database connection URL.
+
+Create a .env file in the root directory and add the following variables:
+
+The application will start running on http://localhost:${port}. Please refer to the API documentation using Swagger UI for more details on request and response formats.
+Routes
+
+Recipes
+
+Operations about users.
+
+GET/api/recipes: Get all recipes.
+POST/api/recipes: Create a new recipe.
+GET/api/recipes/myRecipes: Get my recipes.
+GET/api/recipes/favorites: Get user's favorite recipes.
+PATCH/api/recipes/{recipeId}/favorites: Add a recipe to user's favorites.
+DELETE/api/recipes/{recipeId}/favorites: Remove a recipe from favorites.
+DELETE/api/recipes/{recipeId}: Delete my recipe.
+GET/api/recipes/{recipeId}: Get recipe by id.
+
+Auth
+
+Auth operations.
+
+POST/api/auth/login: Login a user.
+POST/api/auth/register: Register a user.
+POST/api/auth/logout: Logout a user.
+
+User
+
+User data.
+
+Ingredients
+
+Operations to manage ingredients.
+
+GET/api/ingredients: Get all available ingredients.
+
+Categories
+
+Operations to manage categories.
+
+GET/api/categories: Get all categories.
+
+Users
+
+GET/api/users/current: Get current user.

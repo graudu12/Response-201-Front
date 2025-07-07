@@ -56,43 +56,35 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    if (
-      page > 1 &&
-      recipesListRef.current &&
-      recipesListRef.current.children != null &&
-      recipesListRef.current.children.length > 0
-    ) {
-      setTimeout(() => {
-        requestAnimationFrame(() => {
-          const list = recipesListRef.current;
-          if (!list || !list.children) return;
-          // Знаходимо останній елемент в списку
-          const lastRecipe = list.children[list.children.length - 1];
-          if (lastRecipe) {
-            lastRecipe.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
+    if (page > 1 && recipesListRef.current) {
+      requestAnimationFrame(() => {
+        recipesListRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
         });
-      }, 100);
+      });
     }
   }, [page]);
 
-  const recipesToShow = recipes.slice(0, page * recipesPerPage);
+  //const recipesToShow = recipes.slice(0, page * recipesPerPage);
   return (
     <section className={css.profilePage}>
-      <h1 className={css.title}>My profile</h1>
-      <ProfileNavigation />
-
-      <RecipesList
-        mode={mode}
-        recipes={recipesToShow}
-        loading={loading}
-        onToggleFavorite={handleToggleFavorite}
-        ref={recipesListRef}
-      />
-      <div>
-        {page * recipesPerPage < totalItems && !loading && (
-          <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
-        )}
+      <div className={css.container}>
+        <h1 className={css.title}>My profile</h1>
+        <ProfileNavigation />
+        <p className={css.totalRecipes}>{totalItems} recipes</p>
+        <RecipesList
+          mode={mode}
+          recipes={recipes /*ToShow*/}
+          loading={loading}
+          onToggleFavorite={handleToggleFavorite}
+          ref={recipesListRef}
+        />
+        <div>
+          {page * recipesPerPage < totalItems && !loading && (
+            <LoadMoreBtn onClick={loadMore} />
+          )}
+        </div>
       </div>
     </section>
   );
