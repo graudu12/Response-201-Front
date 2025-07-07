@@ -35,7 +35,7 @@ const RecipeCard = ({ recipe, mode }) => {
       </div>
       <div className={styles.recipeDescCal}>
         <p className={styles.descriptioncss}>{recipeDescription}</p>
-        <p className={styles.descriptioncss}>- {calories} cals</p>
+        <p className={styles.descriptioncss}>~ {calories} cals</p>
       </div>
       <div className={styles.formButton}>
         <button
