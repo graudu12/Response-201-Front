@@ -192,6 +192,11 @@ const recipesSlice = createSlice({
       state.notFound = false;
       state.error = null;
     },
+    removeRecipeFromFavoritesLocally: (state, action) => {
+      const recipeId = action.payload;
+      state.items = state.items.filter((r) => r._id !== recipeId);
+      state.totalItems -= 1;
+    },
   },
 
   extraReducers: (builder) => {
@@ -236,7 +241,7 @@ const recipesSlice = createSlice({
         const { recipeId, add, mode } = action.payload;
         if (mode === "favorites" && !add) {
           state.items = state.items.filter((recipe) => recipe._id !== recipeId);
-          //state.totalItems -= 1;
+          state.totalItems -= 1;
         } else {
           const recipe = state.items.find((r) => r._id === recipeId);
           if (recipe) {
@@ -273,6 +278,7 @@ const recipesSlice = createSlice({
         } else {
           state.items = action.payload.items; // перезаписуємо список
         }
+
         state.totalItems = action.payload.totalItems;
         state.loading = false;
       })
@@ -289,6 +295,7 @@ export const {
   clearNotFound,
   addNewRecipe,
   clearRecipes,
+  removeRecipeFromFavoritesLocally,
 } = recipesSlice.actions;
 
 export const recipesReducer = recipesSlice.reducer;

@@ -9,7 +9,6 @@ import { clearRecipes } from "../../redux//recipes/slice";
 import {
   fetchMyRecipes,
   fetchFavoriteRecipes,
-  toggleFavoriteRecipeAsync,
 } from "../../redux/recipes/operations";
 
 const ProfilePage = () => {
@@ -55,31 +54,6 @@ const ProfilePage = () => {
 
     fetch();
   }, [dispatch, page, mode]);
-  const handleToggleFavorite = async (id) => {
-    console.log("hello");
-    try {
-      await dispatch(
-        toggleFavoriteRecipeAsync({ recipeId: id, mode })
-      ).unwrap();
-
-      if (mode === "favorites") {
-        const currentCount = recipes.length - 1;
-        const expectedCount = page * recipesPerPage;
-
-        if (currentCount < expectedCount && currentCount < totalItems) {
-          await dispatch(
-            fetchFavoriteRecipes({
-              page,
-              perPage: recipesPerPage,
-              append: true,
-            })
-          ).unwrap();
-        }
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const loadMore = () => {
     setPage((prev) => prev + 1);
@@ -96,7 +70,7 @@ const ProfilePage = () => {
     }
   }, [page]);
 
-  //const recipesToShow = recipes.slice(0, page * recipesPerPage);
+  const recipesToShow = recipes.slice(0, page * recipesPerPage);
   return (
     <section className={css.profilePage}>
       <div className={css.container}>
@@ -105,9 +79,8 @@ const ProfilePage = () => {
         <p className={css.totalRecipes}>{totalItems} recipes</p>
         <RecipesList
           mode={mode}
-          recipes={recipes /*ToShow*/}
+          recipes={recipesToShow}
           loading={loading}
-          onToggleFavorite={handleToggleFavorite}
           ref={recipesListRef}
         />
         <div>

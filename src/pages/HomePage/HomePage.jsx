@@ -151,7 +151,7 @@ import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
 import {
   fetchRecipes,
   fetchRecipesByQuery,
-  toggleFavoriteRecipeAsync,
+  //toggleFavoriteRecipeAsync,
 } from "../../redux/recipes/operations";
 import { clearRecipes, clearNotFound } from "../../redux/recipes/slice";
 import { changeFilter } from "../../redux/filters/slice";
@@ -226,9 +226,9 @@ export default function HomePage() {
       .catch(() => setLoading(false));
   }, [dispatch, searchQuery]);
 
-  const handleToggleFavorite = (id) => {
+  /*const handleToggleFavorite = (id) => {
     dispatch(toggleFavoriteRecipeAsync({ recipeId: id }));
-  };
+  };*/
 
   const loadMore = () => {
     setPage((prev) => prev + 1);
@@ -266,7 +266,7 @@ export default function HomePage() {
         <RecipesList
           recipes={recipesToShow}
           loading={loading}
-          onToggleFavorite={handleToggleFavorite}
+          //onToggleFavorite={handleToggleFavorite}
           ref={recipesListRef}
         />
 
