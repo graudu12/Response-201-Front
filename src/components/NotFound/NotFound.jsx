@@ -3,7 +3,7 @@ import css from "./NotFound.module.css";
 const NotFound = ({ onRetry }) => {
   const handleClick = () => {
     console.log("onRetry triggered");
-    onRetry?.(); // ?. — перевірка, що функція існує
+    onRetry?.();
   };
 
   return (
