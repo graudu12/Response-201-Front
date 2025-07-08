@@ -11,7 +11,7 @@ import { clearNotFound } from "../../redux/recipes/slice";
 import { selectNotFound } from "../../redux/recipes/selectors";
 import NotFound from "../NotFound/NotFound";
 
-export default function SearchBox() {
+export default function SearchBox({ setIsFiltering }) {
   const dispatch = useDispatch();
   const fieldId = useId();
   const name = useSelector(selectNameFilter);
@@ -48,12 +48,15 @@ export default function SearchBox() {
     }
     dispatch(changeFilter({ name: trimmed }));
     dispatch(fetchRecipesByQuery(trimmed));
+
+    if (setIsFiltering) setIsFiltering(true); // добавил флаг (логика замены LoadMoreBtn на Pagination "Илья")
   };
 
   const handleRetry = () => {
     dispatch(clearNotFound());
     dispatch(changeFilter({ name: "" }));
     setInput("");
+    if (setIsFiltering) setIsFiltering(false); // добавил флаг (логика замены LoadMoreBtn на Pagination "Илья")
   };
 
   const handleClear = () => {
@@ -61,6 +64,7 @@ export default function SearchBox() {
     dispatch(changeFilter({ name: "" }));
     setInput("");
     inputRef.current?.focus();
+    if (setIsFiltering) setIsFiltering(false);
   };
 
   if (notFound) return <NotFound onRetry={handleRetry} />;
