@@ -5,17 +5,17 @@ import axios from "axios";
 import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage} from "formik";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addNewRecipe } from "../../redux/recipes/slice";
+import SuccessSaveModal from "../SuccessSaveModal/SuccessSaveModal.jsx";
 
 
 export default function AddRecipeForm() {
 const dispatch = useDispatch();
-const navigate = useNavigate(); 
-
 const inputRef = useRef(null);
 
+const [showModal, setShowModal] = useState(false);
+const [createdRecipeId, setCreatedRecipeId] = useState(null);
 const [ingredients, setIngredients] = useState([]);
 const [categories, setCategories] = useState([]);
 const [addedIngredients, setAddedIngredients] = useState([]);
@@ -31,14 +31,6 @@ useEffect(() => {
 useEffect(() => {
   axios.get('https://response-201-back.onrender.com/api/ingredients')
     .then((res) => { setIngredients(res.data.ingredients || []) })
-    // .then((res) => {
-    //   const formatted = res.data.ingredients.map((name) => ({
-    //     _id: name, // просто унікальний key
-    //     name,
-    //   }));
-    //   setIngredients(formatted);
-    // })
-
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
 
@@ -123,12 +115,16 @@ useEffect(() => {
       );
   
       dispatch(addNewRecipe(res.data.data));
-      navigate(`/recipes/${res.data.data._id}`);
-      toast.success("Recipe added!");
-      actions.resetForm();
-      setImageFile(null);
-      setPreview(null);
-      setAddedIngredients([]);
+      // navigate(`/recipes/${res.data.data._id}`);
+      setCreatedRecipeId(res.data.data._id);
+      setShowModal(true);
+      // toast.success("Recipe added!");
+      setTimeout(() => {
+        actions.resetForm();
+        setImageFile(null);
+        setPreview(null);
+        setAddedIngredients([]);
+      }, 500);
     } catch (err) {
       console.error("BACKEND ERROR:", err.response?.data || err.message);
       toast.error(err.response?.data?.message || "Something went wrong.");
@@ -151,8 +147,8 @@ const handleAddIngridient = (values, setFieldValue) => {
   if (!values.name_ingredients || !values.amount_ingredients)
     return;
 
-  const selectedIngredient = ingredients.find(ing => ing._id === values.name_ingredients);
-  if (!selectedIngredient) return;
+  // const selectedIngredient = ingredients.find(ing => ing._id === values.name_ingredients);
+  // if (!selectedIngredient) return;
 
   const newIngredient = {
     id: values.name_ingredients,
@@ -217,7 +213,7 @@ const initialValues = {
           validationSchema={validationSchema}
         onSubmit={(values, actions) => {
           // values.ingredients = addedIngredients;
-          handleSubmit(values, values.ingredients, actions)}}
+          handleSubmit(values, addedIngredients, actions)}}
           
         >
           {({ values, setFieldValue }) => (
@@ -418,6 +414,15 @@ const initialValues = {
             </Form>
           )}
         </Formik>
+        
+        {showModal && (
+        <SuccessSaveModal
+          isOpen={showModal}
+          recipeId={createdRecipeId}
+          onClose={() => setShowModal(false)}
+        />
+      )}
+      
       </div>
   );
 }
