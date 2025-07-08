@@ -4,7 +4,6 @@ import styles from "./RecipeDetails.module.css";
 import SaveFavoriteButton from "../SaveFavoriteButton/SaveFavoriteButton.jsx";
 
 const RecipeDetails = ({ recipe }) => {
-  console.log("🧪 Получен recipe в компоненте:", recipe);
 
   const { isAuthenticated } = useSelector((state) => state.auth);
   const largeImageUrl = recipe.dishPhoto?.replace(
