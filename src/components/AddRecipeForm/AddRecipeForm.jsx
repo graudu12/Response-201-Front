@@ -5,17 +5,17 @@ import axios from "axios";
 import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage} from "formik";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addNewRecipe } from "../../redux/recipes/slice";
+import SuccessSaveModal from "../SuccessSaveModal/SuccessSaveModal.jsx";
 
 
 export default function AddRecipeForm() {
 const dispatch = useDispatch();
-const navigate = useNavigate(); 
-
 const inputRef = useRef(null);
 
+const [showModal, setShowModal] = useState(false);
+const [createdRecipeId, setCreatedRecipeId] = useState(null);
 const [ingredients, setIngredients] = useState([]);
 const [categories, setCategories] = useState([]);
 const [addedIngredients, setAddedIngredients] = useState([]);
@@ -31,14 +31,6 @@ useEffect(() => {
 useEffect(() => {
   axios.get('https://response-201-back.onrender.com/api/ingredients')
     .then((res) => { setIngredients(res.data.ingredients || []) })
-    // .then((res) => {
-    //   const formatted = res.data.ingredients.map((name) => ({
-    //     _id: name, // просто унікальний key
-    //     name,
-    //   }));
-    //   setIngredients(formatted);
-    // })
-
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
 
@@ -123,12 +115,16 @@ useEffect(() => {
       );
   
       dispatch(addNewRecipe(res.data.data));
-      navigate(`/recipes/${res.data.data._id}`);
-      toast.success("Recipe added!");
-      actions.resetForm();
-      setImageFile(null);
-      setPreview(null);
-      setAddedIngredients([]);
+      // navigate(`/recipes/${res.data.data._id}`);
+      setCreatedRecipeId(res.data.data._id);
+      setShowModal(true);
+      // toast.success("Recipe added!");
+      setTimeout(() => {
+        actions.resetForm();
+        setImageFile(null);
+        setPreview(null);
+        setAddedIngredients([]);
+      }, 500);
     } catch (err) {
       console.error("BACKEND ERROR:", err.response?.data || err.message);
       toast.error(err.response?.data?.message || "Something went wrong.");
@@ -151,8 +147,8 @@ const handleAddIngridient = (values, setFieldValue) => {
   if (!values.name_ingredients || !values.amount_ingredients)
     return;
 
-  const selectedIngredient = ingredients.find(ing => ing._id === values.name_ingredients);
-  if (!selectedIngredient) return;
+  // const selectedIngredient = ingredients.find(ing => ing._id === values.name_ingredients);
+  // if (!selectedIngredient) return;
 
   const newIngredient = {
     id: values.name_ingredients,
@@ -191,17 +187,19 @@ const initialValues = {
     dishPhoto: Yup.mixed(),
     recipeDescription: Yup.string().min(3, "Must be min 3 chars").max(100, "Must be max 100 chars").required("This field is required"),
     instructions: Yup.string().required("This field is required"),
-    ingredients: Yup.array().of(
-      Yup.object().shape({
-        id: Yup.string()
-          .required('Ingredient ID is required'),
-        measure: Yup.string()
-          .required('Measure is required')
-          .min(1, 'Measure must not be empty'),
-      })
-    )
-    .min(1, 'At least one ingredient is required'),
-    cookingTime: Yup.string().required("This field is required"),
+    // ingredients: Yup.array().of(
+    //   Yup.object().shape({
+    //     id: Yup.string()
+    //       .required('Ingredient ID is required'),
+    //     measure: Yup.string()
+    //       .required('Measure is required')
+    //       .min(1, 'Measure must not be empty'),
+    //   })
+    // )
+    // .min(1, 'At least one ingredient is required'),
+    name_ingredients: Yup.string(),
+    amount_ingredients: Yup.string(),
+    cookingTime: Yup.string().max(4,"Must be max 9999 minutes").required("This field is required"),
     calories: Yup.string(),
     recipeCategory: Yup.string().required("This field is required"),
     
@@ -215,7 +213,7 @@ const initialValues = {
           validationSchema={validationSchema}
         onSubmit={(values, actions) => {
           // values.ingredients = addedIngredients;
-          handleSubmit(values, values.ingredients, actions)}}
+          handleSubmit(values, addedIngredients, actions)}}
           
         >
           {({ values, setFieldValue }) => (
@@ -281,7 +279,7 @@ const initialValues = {
                 className={css.field}
                 id="cookingTime"
                 name="cookingTime"
-                type="text"
+                type="number"
                 placeholder="10"
               />
               <ErrorMessage className={css.error} name="cookingTime" component="span"></ErrorMessage>
@@ -295,7 +293,7 @@ const initialValues = {
                   className={css.field}
                   id="calories"
                   name="calories"
-                  type="text"
+                  type="number"
                   placeholder="150 cals"
                 />
                 <ErrorMessage className={css.error} name="calories" component="span"></ErrorMessage>
@@ -416,6 +414,15 @@ const initialValues = {
             </Form>
           )}
         </Formik>
+        
+        {showModal && (
+        <SuccessSaveModal
+          isOpen={showModal}
+          recipeId={createdRecipeId}
+          onClose={() => setShowModal(false)}
+        />
+      )}
+      
       </div>
   );
 }

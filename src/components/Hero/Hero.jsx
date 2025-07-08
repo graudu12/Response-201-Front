@@ -1,5 +1,3 @@
-// src/components/Hero/Hero.jsx
-
 import css from "./Hero.module.css";
 import SearchBox from "../SearchBox/SearchBox";
 

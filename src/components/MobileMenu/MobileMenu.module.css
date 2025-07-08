@@ -20,7 +20,6 @@
   animation: slideDown 300ms ease-out;
 }
 
-/* Анімація появи */
 @keyframes slideDown {
   from {
     transform: translateY(-100%);
@@ -40,15 +39,14 @@
   margin-bottom: 32px;
 }
 
-/* Логотип */
 .logo {
   max-width: 160px;
   height: auto;
   display: inline-block;
 }
 
-/* Кнопка ✕ */
 .closeBtn {
+  color: white;
   background: none;
   border: none;
   cursor: pointer;
