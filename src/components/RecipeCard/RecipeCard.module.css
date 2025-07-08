@@ -28,6 +28,7 @@
 }
 
 .recipeTitle {
+  height: 43px;
   font-weight: 700;
   font-size: 18px;
   color: #000;

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./Filters.module.css";
 import axios from "axios";
 
-const Filters = ({ onChange, totalItems }) => {
+const Filters = ({ onChange, totalItems, setIsFiltering }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [categories, setCategories] = useState([]);
@@ -35,7 +35,10 @@ const Filters = ({ onChange, totalItems }) => {
 
   useEffect(() => {
     onChange({ category: selectedCategory, ingredient: selectedIngredient });
-  }, [selectedCategory, selectedIngredient, onChange]);
+    const filterActive =
+      selectedCategory.trim() !== "" || selectedIngredient.trim() !== "";
+    setIsFiltering(filterActive);
+  }, [selectedCategory, selectedIngredient, onChange, setIsFiltering]);
 
   const handleResetFilters = () => {
     setSelectedCategory("");
