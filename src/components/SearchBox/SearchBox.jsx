@@ -1,6 +1,6 @@
 //src/components/SearchBox/SearchBox.jsx
 import { useDispatch, useSelector } from "react-redux";
-import { useId, useState } from "react";
+import { useId, useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 
 import css from "./SearchBox.module.css";
@@ -18,9 +18,29 @@ export default function SearchBox() {
   const notFound = useSelector(selectNotFound);
   const [input, setInput] = useState(name || "");
 
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    setInput(name || "");
+  }, [name]);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit(e);
+    } else if (e.key === "Escape") {
+      handleClear();
+    }
+  };
+
   const handleInputChange = (e) => setInput(e.target.value);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e?.target?.blur();
+
     const trimmed = input.trim();
     if (!trimmed) {
       toast.error("Введіть назву рецепта");
@@ -30,29 +50,46 @@ export default function SearchBox() {
     dispatch(fetchRecipesByQuery(trimmed));
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleSubmit();
+  const handleRetry = () => {
+    dispatch(clearNotFound());
+    dispatch(changeFilter({ name: "" }));
+    setInput("");
   };
 
-  const handleRetry = () => {
-    dispatch(clearNotFound()); 
-    dispatch(changeFilter({ name: "" })); 
-    setInput(""); 
+  const handleClear = () => {
+    dispatch(clearNotFound());
+    dispatch(changeFilter({ name: "" }));
+    setInput("");
+    inputRef.current?.focus();
   };
 
   if (notFound) return <NotFound onRetry={handleRetry} />;
 
   return (
     <div className={css.searchBox}>
-      <input
-        id={`${fieldId}-name`}
-        className={css.searchInput}
-        type="text"
-        value={input}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-        placeholder="Search recipes"
-      />
+      <div className={css.inputWrapper}>
+        <input
+          id={`${fieldId}-name`}
+          ref={inputRef}
+          className={css.searchInput}
+          type="text"
+          value={input}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          placeholder="Search recipes"
+        />
+        {input && (
+          <button
+            type="button"
+            className={css.clearButton}
+            aria-label="Clear search"
+            onClick={handleClear}
+          >
+            ×
+          </button>
+        )}
+      </div>
+
       <button className={css.searchButton} onClick={handleSubmit}>
         Search
       </button>

@@ -1,22 +1,31 @@
-// HomePage.jsx
+//src/pages/HomePage/HomePage.jsx
 // import { useState, useEffect, useRef, useCallback } from "react";
 // import { useSelector, useDispatch } from "react-redux";
+// import { useLocation } from "react-router-dom";
 // import css from "./HomePage.module.css";
+
 // import Hero from "../../components/Hero/Hero";
 // import RecipesList from "../../components/RecipesList/RecipesList";
 // import Filters from "../../components/Filters/Filters";
 // import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
+
 // import {
 //   fetchRecipes,
+//   fetchRecipesByQuery,
 //   toggleFavoriteRecipeAsync,
 // } from "../../redux/recipes/operations";
+// import { clearRecipes, clearNotFound } from "../../redux/recipes/slice";
+// import { changeFilter } from "../../redux/filters/slice";
 
 // export default function HomePage() {
 //   const dispatch = useDispatch();
+//   const location = useLocation();
+
 //   const recipes = useSelector((state) =>
 //     Array.isArray(state.recipes.items) ? state.recipes.items : []
 //   );
 //   const totalItems = useSelector((state) => state.recipes.totalItems);
+//   const searchQuery = useSelector((state) => state.filters.name);
 
 //   const [page, setPage] = useState(1);
 //   const recipesPerPage = 12;
@@ -42,6 +51,15 @@
 //   }, []);
 
 //   useEffect(() => {
+//     if (location.pathname === "/") {
+//       dispatch(changeFilter({ name: "" }));
+//       dispatch(clearNotFound());
+//     }
+//   }, [location.pathname, dispatch]);
+
+//   useEffect(() => {
+//     if (searchQuery) return;
+
 //     setLoading(true);
 //     dispatch(
 //       fetchRecipes({
@@ -54,7 +72,19 @@
 //       .unwrap()
 //       .then(() => setLoading(false))
 //       .catch(() => setLoading(false));
-//   }, [dispatch, page, selectedFilters]);
+//   }, [dispatch, page, selectedFilters, searchQuery]);
+
+//   useEffect(() => {
+//     if (!searchQuery) return;
+
+//     setLoading(true);
+
+//     dispatch(clearRecipes());
+//     dispatch(fetchRecipesByQuery(searchQuery))
+//       .unwrap()
+//       .then(() => setLoading(false))
+//       .catch(() => setLoading(false));
+//   }, [dispatch, searchQuery]);
 
 //   const handleToggleFavorite = (id) => {
 //     dispatch(toggleFavoriteRecipeAsync({ recipeId: id }));
@@ -65,27 +95,19 @@
 //   };
 
 //   useEffect(() => {
-//     if (
-//       page > 1 &&
-//       recipesListRef.current &&
-//       recipesListRef.current.children != null &&
-//       recipesListRef.current.children.length > 0
-//     ) {
-//       setTimeout(() => {
-//         requestAnimationFrame(() => {
-//           const list = recipesListRef.current;
-//           if (!list || !list.children) return;
-//           // Знаходимо останній елемент в списку
-//           const lastRecipe = list.children[list.children.length - 1];
-//           if (lastRecipe) {
-//             lastRecipe.scrollIntoView({ behavior: "smooth", block: "start" });
-//           }
+//     if (page > 1 && recipesListRef.current) {
+//       requestAnimationFrame(() => {
+//         recipesListRef.current.scrollIntoView({
+//           behavior: "smooth",
+//           block: "start",
 //         });
-//       }, 100);
+//       });
 //     }
 //   }, [page]);
 
-//   const recipesToShow = recipes.slice(0, page * recipesPerPage);
+//   const recipesToShow = searchQuery
+//     ? recipes
+//     : recipes.slice(0, page * recipesPerPage);
 
 //   return (
 //     <div className={css.homePage}>
@@ -106,8 +128,8 @@
 //         />
 
 //         <div>
-//           {page * recipesPerPage < totalItems && !loading && (
-//             <LoadMoreBtn onClick={loadMore}>Load More</LoadMoreBtn>
+//           {!searchQuery && page * recipesPerPage < totalItems && !loading && (
+//             <LoadMoreBtn onClick={loadMore} />
 //           )}
 //         </div>
 //       </section>
@@ -118,7 +140,7 @@
 //src/pages/HomePage/HomePage.jsx
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom"; 
+import { useLocation } from "react-router-dom";
 import css from "./HomePage.module.css";
 
 import Hero from "../../components/Hero/Hero";
@@ -131,12 +153,12 @@ import {
   fetchRecipesByQuery,
   toggleFavoriteRecipeAsync,
 } from "../../redux/recipes/operations";
-import { clearRecipes, clearNotFound } from "../../redux/recipes/slice"; 
-import { changeFilter } from "../../redux/filters/slice"; 
+import { clearRecipes, clearNotFound } from "../../redux/recipes/slice";
+import { changeFilter } from "../../redux/filters/slice";
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const location = useLocation(); 
+  const location = useLocation();
 
   const recipes = useSelector((state) =>
     Array.isArray(state.recipes.items) ? state.recipes.items : []
@@ -167,7 +189,6 @@ export default function HomePage() {
     setPage(1);
   }, []);
 
-  // + сброс фильтра, если пользователь вернулся на главную
   useEffect(() => {
     if (location.pathname === "/") {
       dispatch(changeFilter({ name: "" }));
@@ -233,7 +254,10 @@ export default function HomePage() {
 
       <section className={css.container}>
         <div>
-          <h2 className={css.title}>Recipes</h2>
+          {/* 🆕 Динамический заголовок — меняется при поиске */}
+          <h2 className={css.title}>
+            {searchQuery ? `Search Results for "${searchQuery}"` : "Recipes"}
+          </h2>
         </div>
 
         <Filters totalItems={totalItems} onChange={handleFilterChange} />
@@ -254,4 +278,3 @@ export default function HomePage() {
     </div>
   );
 }
-
