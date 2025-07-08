@@ -35,11 +35,15 @@ const ProfilePage = () => {
       try {
         if (mode === "own") {
           await dispatch(
-            fetchMyRecipes({ page, perPage: recipesPerPage })
+            fetchMyRecipes({ page, perPage: recipesPerPage, append: page > 1 })
           ).unwrap();
         } else if (mode === "favorites") {
           await dispatch(
-            fetchFavoriteRecipes({ page, perPage: recipesPerPage })
+            fetchFavoriteRecipes({
+              page,
+              perPage: recipesPerPage,
+              append: page > 1,
+            })
           ).unwrap();
         }
       } catch (err) {
@@ -51,9 +55,32 @@ const ProfilePage = () => {
 
     fetch();
   }, [dispatch, page, mode]);
-  const handleToggleFavorite = (id) => {
-    dispatch(toggleFavoriteRecipeAsync({ recipeId: id, mode }));
+  const handleToggleFavorite = async (id) => {
+    console.log("hello");
+    try {
+      await dispatch(
+        toggleFavoriteRecipeAsync({ recipeId: id, mode })
+      ).unwrap();
+
+      if (mode === "favorites") {
+        const currentCount = recipes.length - 1;
+        const expectedCount = page * recipesPerPage;
+
+        if (currentCount < expectedCount && currentCount < totalItems) {
+          await dispatch(
+            fetchFavoriteRecipes({
+              page,
+              perPage: recipesPerPage,
+              append: true,
+            })
+          ).unwrap();
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
+
   const loadMore = () => {
     setPage((prev) => prev + 1);
   };

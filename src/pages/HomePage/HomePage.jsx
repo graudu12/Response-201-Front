@@ -206,6 +206,7 @@ export default function HomePage() {
         perPage: recipesPerPage,
         category: selectedFilters.category,
         ingredient: selectedFilters.ingredient,
+        append: page > 1, // <-- Ось ключова зміна
       })
     )
       .unwrap()

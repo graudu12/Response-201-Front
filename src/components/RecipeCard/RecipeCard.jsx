@@ -2,7 +2,7 @@ import styles from "./RecipeCard.module.css";
 import SaveFavoriteButton from "../SaveFavoriteButton/SaveFavoriteButton";
 import { useNavigate } from "react-router-dom";
 
-const RecipeCard = ({ recipe, mode }) => {
+const RecipeCard = ({ recipe, mode, onToggleFavorite }) => {
   const navigate = useNavigate();
 
   const {
@@ -13,7 +13,11 @@ const RecipeCard = ({ recipe, mode }) => {
     calories,
     cookingTime,
   } = recipe;
-
+  const handleToggle = () => {
+    if (onToggleFavorite) {
+      onToggleFavorite(_id); // ← виклик переданої функції
+    }
+  };
   return (
     <div className={styles.recipeCard}>
       <img src={dishPhoto} alt={nameRecipe} className={styles.imageCard} />
@@ -45,7 +49,12 @@ const RecipeCard = ({ recipe, mode }) => {
           Learn More
         </button>
         {mode !== "own" && (
-          <SaveFavoriteButton small mode={mode} recipeId={_id} />
+          <SaveFavoriteButton
+            small
+            mode={mode}
+            recipeId={_id}
+            onClick={handleToggle}
+          />
         )}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState, } from "react";
+import { useState } from "react";
 import styles from "./SaveFavoriteButton.module.css";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +6,7 @@ import { toggleFavoriteRecipeAsync } from "../../redux/recipes/operations";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import AuthPromptModal from "../AuthPromptModal/AuthPromptModal";
 
-function SaveFavoriteButton({ small, recipeId, mode }) {
+function SaveFavoriteButton({ small, recipeId, mode, onClick }) {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const favoriteRecipes = useSelector(

@@ -143,7 +143,6 @@
 
 // export const recipesReducer = recipesSlice.reducer;
 
-
 //src/redux/recipes/slice.js
 import { createSlice } from "@reduxjs/toolkit";
 import {
@@ -157,9 +156,9 @@ import {
 const initialState = {
   items: [],
   totalItems: 0,
-  favorites: [], 
-  myRecipes: [], 
-  searchQuery: "", 
+  favorites: [],
+  myRecipes: [],
+  searchQuery: "",
   loading: false,
   error: null,
   notFound: false,
@@ -237,7 +236,7 @@ const recipesSlice = createSlice({
         const { recipeId, add, mode } = action.payload;
         if (mode === "favorites" && !add) {
           state.items = state.items.filter((recipe) => recipe._id !== recipeId);
-          state.totalItems -= 1;
+          //state.totalItems -= 1;
         } else {
           const recipe = state.items.find((r) => r._id === recipeId);
           if (recipe) {
@@ -251,7 +250,11 @@ const recipesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchMyRecipes.fulfilled, (state, action) => {
-        state.items = action.payload.items;
+        if (action.payload.append) {
+          state.items = [...state.items, ...action.payload.items];
+        } else {
+          state.items = action.payload.items;
+        }
         state.totalItems = action.payload.totalItems;
         state.loading = false;
       })
@@ -265,7 +268,11 @@ const recipesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
-        state.items = action.payload.items;
+        if (action.payload.append) {
+          state.items = [...state.items, ...action.payload.items]; // додаємо до списку
+        } else {
+          state.items = action.payload.items; // перезаписуємо список
+        }
         state.totalItems = action.payload.totalItems;
         state.loading = false;
       })
@@ -285,4 +292,3 @@ export const {
 } = recipesSlice.actions;
 
 export const recipesReducer = recipesSlice.reducer;
-
