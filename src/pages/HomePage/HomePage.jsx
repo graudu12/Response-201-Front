@@ -146,7 +146,8 @@ import css from "./HomePage.module.css";
 import Hero from "../../components/Hero/Hero";
 import RecipesList from "../../components/RecipesList/RecipesList";
 import Filters from "../../components/Filters/Filters";
-import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
+//import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
+import Pagination from "../../components/Pagination/Pagination.jsx";
 
 import {
   fetchRecipes,
@@ -229,9 +230,9 @@ export default function HomePage() {
     dispatch(toggleFavoriteRecipeAsync({ recipeId: id }));
   };
 
-  const loadMore = () => {
-    setPage((prev) => prev + 1);
-  };
+  //const loadMore = () => {
+  // setPage((prev) => prev + 1);
+  //};
 
   useEffect(() => {
     if (page > 1 && recipesListRef.current) {
@@ -269,10 +270,18 @@ export default function HomePage() {
           ref={recipesListRef}
         />
 
+        <Pagination
+          page={page}
+          perPage={recipesPerPage}
+          totalItems={totalItems}
+          onPageChange={setPage}
+        />
         <div>
-          {!searchQuery && page * recipesPerPage < totalItems && !loading && (
-            <LoadMoreBtn onClick={loadMore} />
-          )}
+          {/*
+    {!searchQuery && page * recipesPerPage < totalItems && !loading && (
+      <LoadMoreBtn onClick={loadMore} />
+    )}
+  */}
         </div>
       </section>
     </div>
