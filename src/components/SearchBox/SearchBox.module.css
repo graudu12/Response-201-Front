@@ -4,10 +4,13 @@
   gap: 24px;
   width: 100%;
   max-width: 700px;
-  
 }
 
-/* Mobile */
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
 .searchInput {
   width: 100%;
   padding: 12px 12px;
@@ -25,6 +28,26 @@
   color: #9f9f9f;
 }
 
+.clearButton {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: #9f9f9f;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  z-index: 10;
+  transition: color 0.2s ease;
+}
+
+.clearButton:hover {
+  color: red;
+}
+
 .searchButton {
   width: 100%;
   padding: 12px 16px;
@@ -32,12 +55,13 @@
   font-weight: 600;
   background-color: #9b6c43;
   color: #fff;
-  border: 1px;
+  border: none;
   border-radius: 12px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   white-space: nowrap;
   height: 46px;
+  outline: none;
 }
 
 .searchButton:hover,
@@ -45,7 +69,10 @@
   background-color: #6d554b;
 }
 
-/* Tablet  */
+.searchButton:active {
+  background-color: #8a5c39;
+}
+
 @media screen and (min-width: 768px) {
   .searchBox {
     flex-direction: row;
@@ -53,9 +80,7 @@
     gap: 24px;
   }
 
-  .searchInput {
-    flex: 1;
-    font-size: 18px;
+  .inputWrapper {
     width: 471px;
   }
 
@@ -66,20 +91,13 @@
   }
 }
 
-/* Desktop */
 @media screen and (min-width: 1440px) {
-  .searchBox {
-    gap: 12px;
-  }
-  
-  .searchInput {
-    font-size: 18px;
+  .inputWrapper {
     width: 459px;
   }
 
   .searchButton {
     width: 190px;
-    padding: 12px 16px;
     font-size: 16px;
   }
 }
