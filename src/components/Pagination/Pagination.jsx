@@ -13,10 +13,39 @@ export default function Pagination({
       onPageChange(newPage);
     }
   };
-
   const pages = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push(i);
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
+  } else {
+    pages.push(1);
+
+    let left = page - 1;
+    let right = page + 1;
+
+    if (page <= 3) {
+      left = 2;
+      right = 4;
+    }
+    if (page >= totalPages - 2) {
+      left = totalPages - 3;
+      right = totalPages - 1;
+    }
+
+    if (left > 2) {
+      pages.push("...");
+    }
+
+    for (let i = left; i <= right; i++) {
+      pages.push(i);
+    }
+
+    if (right < totalPages - 1) {
+      pages.push("...");
+    }
+
+    pages.push(totalPages);
   }
 
   return (
