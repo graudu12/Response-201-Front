@@ -6,12 +6,15 @@ import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage} from "formik";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addNewRecipe } from "../../redux/recipes/slice";
 import SuccessSaveModal from "../SuccessSaveModal/SuccessSaveModal.jsx";
 
 
+
 export default function AddRecipeForm() {
 const dispatch = useDispatch();
+const navigate = useNavigate();
 const inputRef = useRef(null);
 
 const [showModal, setShowModal] = useState(false);
@@ -115,7 +118,7 @@ useEffect(() => {
       );
   
       dispatch(addNewRecipe(res.data.data));
-      // navigate(`/recipes/${res.data.data._id}`);
+      // navigate(`/`);
       setCreatedRecipeId(res.data.data._id);
       setShowModal(true);
       // toast.success("Recipe added!");
