@@ -13,13 +13,13 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
     (state) => state.auth.user?.favoriteRecipes ?? []
   );
 
-  const [hovered, setHovered] = useState(false);
+  //const [hovered, setHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(
     favoriteRecipes.includes(recipeId)
   );
   const [isLoading, setIsLoading] = useState(false);
-  //const isFavorite = favoriteRecipes.includes(recipeId); // ❗ вычисляем напрямую
+
   useEffect(() => {
     setIsFavorite(favoriteRecipes.includes(recipeId));
   }, [favoriteRecipes, recipeId]);
@@ -46,7 +46,7 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
     }
   };
 
-  const handleMouseEnter = () => {
+  /* const handleMouseEnter = () => {
     if (small && isFavorite) setHovered(true);
   };
 
@@ -54,7 +54,7 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
     setHovered(false);
   };
 
-  const iconId = hovered ? "icon-delete" : "icon-saved";
+  const iconId = hovered ? "icon-delete" : "icon-saved";*/
 
   return (
     <>
@@ -64,13 +64,13 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
           small ? styles.smallFavoriteButton : styles.favoriteButton
         } ${isFavorite ? styles.active : ""}`}
         aria-label={isFavorite ? "Remove" : "Add to favorites"}
-        onMouseEnter={small ? handleMouseEnter : undefined}
-        onMouseLeave={small ? handleMouseLeave : undefined}
+        //onMouseEnter={small ? handleMouseEnter : undefined}
+        //onMouseLeave={small ? handleMouseLeave : undefined}
         disabled={isLoading} // 👈 Блокуємо кнопку під час запиту
       >
         {isLoading ? (
           <div>
-            <Loading />
+            <Loading height={60} width={60} />
           </div>
         ) : (
           <>
@@ -81,7 +81,8 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
               width="24"
               height="24"
             >
-              <use href={`/svg/sprite.svg#${iconId}`} />
+              <use href="/svg/sprite.svg#icon-saved" />
+              {/*<use href={`/svg/sprite.svg#${iconId}`} />*/}
             </svg>
             {!small && (isFavorite ? "Remove" : "Save")}
           </>
