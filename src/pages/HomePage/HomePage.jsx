@@ -228,7 +228,7 @@ export default function HomePage() {
 
     setLoading(true);
     setIsFiltering(true); //  При поиске — тоже filtering (логика замены LoadMoreBtn на Pagination "Илья")
-
+    setPage(1);
     dispatch(clearRecipes());
     dispatch(fetchRecipesByQuery(searchQuery))
       .unwrap()
@@ -269,12 +269,10 @@ export default function HomePage() {
       setStartIndex(null);
     }
   }, [loading]);
-  const recipesToShow = searchQuery
+  /*const recipesToShow = searchQuery
     ? recipes
-    : recipes.slice(0, page * recipesPerPage);
-
-  
-
+    : recipes.slice(0, page * recipesPerPage);*/
+  const recipesToShow = recipes.slice(0, page * recipesPerPage);
   return (
     <div className={css.homePage}>
       <Hero setIsFiltering={setIsFiltering} />
@@ -302,9 +300,15 @@ export default function HomePage() {
         {/* Условие для LoadMoreBtn (логика замены LoadMoreBtn на Pagination
         "Илья") */}
 
-        {isFiltering ? (
+        {searchQuery || isFiltering ? (
+          <div>
+            {
+              /*!searchQuery && */ page * recipesPerPage < totalItems &&
+                !loading && <LoadMoreBtn onClick={loadMore} />
+            }
+          </div> /*
           recipes.length >= recipesPerPage &&
-          !loading && <LoadMoreBtn onClick={loadMore} />
+          !loading && <LoadMoreBtn onClick={loadMore} />*/
         ) : (
           <Pagination
             page={page}
@@ -313,13 +317,6 @@ export default function HomePage() {
             onPageChange={setPage}
           />
         )}
-        <div>
-          {/*
-    {!searchQuery && page * recipesPerPage < totalItems && !loading && (
-      <LoadMoreBtn onClick={loadMore} />
-    )}
-  */}
-        </div>
       </section>
     </div>
   );
