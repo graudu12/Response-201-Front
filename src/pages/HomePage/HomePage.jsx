@@ -273,14 +273,7 @@ export default function HomePage() {
     ? recipes
     : recipes.slice(0, page * recipesPerPage);
 
-  console.log({
-    isFiltering,
-    page,
-    recipesPerPage,
-    recipesLength: recipes.length,
-    showLoadMore:
-      isFiltering && page * recipesPerPage < recipes.length && !loading,
-  });
+  
 
   return (
     <div className={css.homePage}>
