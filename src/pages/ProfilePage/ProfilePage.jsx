@@ -23,6 +23,7 @@ const ProfilePage = () => {
   const [page, setPage] = useState(1);
   const recipesPerPage = 12;
   const [loading, setLoading] = useState(false);
+  const [startIndex, setStartIndex] = useState(null);
   const recipesListRef = useRef(null);
   useEffect(() => {
     dispatch(clearRecipes());
@@ -55,12 +56,22 @@ const ProfilePage = () => {
     fetch();
   }, [dispatch, page, mode]);
 
-  const loadMore = () => {
+  /*const loadMore = () => {
     setPage((prev) => prev + 1);
+  };*/
+  const loadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+
+    setStartIndex((nextPage - 1) * recipesPerPage);
   };
 
   useEffect(() => {
-    if (page > 1 && recipesListRef.current) {
+    if (
+      startIndex !== null &&
+      recipes[startIndex] !== undefined &&
+      recipesListRef.current
+    ) {
       requestAnimationFrame(() => {
         recipesListRef.current.scrollIntoView({
           behavior: "smooth",
@@ -68,8 +79,12 @@ const ProfilePage = () => {
         });
       });
     }
-  }, [page]);
-
+  }, [recipes, startIndex]);
+  useEffect(() => {
+    if (!loading) {
+      setStartIndex(null);
+    }
+  }, [loading]);
   const recipesToShow = recipes.slice(0, page * recipesPerPage);
   return (
     <section className={css.profilePage}>
@@ -82,6 +97,7 @@ const ProfilePage = () => {
           recipes={recipesToShow}
           loading={loading}
           ref={recipesListRef}
+          startIndex={startIndex}
         />
         <div>
           {page * recipesPerPage < totalItems && !loading && (

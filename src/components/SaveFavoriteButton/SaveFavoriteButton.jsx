@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./SaveFavoriteButton.module.css";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,21 +15,28 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
 
   const [hovered, setHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
-  const isFavorite = favoriteRecipes.includes(recipeId); // ❗ вычисляем напрямую
-
+  const [isFavorite, setIsFavorite] = useState(
+    favoriteRecipes.includes(recipeId)
+  );
+  //const isFavorite = favoriteRecipes.includes(recipeId); // ❗ вычисляем напрямую
+  useEffect(() => {
+    setIsFavorite(favoriteRecipes.includes(recipeId));
+  }, [favoriteRecipes, recipeId]);
   const handleToggle = async () => {
+    const wasFavorite = isFavorite;
     if (!isLoggedIn) {
       setShowModal(true);
       return;
     }
-
+    const nextFavorite = !isFavorite;
+    setIsFavorite(nextFavorite); // миттєва зміна
     try {
       await dispatch(toggleFavoriteRecipeAsync({ recipeId, mode })).unwrap();
     } catch (error) {
+      setIsFavorite(wasFavorite);
       if (!isFavorite) {
         toast.error("Failed to add to favorites 😢");
-      } else {
+      } else if (wasFavorite) {
         toast.error("Failed to remove from favorites 😢");
       }
     }
