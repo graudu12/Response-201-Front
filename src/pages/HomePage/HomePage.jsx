@@ -274,7 +274,6 @@ export default function HomePage() {
   return (
     <div className={css.homePage}>
       <Hero setIsFiltering={setIsFiltering} />
-      
       <section className={css.container}>
         <div>
           {/* 🆕 Динамический заголовок — меняется при поиске */}
