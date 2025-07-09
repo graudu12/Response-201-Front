@@ -1,13 +1,12 @@
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux"; 
-import { changeFilter } from "../../redux/filters/slice"; 
-import { clearNotFound } from "../../redux/recipes/slice"; 
+import { useDispatch } from "react-redux";
+import { changeFilter } from "../../redux/filters/slice";
+import { clearNotFound } from "../../redux/recipes/slice";
 import css from "./Logo.module.css";
 
 const Logo = ({ className }) => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
-  // + обработчик для сброса фильтра
   const handleClick = () => {
     dispatch(changeFilter({ name: "" }));
     dispatch(clearNotFound());
@@ -16,7 +15,7 @@ const Logo = ({ className }) => {
   return (
     <NavLink
       to="/"
-      onClick={handleClick} 
+      onClick={handleClick}
       className={`${css.logo} ${className || ""}`}
     >
       <svg className={css.logoIcon} width="30" height="30">

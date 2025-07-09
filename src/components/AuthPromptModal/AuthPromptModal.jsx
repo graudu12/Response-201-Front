@@ -42,13 +42,13 @@ export default function AuthPromptModal({ isOpen, onClose }) {
             <path
               d="M10 10L22 22"
               stroke="black"
-              strokeWidth="2"
+              strokeWidth="1"
               strokeLinecap="round"
             />
             <path
               d="M22 10L10 22"
               stroke="black"
-              strokeWidth="2"
+              strokeWidth="1"
               strokeLinecap="round"
             />
           </svg>

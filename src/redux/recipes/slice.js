@@ -63,14 +63,28 @@ const recipesSlice = createSlice({
         state.notFound = false;
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-        if (action.payload.append) {
-          state.items = [...state.items, ...action.payload.items];
-        } else {
-          state.items = action.payload.items;
-        }
-        state.totalItems = action.payload.totalItems;
+        // if (action.payload.append) {
+        //  state.items = [...state.items, ...action.payload.items];
+        // } else {
+        //   state.items = action.payload.items;
+        //  }
+        //  state.totalItems = action.payload.totalItems;
+        //  state.loading = false;
+        //  state.notFound = action.payload.items.length === 0;
+        const { items, totalItems, append } = action.payload;
+
+        state.items = append
+          ? [
+              ...state.items,
+              ...items.filter(
+                (item) => !state.items.find((r) => r._id === item._id)
+              ),
+            ]
+          : items;
+
+        state.totalItems = totalItems;
         state.loading = false;
-        state.notFound = action.payload.items.length === 0;
+        state.notFound = items.length === 0;
       })
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.loading = false;
