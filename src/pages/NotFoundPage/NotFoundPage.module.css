@@ -9,15 +9,15 @@
   padding: 50px;
   font-weight: 500;
   font-size: 25px;
-  color: #3d2218;
+  color: #000;
 }
 
 .link {
   font-weight: 500;
-  color: #9b6c43;
+  color: #344e41;
   text-decoration: underline;
   transition: color 0.3s ease;
 }
 .link:hover {
-  color: #c2854d;
+  color: #588157;
 }

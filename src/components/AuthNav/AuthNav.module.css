@@ -39,11 +39,11 @@
   width: 100%;
 }
 .link:hover {
-  color: #c2854d;
+  color: #a3b18a;
 }
 
 .authRegister {
-  background-color: #9b6c43;
+  background-color: #344e41;
   color: #fff;
   padding: 12px 16px;
   border: none;
@@ -64,5 +64,5 @@
 }
 
 .authRegister:hover {
-  background-color: #8c5f38;
+  background-color: #588157;
 }

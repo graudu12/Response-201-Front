@@ -53,7 +53,7 @@
   padding: 12px 16px;
   font-size: 16px;
   font-weight: 600;
-  background-color: #9b6c43;
+  background-color: #344e41;
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -66,11 +66,11 @@
 
 .searchButton:hover,
 .searchButton:focus {
-  background-color: #6d554b;
+  background-color: #588157;
 }
 
 .searchButton:active {
-  background-color: #8a5c39;
+  background-color: #344e41;
 }
 
 @media screen and (min-width: 768px) {
