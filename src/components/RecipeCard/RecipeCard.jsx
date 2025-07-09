@@ -1,8 +1,8 @@
 import styles from "./RecipeCard.module.css";
 import SaveFavoriteButton from "../SaveFavoriteButton/SaveFavoriteButton";
 import { useNavigate } from "react-router-dom";
-
-const RecipeCard = ({ recipe, mode }) => {
+import { forwardRef } from "react";
+const RecipeCard = forwardRef(({ recipe, mode }, ref) => {
   const navigate = useNavigate();
 
   const {
@@ -15,7 +15,7 @@ const RecipeCard = ({ recipe, mode }) => {
   } = recipe;
 
   return (
-    <div className={styles.recipeCard}>
+    <div ref={ref} className={styles.recipeCard}>
       <img src={dishPhoto} alt={nameRecipe} className={styles.imageCard} />
       <div className={styles.recipeForm}>
         <h3 className={styles.recipeTitle}>{nameRecipe}</h3>
@@ -50,6 +50,6 @@ const RecipeCard = ({ recipe, mode }) => {
       </div>
     </div>
   );
-};
-
+});
+RecipeCard.displayName = "RecipeCard";
 export default RecipeCard;

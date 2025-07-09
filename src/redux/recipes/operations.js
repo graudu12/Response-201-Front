@@ -274,7 +274,7 @@ export const fetchRecipesByIngredients = createAsyncThunk(
 
 export const fetchMyRecipes = createAsyncThunk(
   "recipes/fetchMyRecipes",
-  async ({ page = 1, perPage = 12 } = {}, thunkAPI) => {
+  async ({ page = 1, perPage = 12, append = false } = {}, thunkAPI) => {
     try {
       const params = { page, perPage };
 
@@ -286,7 +286,7 @@ export const fetchMyRecipes = createAsyncThunk(
       return {
         totalItems: res.data.data.pagination.totalItems,
         items: res.data.data.recipes,
-        append: false,
+        append,
       };
     } catch (error) {
       return thunkAPI.rejectWithValue("Error fetching my recipes");
@@ -296,7 +296,7 @@ export const fetchMyRecipes = createAsyncThunk(
 
 export const fetchFavoriteRecipes = createAsyncThunk(
   "recipes/fetchFavoriteRecipes",
-  async ({ page = 1, perPage = 12 } = {}, thunkAPI) => {
+  async ({ page = 1, perPage = 12, append = false } = {}, thunkAPI) => {
     try {
       const params = { page, perPage };
 
@@ -304,10 +304,10 @@ export const fetchFavoriteRecipes = createAsyncThunk(
         "https://response-201-back.onrender.com/api/recipes/favorites",
         { params }
       );
-
+      console.log("append inside fetchFavoriteRecipes:", append);
       return {
         items: res.data.data.recipes,
-        append: false,
+        append,
         totalItems: res.data.data.pagination.totalItems,
       };
     } catch (error) {

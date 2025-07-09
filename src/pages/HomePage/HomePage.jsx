@@ -152,7 +152,7 @@ import Pagination from "../../components/Pagination/Pagination.jsx";
 import {
   fetchRecipes,
   fetchRecipesByQuery,
-  toggleFavoriteRecipeAsync,
+  //toggleFavoriteRecipeAsync,
 } from "../../redux/recipes/operations";
 import { clearRecipes, clearNotFound } from "../../redux/recipes/slice";
 import { changeFilter } from "../../redux/filters/slice";
@@ -166,7 +166,7 @@ export default function HomePage() {
   );
   const totalItems = useSelector((state) => state.recipes.totalItems);
   const searchQuery = useSelector((state) => state.filters.name);
-
+  const [startIndex, setStartIndex] = useState(null);
   const [page, setPage] = useState(1);
   const recipesPerPage = 12;
   const [loading, setLoading] = useState(false);
@@ -215,6 +215,7 @@ export default function HomePage() {
         perPage: recipesPerPage,
         category: selectedFilters.category,
         ingredient: selectedFilters.ingredient,
+        append: page > 1, // <-- Ось ключова зміна
       })
     )
       .unwrap()
@@ -235,16 +236,26 @@ export default function HomePage() {
       .catch(() => setLoading(false));
   }, [dispatch, searchQuery]);
 
-  const handleToggleFavorite = (id) => {
+  /*const handleToggleFavorite = (id) => {
     dispatch(toggleFavoriteRecipeAsync({ recipeId: id }));
-  };
+  };*/
 
-  const loadMore = () => {
+  /*const loadMore = () => {
     setPage((prev) => prev + 1);
+  };*/
+  const loadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+
+    setStartIndex((nextPage - 1) * recipesPerPage);
   };
 
   useEffect(() => {
-    if (page > 1 && recipesListRef.current) {
+    if (
+      startIndex !== null &&
+      recipes[startIndex] !== undefined &&
+      recipesListRef.current
+    ) {
       requestAnimationFrame(() => {
         recipesListRef.current.scrollIntoView({
           behavior: "smooth",
@@ -252,8 +263,12 @@ export default function HomePage() {
         });
       });
     }
-  }, [page]);
-
+  }, [recipes, startIndex]);
+  useEffect(() => {
+    if (!loading) {
+      setStartIndex(null);
+    }
+  }, [loading]);
   const recipesToShow = searchQuery
     ? recipes
     : recipes.slice(0, page * recipesPerPage);
@@ -286,8 +301,9 @@ export default function HomePage() {
         <RecipesList
           recipes={recipesToShow}
           loading={loading}
-          onToggleFavorite={handleToggleFavorite}
+          //onToggleFavorite={handleToggleFavorite}
           ref={recipesListRef}
+          startIndex={startIndex}
         />
 
         {/* Условие для LoadMoreBtn (логика замены LoadMoreBtn на Pagination
