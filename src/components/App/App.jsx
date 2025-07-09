@@ -36,7 +36,6 @@ export default function App() {
   const  isRefreshing  = useSelector(selectRefreshing);
 
   useEffect(() => {
-    console.log('Dispatching refreshUser');
     dispatch(refreshUser());
   }, [dispatch]);
 
