@@ -1,3 +1,5 @@
+import styles from './Pagination.module.css';
+
 export default function Pagination({
   page,
   perPage,
@@ -5,7 +7,6 @@ export default function Pagination({
   onPageChange,
 }) {
   const totalPages = Math.ceil(totalItems / perPage);
-
   if (totalPages <= 1) return null;
 
   const handlePageChange = (newPage) => {
@@ -13,53 +14,36 @@ export default function Pagination({
       onPageChange(newPage);
     }
   };
-  const pages = [];
-  if (totalPages <= 7) {
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(i);
-    }
-  } else {
+
+  const getVisiblePages = () => {
+    const pages = [];
     pages.push(1);
-
-    let left = page - 1;
-    let right = page + 1;
-
-    if (page <= 3) {
-      left = 2;
-      right = 4;
-    }
-    if (page >= totalPages - 2) {
-      left = totalPages - 3;
-      right = totalPages - 1;
-    }
-
-    if (left > 2) {
-      pages.push("...");
-    }
-
-    for (let i = left; i <= right; i++) {
-      pages.push(i);
-    }
-
-    if (right < totalPages - 1) {
-      pages.push("...");
-    }
-
+    if (page > 4) pages.push('...');
+    const start = Math.max(2, page - 2);
+    const end = Math.min(totalPages - 1, page + 2);
+    for (let i = start; i <= end; i++) pages.push(i);
+    if (page < totalPages - 3) pages.push('...');
     pages.push(totalPages);
-  }
+    return pages;
+  };
+
+  const pages = getVisiblePages();
 
   return (
-    <div>
-      <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
-        <div style={{ "--color1": "red" }}>
-          <svg width="24" height="24" fill="none" stroke="currentColor">
-            <use href="/svg/sprite.svg#icon-left" />
-          </svg>
-        </div>
+    <div className={styles.pagination}>
+      <button
+        onClick={() => handlePageChange(page - 1)}
+        disabled={page === 1}
+        className={styles.button}>
+        &lt;
       </button>
 
-      {pages.map((num) => (
-        <button key={num} onClick={() => handlePageChange(num)}>
+      {pages.map((num, index) => (
+        <button
+          key={index}
+          onClick={() => typeof num === 'number' && handlePageChange(num)}
+          disabled={num === '...'}
+          className={`${styles.button} ${num === page ? styles.active : ''}`}>
           {num}
         </button>
       ))}
@@ -67,12 +51,8 @@ export default function Pagination({
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={page === totalPages}
-      >
-        <div style={{ "--color1": "red" }}>
-          <svg width="24" height="24" fill="none" stroke="currentColor">
-            <use href="/svg/sprite.svg#icon-right" />
-          </svg>
-        </div>
+        className={styles.button}>
+        &gt;
       </button>
     </div>
   );
