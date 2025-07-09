@@ -146,7 +146,7 @@ import css from "./HomePage.module.css";
 import Hero from "../../components/Hero/Hero";
 import RecipesList from "../../components/RecipesList/RecipesList";
 import Filters from "../../components/Filters/Filters";
-//import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
+import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
 import Pagination from "../../components/Pagination/Pagination.jsx";
 
 import {
@@ -175,6 +175,9 @@ export default function HomePage() {
     ingredient: "",
   });
 
+  // Новый флаг: включён ли поиск/фильтрация? (логика замены LoadMoreBtn на Pagination "Илья")
+  const [isFiltering, setIsFiltering] = useState(false);
+
   const recipesListRef = useRef(null);
 
   const handleFilterChange = useCallback((filters) => {
@@ -188,6 +191,11 @@ export default function HomePage() {
       return filters;
     });
     setPage(1);
+
+    // проверка активен ли хоть один фильтр. (логика замены LoadMoreBtn на Pagination "Илья")
+    const filterActive =
+      filters.category.trim() !== "" || filters.ingredient.trim() !== "";
+    setIsFiltering(filterActive);
   }, []);
 
   useEffect(() => {
@@ -218,6 +226,7 @@ export default function HomePage() {
     if (!searchQuery) return;
 
     setLoading(true);
+    setIsFiltering(true); //  При поиске — тоже filtering (логика замены LoadMoreBtn на Pagination "Илья")
 
     dispatch(clearRecipes());
     dispatch(fetchRecipesByQuery(searchQuery))
@@ -230,9 +239,9 @@ export default function HomePage() {
     dispatch(toggleFavoriteRecipeAsync({ recipeId: id }));
   };
 
-  //const loadMore = () => {
-  // setPage((prev) => prev + 1);
-  //};
+  const loadMore = () => {
+    setPage((prev) => prev + 1);
+  };
 
   useEffect(() => {
     if (page > 1 && recipesListRef.current) {
@@ -249,9 +258,18 @@ export default function HomePage() {
     ? recipes
     : recipes.slice(0, page * recipesPerPage);
 
+  console.log({
+    isFiltering,
+    page,
+    recipesPerPage,
+    recipesLength: recipes.length,
+    showLoadMore:
+      isFiltering && page * recipesPerPage < recipes.length && !loading,
+  });
+
   return (
     <div className={css.homePage}>
-      <Hero />
+      <Hero setIsFiltering={setIsFiltering} />
 
       <section className={css.container}>
         <div>
@@ -260,9 +278,11 @@ export default function HomePage() {
             {searchQuery ? `Search Results for "${searchQuery}"` : "Recipes"}
           </h2>
         </div>
-
-        <Filters totalItems={totalItems} onChange={handleFilterChange} />
-
+        <Filters
+          totalItems={totalItems}
+          onChange={handleFilterChange}
+          setIsFiltering={setIsFiltering}
+        />
         <RecipesList
           recipes={recipesToShow}
           loading={loading}
@@ -270,12 +290,20 @@ export default function HomePage() {
           ref={recipesListRef}
         />
 
-        <Pagination
-          page={page}
-          perPage={recipesPerPage}
-          totalItems={totalItems}
-          onPageChange={setPage}
-        />
+        {/* Условие для LoadMoreBtn (логика замены LoadMoreBtn на Pagination
+        "Илья") */}
+
+        {isFiltering ? (
+          recipes.length >= recipesPerPage &&
+          !loading && <LoadMoreBtn onClick={loadMore} />
+        ) : (
+          <Pagination
+            page={page}
+            perPage={recipesPerPage}
+            totalItems={totalItems}
+            onPageChange={setPage}
+          />
+        )}
         <div>
           {/*
     {!searchQuery && page * recipesPerPage < totalItems && !loading && (
