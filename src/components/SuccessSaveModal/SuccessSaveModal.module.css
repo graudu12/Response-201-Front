@@ -39,7 +39,7 @@
 .closeIcon {
   width: 24px;
   height: 24px;
-  color: #000;
+  stroke: #000;
 }
 
 .title {
@@ -69,11 +69,18 @@
   padding: 12px 36px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-bottom: 12px;
+  width: 210px;
+}
+
+.primaryBtn:last-child {
+  margin-bottom: 0;
 }
 
 .primaryBtn:hover {
   background-color: #7d5131;
 }
+
 @media (min-width: 393px) and (max-width: 767px) {
   .modal {
     width: 362px;

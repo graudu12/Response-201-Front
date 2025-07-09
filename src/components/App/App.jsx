@@ -37,6 +37,7 @@ export default function App() {
   console.log("App render, isRefreshing:", isRefreshing);
 
   useEffect(() => {
+    console.log('Dispatching refreshUser');
     dispatch(refreshUser());
   }, [dispatch]);
 
@@ -70,8 +71,10 @@ export default function App() {
           <Route
             path="/profile"
             element={<Navigate to="/profile/own" replace />}
-          />
-          <Route path="/profile/:recipeType" element={<ProfilePage />} />
+            />
+            
+          <Route path="/profile/:recipeType" element={<PrivateRoute component={<ProfilePage />} redirectTo="/"/>} />
+
 
           {/* ❌ 404 */}
           <Route path="*" element={<NotFoundPage />} />

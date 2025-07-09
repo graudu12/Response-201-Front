@@ -185,6 +185,12 @@
     width: 24px;
     height: 24px;
     pointer-events: none;
+    color: red;
+}
+
+.icon_delete:hover,
+.icon_delete:focus {
+    stroke: var(--color1, #ff0606);
 }
 
 .btn_submit {
@@ -208,6 +214,10 @@
 .error {
     color: #ff4d4d;
     font-size: 12px;
+}
+
+.selectPlaceholder option[value=""] {
+    color: grey; 
 }
 
 @media screen and (min-width: 768px) {
