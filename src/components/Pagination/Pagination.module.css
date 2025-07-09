@@ -1,0 +1,20 @@
+/* Pagination.module.css */
+.pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.button {
+  padding: 6px 12px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #f7b801;
+  color: white;
+  font-weight: bold;
+}
