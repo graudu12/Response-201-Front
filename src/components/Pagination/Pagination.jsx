@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import styles from './Pagination.module.css';
+import { useState, useEffect } from "react";
+import styles from "./Pagination.module.css";
 
 export default function Pagination({
   page,
@@ -14,8 +14,8 @@ export default function Pagination({
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handlePageChange = (newPage) => {
@@ -31,17 +31,20 @@ export default function Pagination({
 
     if (isMobile) {
       //  Mobile view: current ± 2 (5 total if possible)
-      const start = Math.max(1, page - 2);
-      const end = Math.min(totalPages, page + 2);
-
-      for (let i = start; i <= end; i++) {
-        pages.push(i);
+      if (totalPages <= 6) {
+        for (let i = 1; i <= totalPages; i++) pages.push(i);
+      } else if (page <= 3) {
+        for (let i = 1; i <= 6; i++) pages.push(i);
+      } else if (page >= totalPages - 2) {
+        for (let i = totalPages - 5; i <= totalPages; i++) pages.push(i);
+      } else {
+        for (let i = page - 2; i <= page + 3; i++) pages.push(i);
       }
     } else {
       //  Desktop view: full logic with ellipses
       pages.push(1);
 
-      if (page > 4) pages.push('...');
+      if (page > 4) pages.push("...");
 
       const start = Math.max(2, page - 2);
       const end = Math.min(totalPages - 1, page + 2);
@@ -50,7 +53,7 @@ export default function Pagination({
         pages.push(i);
       }
 
-      if (page < totalPages - 3) pages.push('...');
+      if (page < totalPages - 3) pages.push("...");
 
       if (totalPages > 1) pages.push(totalPages);
     }
@@ -65,20 +68,24 @@ export default function Pagination({
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
-        className={`${styles.button} ${styles.arrow}`}>
-        &lt;
+        className={`${styles.button} ${styles.arrow}`}
+      >
+        <svg className={styles.logoIcon} viewBox="0 0 16 10" aria-hidden="true">
+          <use href={`/svg/sprite.svg#icon-left`} />
+        </svg>
       </button>
       {pages.map((num, index) => {
-        const isDots = num === '...';
+        const isDots = num === "...";
 
         return (
           <button
             key={index}
-            onClick={() => typeof num === 'number' && handlePageChange(num)}
+            onClick={() => typeof num === "number" && handlePageChange(num)}
             disabled={isDots}
-            className={`${styles.button} ${num === page ? styles.active : ''} ${
-              isDots ? styles.dots : ''
-            }`}>
+            className={`${styles.button} ${num === page ? styles.active : ""} ${
+              isDots ? styles.dots : ""
+            }`}
+          >
             {num}
           </button>
         );
@@ -97,8 +104,17 @@ export default function Pagination({
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={page === totalPages}
-        className={`${styles.button} ${styles.arrow}`}>
-        &gt;
+        className={`${styles.button} ${styles.arrow}`}
+      >
+        <svg
+          className={styles.logoIcon}
+          width={10}
+          height={10}
+          viewBox="0 0 16 10"
+          aria-hidden="true"
+        >
+          <use href={`/svg/sprite.svg#icon-right`} />
+        </svg>
       </button>
     </div>
   );
