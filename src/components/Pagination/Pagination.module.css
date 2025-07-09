@@ -71,19 +71,3 @@
   color: #333;
   cursor: default;
 }
-.logoIcon {
-  display: inline-block;
-  width: 16px;
-  height: 10px;
-  fill: none;
-  stroke-width: 1px;
-  background-color: #9b6c43;
-}
-
-.button:hover:not(:disabled) .logoIcon {
-  filter: invert(0);
-}
-.arrow {
-  background-color: #9b6c43;
-  border: none;
-}
