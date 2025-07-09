@@ -1,4 +1,3 @@
-/* Pagination.module.css */
 .pagination {
   display: flex;
   justify-content: center;
@@ -9,68 +8,66 @@
 }
 
 .button {
-  padding: 6px 12px;
   min-width: 36px;
+  padding: 6px 12px;
   font-size: 14px;
   background-color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .button:hover:not(:disabled) {
   background-color: #9b6c43;
-  color: white;
-  border-color: #000000;
+  color: #ffffff;
 }
 
 .active {
   background-color: #9b6c43;
-  color: white;
+  color: #ffffff;
   font-weight: bold;
-  border-color: #000000;
 }
 
 .button:disabled {
-  background-color: white;
   opacity: 0.5;
   cursor: not-allowed;
+  background-color: white;
+  color: #aaa;
 }
 
-.icon {
+.arrow {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.icon svg {
+  width: 32px;
+  height: 32px;
+  padding: 4px;
   background-color: #9b6c43;
-  stroke: black;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.arrow:hover:not(:disabled) {
+  background-color: #6d554b;
+}
+
+.logoIcon {
+  width: 32px;
+  height: 32px;
+  transform: scale(1.3);
+  transform-origin: center;
 }
 .dots {
   font-weight: 700;
   font-size: 16px;
-  color: #000000; /* or black or theme color */
+  color: #000000;
   cursor: default;
 }
+
 .dots:hover {
   background-color: transparent;
   color: #333;
   cursor: default;
-}
-.logoIcon {
-  display: inline-block;
-  width: 16px;
-  height: 10px;
-  fill: none;
-  stroke-width: 1px;
-  background-color: #9b6c43;
-}
-
-.button:hover:not(:disabled) .logoIcon {
-  filter: invert(0);
-}
-.arrow {
-  background-color: #9b6c43;
-  border: none;
 }
