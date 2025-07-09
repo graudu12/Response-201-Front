@@ -10,11 +10,11 @@
 
 .modal {
   background-color: #faf3e0;
-  padding: 56px 32px;
+  width: 420px;
+  min-height: 236px;
+  padding: 56px 32px 32px 32px;
   border-radius: 32px;
   position: relative;
-  width: 420px;
-  max-width: 90%;
   text-align: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
@@ -37,8 +37,8 @@
 }
 
 .closeIcon {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   color: #000;
 }
 
@@ -52,7 +52,7 @@
 .text {
   font-size: 18px;
   color: rgba(0, 0, 0, 0.7);
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   line-height: 1.5;
   max-width: 360px;
   margin-left: auto;
@@ -62,7 +62,7 @@
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -94,6 +94,8 @@
 .logoutBtn:hover {
   background-color: #b30000;
 }
+
+/* Mobile adaptation: 393px–767px */
 @media (min-width: 393px) and (max-width: 767px) {
   .modal {
     width: 362px;
@@ -108,7 +110,6 @@
   .text {
     font-size: 16px;
     margin-bottom: 24px;
-    line-height: 1.5;
   }
 
   .buttons {
@@ -116,10 +117,10 @@
     gap: 20px;
   }
 
-  .loginBtn,
-  .registerBtn,
   .logoutBtn,
   .cancelBtn,
+  .loginBtn,
+  .registerBtn,
   .primaryBtn {
     width: 100%;
     padding: 12px 24px;
