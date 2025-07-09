@@ -35,7 +35,11 @@ export default function Pagination({
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
         className={styles.button}>
-        &lt;
+        <div className={styles.icon}>
+          <svg width="20" height="20" fill="none" stroke="currentColor">
+            <use href="/svg/sprite.svg#icon-left" />
+          </svg>
+        </div>
       </button>
 
       {pages.map((num, index) => (
@@ -52,7 +56,11 @@ export default function Pagination({
         onClick={() => handlePageChange(page + 1)}
         disabled={page === totalPages}
         className={styles.button}>
-        &gt;
+        <div className={styles.icon}>
+          <svg width="20" height="20" fill="none" stroke="currentColor">
+            <use href="/svg/sprite.svg#icon-right" />
+          </svg>
+        </div>
       </button>
     </div>
   );
