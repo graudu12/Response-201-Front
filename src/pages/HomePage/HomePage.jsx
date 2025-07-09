@@ -138,24 +138,24 @@
 // }
 
 //src/pages/HomePage/HomePage.jsx
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import css from './HomePage.module.css';
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import css from "./HomePage.module.css";
 
-import Hero from '../../components/Hero/Hero';
-import RecipesList from '../../components/RecipesList/RecipesList';
-import Filters from '../../components/Filters/Filters';
-import LoadMoreBtn from '../../components/LoadMoreBtn/LoadMoreBtn';
-import Pagination from '../../components/Pagination/Pagination.jsx';
+import Hero from "../../components/Hero/Hero";
+import RecipesList from "../../components/RecipesList/RecipesList";
+import Filters from "../../components/Filters/Filters";
+import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
+import Pagination from "../../components/Pagination/Pagination.jsx";
 
 import {
   fetchRecipes,
   fetchRecipesByQuery,
   //toggleFavoriteRecipeAsync,
-} from '../../redux/recipes/operations';
-import { clearRecipes, clearNotFound } from '../../redux/recipes/slice';
-import { changeFilter } from '../../redux/filters/slice';
+} from "../../redux/recipes/operations";
+import { clearRecipes, clearNotFound } from "../../redux/recipes/slice";
+import { changeFilter } from "../../redux/filters/slice";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -171,8 +171,8 @@ export default function HomePage() {
   const recipesPerPage = 12;
   const [loading, setLoading] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
-    category: '',
-    ingredient: '',
+    category: "",
+    ingredient: "",
   });
 
   // Новый флаг: включён ли поиск/фильтрация? (логика замены LoadMoreBtn на Pagination "Илья")
@@ -194,13 +194,13 @@ export default function HomePage() {
 
     // проверка активен ли хоть один фильтр. (логика замены LoadMoreBtn на Pagination "Илья")
     const filterActive =
-      filters.category.trim() !== '' || filters.ingredient.trim() !== '';
+      filters.category.trim() !== "" || filters.ingredient.trim() !== "";
     setIsFiltering(filterActive);
   }, []);
 
   useEffect(() => {
-    if (location.pathname === '/') {
-      dispatch(changeFilter({ name: '' }));
+    if (location.pathname === "/") {
+      dispatch(changeFilter({ name: "" }));
       dispatch(clearNotFound());
     }
   }, [location.pathname, dispatch]);
@@ -228,7 +228,7 @@ export default function HomePage() {
 
     setLoading(true);
     setIsFiltering(true); //  При поиске — тоже filtering (логика замены LoadMoreBtn на Pagination "Илья")
-
+    setPage(1);
     dispatch(clearRecipes());
     dispatch(fetchRecipesByQuery(searchQuery))
       .unwrap()
@@ -258,8 +258,8 @@ export default function HomePage() {
     ) {
       requestAnimationFrame(() => {
         recipesListRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
+          behavior: "smooth",
+          block: "start",
         });
       });
     }
@@ -269,13 +269,7 @@ export default function HomePage() {
       setStartIndex(null);
     }
   }, [loading]);
-  const recipesToShow =
-    searchQuery || isFiltering
-      ? recipes
-      : recipes.slice((page - 1) * recipesPerPage, page * recipesPerPage);
-  // const recipesToShow = searchQuery
-  //  ? recipes
-  //  : recipes.slice(0, page * recipesPerPage);
+  const recipesToShow = recipes.slice(0, page * recipesPerPage);
 
   return (
     <div className={css.homePage}>
@@ -285,7 +279,7 @@ export default function HomePage() {
         <div>
           {/* 🆕 Динамический заголовок — меняется при поиске */}
           <h2 className={css.title}>
-            {searchQuery ? `Search Results for "${searchQuery}"` : 'Recipes'}
+            {searchQuery ? `Search Results for "${searchQuery}"` : "Recipes"}
           </h2>
         </div>
         <Filters
@@ -304,9 +298,15 @@ export default function HomePage() {
         {/* Условие для LoadMoreBtn (логика замены LoadMoreBtn на Pagination
         "Илья") */}
 
-        {isFiltering ? (
+        {searchQuery || isFiltering ? (
+          <div>
+            {
+              /*!searchQuery && */ page * recipesPerPage < totalItems &&
+                !loading && <LoadMoreBtn onClick={loadMore} />
+            }
+          </div> /*
           recipes.length >= recipesPerPage &&
-          !loading && <LoadMoreBtn onClick={loadMore} />
+          !loading && <LoadMoreBtn onClick={loadMore} />*/
         ) : (
           <Pagination
             page={page}
@@ -315,13 +315,6 @@ export default function HomePage() {
             onPageChange={setPage}
           />
         )}
-        <div>
-          {/*
-    {!searchQuery && page * recipesPerPage < totalItems && !loading && (
-      <LoadMoreBtn onClick={loadMore} />
-    )}
-  */}
-        </div>
       </section>
     </div>
   );
