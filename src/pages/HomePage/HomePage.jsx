@@ -269,14 +269,7 @@ export default function HomePage() {
       setStartIndex(null);
     }
   }, [loading]);
-
-  const recipesToShow =
-    searchQuery || isFiltering
-      ? recipes
-      : recipes.slice((page - 1) * recipesPerPage, page * recipesPerPage);
-  // const recipesToShow = searchQuery
-  //  ? recipes
-  //  : recipes.slice(0, page * recipesPerPage);
+  const recipesToShow = recipes.slice(0, page * recipesPerPage);
 
   return (
     <div className={css.homePage}>
