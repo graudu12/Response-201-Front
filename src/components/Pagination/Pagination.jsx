@@ -26,20 +26,33 @@ export default function Pagination({
 
   const getVisiblePages = () => {
     const pages = [];
+
     if (totalPages <= 1) return pages;
 
     if (isMobile) {
-      if (page > 1) pages.push(page - 1);
-      pages.push(page);
-      if (page < totalPages) pages.push(page + 1);
+      //  Mobile view: current ± 2 (5 total if possible)
+      const start = Math.max(1, page - 2);
+      const end = Math.min(totalPages, page + 2);
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
     } else {
+      //  Desktop view: full logic with ellipses
       pages.push(1);
+
       if (page > 4) pages.push('...');
+
       const start = Math.max(2, page - 2);
       const end = Math.min(totalPages - 1, page + 2);
-      for (let i = start; i <= end; i++) pages.push(i);
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
       if (page < totalPages - 3) pages.push('...');
-      pages.push(totalPages);
+
+      if (totalPages > 1) pages.push(totalPages);
     }
 
     return pages;
