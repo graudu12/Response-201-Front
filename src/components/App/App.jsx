@@ -37,6 +37,7 @@ export default function App() {
   console.log("App render, isRefreshing:", isRefreshing);
 
   useEffect(() => {
+    console.log('Dispatching refreshUser');
     dispatch(refreshUser());
   }, [dispatch]);
 

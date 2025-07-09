@@ -6,15 +6,11 @@ import * as Yup from 'yup';
 import { useRef, useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage} from "formik";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { addNewRecipe } from "../../redux/recipes/slice";
 import SuccessSaveModal from "../SuccessSaveModal/SuccessSaveModal.jsx";
 
-
-
 export default function AddRecipeForm() {
 const dispatch = useDispatch();
-const navigate = useNavigate();
 const inputRef = useRef(null);
 
 const [showModal, setShowModal] = useState(false);
@@ -33,106 +29,64 @@ useEffect(() => {
   
 useEffect(() => {
   axios.get('https://response-201-back.onrender.com/api/ingredients')
-    .then((res) => { setIngredients(res.data.ingredients || []) })
+    .then((res) => {
+      const loadedIngredients = res.data.ingredients || [];
+      setIngredients(loadedIngredients);
+    })
     .catch((err) => console.error("Error loading ingredients:", err));
 }, []);
 
-// const handleSubmit = async (values, addedIngredients, actions) => {
-//   if (addedIngredients.length === 0) {
-//     toast.warning("Please add at least one ingredient.");
-//     return;
-//   }
+const handleSubmit = async (values, addedIngredients, actions) => {
+  if (addedIngredients.length === 0) {
+    toast.warning("Please add at least one ingredient.");
+    return;
+  }
 
-//   const formData = new FormData();
+  const token = localStorage.getItem('token');
+  const formData = new FormData();
 
-//   formData.append('nameRecipe', values.nameRecipe);
-//   formData.append('recipeDescription', values.recipeDescription);
-//   formData.append('cookingTime', values.cookingTime);
-//   if (values.calories) {
-//     formData.append('calories', values.calories);
-//   }
-//   formData.append('recipeCategory', values.recipeCategory);
-//   formData.append('instructions', values.instructions);
-//   formData.append('ingredients', JSON.stringify(addedIngredients));
+  formData.append("nameRecipe", values.nameRecipe);
+  formData.append("recipeDescription", values.recipeDescription);
+  formData.append("cookingTime", values.cookingTime);
+  formData.append("calories", values.calories);
+  formData.append("recipeCategory", values.recipeCategory);
+  formData.append("instructions", values.instructions);
+  addedIngredients.forEach((ing, index) => {
+    formData.append(`ingredients[${index}][id]`, ing.id);
+    formData.append(`ingredients[${index}][measure]`, ing.measure);
+  });
 
-//   if (imageFile) {
-//     formData.append('dishPhoto', imageFile);
-//   }
+  if (imageFile) {
+    formData.append("isPhoto", imageFile); 
+  }
 
-//   const token = localStorage.getItem('token');
+  try {
+    const res = await axios.post(
+      "https://response-201-back.onrender.com/api/recipes",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-//   console.log("VALUES", values);
-// console.log("ADDED INGREDIENTS", addedIngredients);
-//     try {
-//       for (let [key, value] of formData.entries()) {
-//         console.log(`${key}: ${value}`);
-//       }
-//       const res = await axios.post('https://response-201-back.onrender.com/api/recipes', formData, {
-//         headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
-//       });
+    dispatch(addNewRecipe(res.data.data));
+    setCreatedRecipeId(res.data.data._id);
+    setShowModal(true);
 
-//       const newRecipe = res.data;
-
-//       dispatch(addNewRecipe(newRecipe));
-
-//       toast.success("Recipe added!");
-//       navigate(`/recipes/${res.data.id}`);
-//       actions.resetForm();
-//       setImageFile(null);
-//       setPreview(null);
-//       setAddedIngredients([]);
-//     } catch (err) {
-//       toast.error("Something went wrong.");
-      
-//     }
-  // };
-  
-  const handleSubmit = async (values, addedIngredients, actions) => {
-    if (addedIngredients.length === 0) {
-      toast.warning("Please add at least one ingredient.");
-      return;
-    }
-  
-    const token = localStorage.getItem('token');
-  
-    const payload = {
-      nameRecipe: values.nameRecipe,
-      recipeDescription: values.recipeDescription,
-      cookingTime: String(values.cookingTime),
-      calories: String(values.calories),
-      recipeCategory: values.recipeCategory,
-      instructions: values.instructions,
-      ingredients: addedIngredients,
-      // dishPhoto: "https://your-image-url.com/photo.jpg" // 
-    };
-  
-    try {
-      const res = await axios.post(
-        'https://response-201-back.onrender.com/api/recipes',
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-  
-      dispatch(addNewRecipe(res.data.data));
-      // navigate(`/`);
-      setCreatedRecipeId(res.data.data._id);
-      setShowModal(true);
-      // toast.success("Recipe added!");
-      setTimeout(() => {
-        actions.resetForm();
-        setImageFile(null);
-        setPreview(null);
-        setAddedIngredients([]);
-      }, 500);
-    } catch (err) {
-      console.error("BACKEND ERROR:", err.response?.data || err.message);
-      toast.error(err.response?.data?.message || "Something went wrong.");
-    }
-  };
+    setTimeout(() => {
+      actions.resetForm();
+      setImageFile(null);
+      setPreview(null);
+      setAddedIngredients([]);
+    }, 500);
+  } catch (err) {
+    console.error("BACKEND ERROR:", err.response?.data || err.message);
+    toast.error(err.response?.data?.message || "Something went wrong.");
+  }
+};
 
 const handleImageClick = () => {
     inputRef.current.click();
@@ -150,8 +104,6 @@ const handleAddIngridient = (values, setFieldValue) => {
   if (!values.name_ingredients || !values.amount_ingredients)
     return;
 
-  // const selectedIngredient = ingredients.find(ing => ing._id === values.name_ingredients);
-  // if (!selectedIngredient) return;
 
   const newIngredient = {
     id: values.name_ingredients,
@@ -162,6 +114,7 @@ const handleAddIngridient = (values, setFieldValue) => {
   setAddedIngredients(updated);
   setFieldValue('ingredients', updated);
   setFieldValue('amount_ingredients', '');
+  setFieldValue('name_ingredients', '');
 };
 
 const handleRemoveLastIngredient = () => {
@@ -190,16 +143,6 @@ const initialValues = {
     dishPhoto: Yup.mixed(),
     recipeDescription: Yup.string().min(3, "Must be min 3 chars").max(100, "Must be max 100 chars").required("This field is required"),
     instructions: Yup.string().required("This field is required"),
-    // ingredients: Yup.array().of(
-    //   Yup.object().shape({
-    //     id: Yup.string()
-    //       .required('Ingredient ID is required'),
-    //     measure: Yup.string()
-    //       .required('Measure is required')
-    //       .min(1, 'Measure must not be empty'),
-    //   })
-    // )
-    // .min(1, 'At least one ingredient is required'),
     name_ingredients: Yup.string(),
     amount_ingredients: Yup.string(),
     cookingTime: Yup.string().max(4,"Must be max 9999 minutes").required("This field is required"),
@@ -306,11 +249,14 @@ const initialValues = {
                 <label className={css.label} htmlFor="recipeCategory">
                 Category
                 <Field 
-                    className={css.field} 
+                    className={`${css.field} selectPlaceholder`}
                     id="recipeCategory" 
                     name="recipeCategory" 
                     as="select" 
                     >
+                    <option value="" disabled hidden>
+                    {categories[0]?.name || "Select category"}
+                    </option>
                 {categories.map((cat) => (
                     <option value={cat.name} key={cat._id}>{cat.name}</option>
                 ))}
@@ -328,8 +274,10 @@ const initialValues = {
                     className={css.field}
                     id="name_ingredients"
                     name="name_ingredients"
-                as="select">
-                  {/* <option value={ingredients[0]}></option> */}
+                      as="select">
+                <option value="" disabled hidden>
+                  {ingredients[0]?.name || "Select ingredient"}
+                </option>
                 {ingredients.map(ing => (
                   <option value={ing._id} key={ing._id}>{ing.name}</option>
                 ))}
