@@ -177,7 +177,7 @@ export default function HomePage() {
 
   // Новый флаг: включён ли поиск/фильтрация? (логика замены LoadMoreBtn на Pagination "Илья")
   const [isFiltering, setIsFiltering] = useState(false);
-
+  const [isPagination, setIsPagination] = useState(false);
   const recipesListRef = useRef(null);
 
   const handleFilterChange = useCallback((filters) => {
@@ -191,6 +191,7 @@ export default function HomePage() {
       return filters;
     });
     setPage(1);
+    setIsPagination(false);
 
     // проверка активен ли хоть один фильтр. (логика замены LoadMoreBtn на Pagination "Илья")
     const filterActive =
@@ -215,19 +216,21 @@ export default function HomePage() {
         perPage: recipesPerPage,
         category: selectedFilters.category,
         ingredient: selectedFilters.ingredient,
-        append: page > 1, // <-- Ось ключова зміна
+        append: !isPagination,
+        //append: page > 1, // <-- Ось ключова зміна
       })
     )
       .unwrap()
       .then(() => setLoading(false))
       .catch(() => setLoading(false));
-  }, [dispatch, page, selectedFilters, searchQuery]);
+  }, [dispatch, page, selectedFilters, searchQuery, isPagination]);
 
   useEffect(() => {
     if (!searchQuery) return;
 
     setLoading(true);
     setIsFiltering(true); //  При поиске — тоже filtering (логика замены LoadMoreBtn на Pagination "Илья")
+    setIsPagination(false);
     setPage(1);
     dispatch(clearRecipes());
     dispatch(fetchRecipesByQuery(searchQuery))
@@ -244,26 +247,48 @@ export default function HomePage() {
     setPage((prev) => prev + 1);
   };*/
   const loadMore = () => {
+    setIsPagination(false);
     const nextPage = page + 1;
     setPage(nextPage);
 
     setStartIndex((nextPage - 1) * recipesPerPage);
   };
 
+  // useEffect(() => {
+  // if (
+  // startIndex !== null &&
+  // recipes[startIndex] !== undefined &&
+  //recipesListRef.current
+  // ) {
+  // requestAnimationFrame(() => {
+  // recipesListRef.current.scrollIntoView({
+  //   behavior: "smooth",
+  //    block: "start",
+  //   });
+  //  });
+  //  }
+  // }, [recipes, startIndex]);
+
   useEffect(() => {
-    if (
-      startIndex !== null &&
-      recipes[startIndex] !== undefined &&
-      recipesListRef.current
-    ) {
+    if (recipesListRef.current && startIndex !== null) {
+      const recipeExists = recipes[startIndex];
+
       requestAnimationFrame(() => {
-        recipesListRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+        if (isPagination) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else if (recipeExists) {
+          recipesListRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+
+        // ⬅️ Сбрасываем startIndex ТОЛЬКО после scroll
+        setStartIndex(null);
       });
     }
-  }, [recipes, startIndex]);
+  }, [recipes, startIndex, isPagination]);
+
   useEffect(() => {
     if (!loading) {
       setStartIndex(null);
@@ -312,7 +337,11 @@ export default function HomePage() {
             page={page}
             perPage={recipesPerPage}
             totalItems={totalItems}
-            onPageChange={setPage}
+            onPageChange={(newPage) => {
+              setIsPagination(true); // Пагинация → перерисовка
+              setStartIndex(0);
+              setPage(newPage);
+            }}
           />
         )}
       </section>
