@@ -12,7 +12,7 @@
   padding: 6px 12px;
   min-width: 36px;
   font-size: 14px;
-  background-color: #ffffff;
+  background-color: white;
   border: 1px solid #000000;
   border-radius: 8px;
   cursor: pointer;
@@ -33,6 +33,7 @@
 }
 
 .button:disabled {
+  background-color: white;
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -41,4 +42,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.icon svg {
+  background-color: #9b6c43;
+  stroke: black;
+}
+.dots {
+  font-weight: 700;
+  font-size: 16px;
+  color: #000000; /* or black or theme color */
+  cursor: default;
+}
+.dots:hover {
+  background-color: transparent;
+  color: #333;
+  cursor: default;
 }
