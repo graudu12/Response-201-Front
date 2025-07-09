@@ -4,7 +4,7 @@
   border: none;
   width: 289px;
   height: 54px;
-  background: #9b6c43;
+  background: #344e41;
   padding: 0;
   display: block;
   margin: 0 auto;
@@ -18,12 +18,12 @@
 }
 .button:hover,
 .button:focus {
-  background: #6d554b;
+  background: #588157;
   border: none;
 }
 
 .button:active {
-  background: #9b6c43;
+  background: #344e41;
   border: 2px solid white;
 }
 @media only screen and (min-width: 768px) {

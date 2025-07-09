@@ -9,7 +9,7 @@
 }
 
 .modal {
-  background-color: #faf3e0;
+  background-color: #a3b18a;
   width: 420px;
   min-height: 236px;
   padding: 56px 32px 32px 32px;
@@ -82,7 +82,7 @@
 }
 
 .cancelBtn:hover {
-  background-color: #f0f0f0;
+  background-color: #588157;
 }
 
 .logoutBtn {
