@@ -139,7 +139,10 @@ export default function AddRecipeForm() {
   };
 
   const validationSchema = Yup.object().shape({
-    nameRecipe: Yup.string().min(3, "Must be min 3 chars").max(100, "Must be max 100 chars").required("This field is required"),
+    nameRecipe: Yup.string()
+      .min(3, "Must be min 3 chars")
+      .max(30, "Must be max 50 chars")
+      .required("This field is required"),
     dishPhoto: Yup.mixed(),
     recipeDescription: Yup.string()
       .min(3, "Must be min 3 chars")
