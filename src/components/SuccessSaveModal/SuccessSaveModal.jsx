@@ -42,6 +42,15 @@ export default function SuccessSaveModal({ isOpen, onClose }) {
         >
           Go to My profile
         </button>
+        <button
+          className={css.primaryBtn}
+          onClick={() => {
+            navigate("/");
+            onClose();
+          }}
+        >
+          Go to Recipes
+        </button>
       </div>
     </div>
   );

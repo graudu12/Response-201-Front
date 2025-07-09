@@ -9,7 +9,6 @@ import { clearRecipes } from "../../redux//recipes/slice";
 import {
   fetchMyRecipes,
   fetchFavoriteRecipes,
-  toggleFavoriteRecipeAsync,
 } from "../../redux/recipes/operations";
 
 const ProfilePage = () => {
@@ -24,6 +23,7 @@ const ProfilePage = () => {
   const [page, setPage] = useState(1);
   const recipesPerPage = 12;
   const [loading, setLoading] = useState(false);
+  const [startIndex, setStartIndex] = useState(null);
   const recipesListRef = useRef(null);
   useEffect(() => {
     dispatch(clearRecipes());
@@ -35,11 +35,15 @@ const ProfilePage = () => {
       try {
         if (mode === "own") {
           await dispatch(
-            fetchMyRecipes({ page, perPage: recipesPerPage })
+            fetchMyRecipes({ page, perPage: recipesPerPage, append: page > 1 })
           ).unwrap();
         } else if (mode === "favorites") {
           await dispatch(
-            fetchFavoriteRecipes({ page, perPage: recipesPerPage })
+            fetchFavoriteRecipes({
+              page,
+              perPage: recipesPerPage,
+              append: page > 1,
+            })
           ).unwrap();
         }
       } catch (err) {
@@ -51,15 +55,23 @@ const ProfilePage = () => {
 
     fetch();
   }, [dispatch, page, mode]);
-  const handleToggleFavorite = (id) => {
-    dispatch(toggleFavoriteRecipeAsync({ recipeId: id, mode }));
-  };
-  const loadMore = () => {
+
+  /*const loadMore = () => {
     setPage((prev) => prev + 1);
+  };*/
+  const loadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+
+    setStartIndex((nextPage - 1) * recipesPerPage);
   };
 
   useEffect(() => {
-    if (page > 1 && recipesListRef.current) {
+    if (
+      startIndex !== null &&
+      recipes[startIndex] !== undefined &&
+      recipesListRef.current
+    ) {
       requestAnimationFrame(() => {
         recipesListRef.current.scrollIntoView({
           behavior: "smooth",
@@ -67,9 +79,13 @@ const ProfilePage = () => {
         });
       });
     }
-  }, [page]);
-
-  //const recipesToShow = recipes.slice(0, page * recipesPerPage);
+  }, [recipes, startIndex]);
+  useEffect(() => {
+    if (!loading) {
+      setStartIndex(null);
+    }
+  }, [loading]);
+  const recipesToShow = recipes.slice(0, page * recipesPerPage);
   return (
     <section className={css.profilePage}>
       <div className={css.container}>
@@ -78,10 +94,10 @@ const ProfilePage = () => {
         <p className={css.totalRecipes}>{totalItems} recipes</p>
         <RecipesList
           mode={mode}
-          recipes={recipes /*ToShow*/}
+          recipes={recipesToShow}
           loading={loading}
-          onToggleFavorite={handleToggleFavorite}
           ref={recipesListRef}
+          startIndex={startIndex}
         />
         <div>
           {page * recipesPerPage < totalItems && !loading && (

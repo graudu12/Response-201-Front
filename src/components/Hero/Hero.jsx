@@ -1,7 +1,7 @@
 import css from "./Hero.module.css";
 import SearchBox from "../SearchBox/SearchBox";
 
-export default function Hero() {
+export default function Hero({ setIsFiltering }) {
   return (
     <section className={css.hero}>
       <div className={css.heroContainer}>
@@ -10,7 +10,7 @@ export default function Hero() {
             Plan, Cook, and <br />
             Share Your Flavors
           </h1>
-          <SearchBox />
+          <SearchBox setIsFiltering={setIsFiltering} />
         </div>
       </div>
     </section>

@@ -6,10 +6,6 @@ import SaveFavoriteButton from "../SaveFavoriteButton/SaveFavoriteButton.jsx";
 const RecipeDetails = ({ recipe }) => {
 
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const largeImageUrl = recipe.dishPhoto?.replace(
-    "/preview/",
-    "/preview/large/"
-  );
 
   useEffect(() => {
     if (recipe && isAuthenticated) {
@@ -21,6 +17,11 @@ const RecipeDetails = ({ recipe }) => {
   if (!recipe) {
     return <div className={styles.notFound}>Рецепт не найден</div>;
   }
+
+  const largeImageUrl = recipe.dishPhoto?.replace(
+    "/preview/",
+    "/preview/large/"
+  );
 
   return (
     <div className={styles.container}>
