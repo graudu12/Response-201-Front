@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ReactDOM from "react-dom";
 import css from "./AuthPromptModal.module.css";
 
 export default function AuthPromptModal({ isOpen, onClose }) {
@@ -25,7 +26,7 @@ export default function AuthPromptModal({ isOpen, onClose }) {
     if (e.target === e.currentTarget) onClose();
   };
 
-  return (
+  const modal = (
     <div className={css.backdrop} onClick={handleBackdropClick}>
       <div className={css.modal}>
         <button
@@ -82,4 +83,6 @@ export default function AuthPromptModal({ isOpen, onClose }) {
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modal, document.getElementById("modal-root"));
 }
