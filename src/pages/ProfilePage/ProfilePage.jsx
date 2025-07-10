@@ -5,7 +5,7 @@ import css from "./ProfilePage.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import RecipesList from "../../components/RecipesList/RecipesList";
-import { clearRecipes } from "../../redux//recipes/slice";
+import { clearRecipes } from "../../redux/recipes/slice";
 import {
   fetchMyRecipes,
   fetchFavoriteRecipes,
@@ -56,9 +56,6 @@ const ProfilePage = () => {
     fetch();
   }, [dispatch, page, mode]);
 
-  /*const loadMore = () => {
-    setPage((prev) => prev + 1);
-  };*/
   const loadMore = () => {
     const nextPage = page + 1;
     setPage(nextPage);
@@ -85,6 +82,7 @@ const ProfilePage = () => {
       setStartIndex(null);
     }
   }, [loading]);
+  //const recipesToShow = recipes;
   const recipesToShow = recipes.slice(0, page * recipesPerPage);
   return (
     <section className={css.profilePage}>
