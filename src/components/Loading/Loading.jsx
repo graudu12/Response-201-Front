@@ -1,20 +1,9 @@
-import css from "../Loading/Loading.module.css";
-
-import { Comment } from "react-loader-spinner";
-
-export default function Loading({ height = 80, width = 80 }) {
+import ClipLoader from "react-spinners/ClipLoader";
+import css from "./Loading.module.css";
+export default function Loading() {
   return (
-    <div className={css.loader}>
-      <Comment
-        visible={true}
-        height={height}
-        width={width}
-        ariaLabel="comment-loading"
-        wrapperStyle={{}}
-        wrapperClass="comment-wrapper"
-        color="#4A90E2" // приятный синий
-        backgroundColor="transparent"
-      />
+    <div className={css.loaderOverlay}>
+      <ClipLoader color="#ffffff" size={60} />
     </div>
   );
 }
