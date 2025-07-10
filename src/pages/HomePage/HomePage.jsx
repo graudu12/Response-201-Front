@@ -78,13 +78,14 @@ export default function HomePage() {
         perPage: recipesPerPage,
         category: selectedFilters.category,
         ingredient: selectedFilters.ingredient,
-        append: !isPagination,
+        append: false,
+        //append: !isPagination,
         //append: page > 1, // <-- Ось ключова зміна
       })
     ).unwrap();
     // .then(() => setLoading(false))
     // .catch(() => setLoading(false));
-  }, [dispatch, page, selectedFilters, searchQuery, isPagination]);
+  }, [dispatch, page, selectedFilters, searchQuery /*isPagination*/]);
 
   useEffect(() => {
     if (!searchQuery) return;
