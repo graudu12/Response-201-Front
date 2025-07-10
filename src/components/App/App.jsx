@@ -16,9 +16,8 @@ import RecipeDetailsPage from "../../pages/recipeDetailsPage/recipeDetailsPage";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import HomePage from "../../pages/HomePage/HomePage";
 // 📦 Сторінки
-// const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
+const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() =>
   import("../../pages/RegistrationPage/RegistrationPage")
 );
