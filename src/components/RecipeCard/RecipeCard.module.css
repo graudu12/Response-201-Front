@@ -96,8 +96,13 @@
 .learnMoreButton:hover {
   background-color: #588157;
   color: #fff;
+  border: none;
 }
 .icon {
   stroke: currentColor;
   color: #000000;
+}
+
+.learnMoreButton:active {
+  border: 1px solid #fff;
 }

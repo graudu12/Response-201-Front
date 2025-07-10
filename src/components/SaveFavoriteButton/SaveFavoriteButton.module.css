@@ -76,7 +76,7 @@
 }
 .smallFavoriteButton.active {
   background: #344e41;
-  border: none;
+  /*border: none;*/
   color: white;
 }
 .icon {
@@ -105,7 +105,7 @@
   color: white;
 }
 .smallFavoriteButton.active:hover {
-  background-color: #6d554b;
+  background-color: #588157;
   border: none;
 }
 
