@@ -30,7 +30,8 @@ export default function HomePage() {
   const [startIndex, setStartIndex] = useState(null);
   const [page, setPage] = useState(1);
   const recipesPerPage = 12;
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const loading = useSelector((state) => state.recipes.loading);
   const [selectedFilters, setSelectedFilters] = useState({
     category: "",
     ingredient: "",
@@ -70,34 +71,40 @@ export default function HomePage() {
   useEffect(() => {
     if (searchQuery) return;
 
-    setLoading(true);
+    // setLoading(true);
     dispatch(
       fetchRecipes({
         page,
         perPage: recipesPerPage,
         category: selectedFilters.category,
         ingredient: selectedFilters.ingredient,
-        append: !isPagination,
+        //append: false,
+        append: page > 1 && (searchQuery || isFiltering),
+        //append: !isPagination,
         //append: page > 1, // <-- Ось ключова зміна
       })
-    )
-      .unwrap()
-      .then(() => setLoading(false))
-      .catch(() => setLoading(false));
-  }, [dispatch, page, selectedFilters, searchQuery, isPagination]);
+    ).unwrap();
+    // .then(() => setLoading(false))
+    // .catch(() => setLoading(false));
+  }, [
+    dispatch,
+    page,
+    selectedFilters,
+    searchQuery,
+    isFiltering /*isPagination*/,
+  ]);
 
   useEffect(() => {
     if (!searchQuery) return;
 
-    setLoading(true);
+    // setLoading(true);
     setIsFiltering(true); //  При поиске — тоже filtering (логика замены LoadMoreBtn на Pagination "Илья")
     setIsPagination(false);
     setPage(1);
     dispatch(clearRecipes());
-    dispatch(fetchRecipesByQuery(searchQuery))
-      .unwrap()
-      .then(() => setLoading(false))
-      .catch(() => setLoading(false));
+    dispatch(fetchRecipesByQuery(searchQuery)).unwrap();
+    // .then(() => setLoading(false))
+    // .catch(() => setLoading(false));
   }, [dispatch, searchQuery]);
 
   /*const handleToggleFavorite = (id) => {

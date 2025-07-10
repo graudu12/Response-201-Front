@@ -5,11 +5,12 @@ import css from "./ProfilePage.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import RecipesList from "../../components/RecipesList/RecipesList";
-import { clearRecipes } from "../../redux//recipes/slice";
+import { clearRecipes } from "../../redux/recipes/slice";
 import {
   fetchMyRecipes,
   fetchFavoriteRecipes,
 } from "../../redux/recipes/operations";
+import Loader from "../../components/Loading/Loading";
 
 const ProfilePage = () => {
   const { recipeType } = useParams(); // ⬅️ own або favorites
@@ -22,15 +23,16 @@ const ProfilePage = () => {
 
   const [page, setPage] = useState(1);
   const recipesPerPage = 12;
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const loading = useSelector((state) => state.recipes.loading);
   const [startIndex, setStartIndex] = useState(null);
   const recipesListRef = useRef(null);
   useEffect(() => {
     dispatch(clearRecipes());
     setPage(1); // сбрасываем страницу, иначе будет догружать с текущей
   }, [mode, dispatch]);
+
   useEffect(() => {
-    setLoading(true);
     const fetch = async () => {
       try {
         if (mode === "own") {
@@ -48,17 +50,12 @@ const ProfilePage = () => {
         }
       } catch (err) {
         console.error(err);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetch();
   }, [dispatch, page, mode]);
 
-  /*const loadMore = () => {
-    setPage((prev) => prev + 1);
-  };*/
   const loadMore = () => {
     const nextPage = page + 1;
     setPage(nextPage);
@@ -85,6 +82,7 @@ const ProfilePage = () => {
       setStartIndex(null);
     }
   }, [loading]);
+  //const recipesToShow = recipes;
   const recipesToShow = recipes.slice(0, page * recipesPerPage);
   return (
     <section className={css.profilePage}>
@@ -92,6 +90,7 @@ const ProfilePage = () => {
         <h1 className={css.title}>My profile</h1>
         <ProfileNavigation />
         <p className={css.totalRecipes}>{totalItems} recipes</p>
+        {loading && <Loader />}
         <RecipesList
           mode={mode}
           recipes={recipesToShow}

@@ -1,10 +1,10 @@
 .navList {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 38px;
   list-style: none;
-  padding-bottom: 16px;
   margin: 0;
+  margin-bottom: 16px;
 }
 
 .navItem {
@@ -14,8 +14,8 @@
   position: relative;
   color: #292424;
   text-decoration: none;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 600;
   padding-bottom: 4px;
   transition: color 0.3s ease;
 }
@@ -37,5 +37,10 @@
 }
 
 .link:hover {
-  color: #c2854d;
+  color: #588157;
+}
+@media screen and (min-width: 768px) {
+  .link {
+    font-size: 12px;
+  }
 }

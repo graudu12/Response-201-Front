@@ -192,11 +192,6 @@ const recipesSlice = createSlice({
       state.notFound = false;
       state.error = null;
     },
-    removeRecipeFromFavoritesLocally: (state, action) => {
-      const recipeId = action.payload;
-      state.items = state.items.filter((r) => r._id !== recipeId);
-      state.totalItems -= 1;
-    },
   },
 
   extraReducers: (builder) => {
@@ -250,7 +245,10 @@ const recipesSlice = createSlice({
         state.loading = false;
         state.error = action.payload || action.error.message;
       })
-
+      .addCase(toggleFavoriteRecipeAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
         const { recipeId, add, mode } = action.payload;
         if (mode === "favorites" && !add) {
@@ -262,8 +260,12 @@ const recipesSlice = createSlice({
             recipe.isFavorite = add;
           }
         }
+        state.loading = false;
       })
-
+      .addCase(toggleFavoriteRecipeAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || action.error.message;
+      })
       .addCase(fetchMyRecipes.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -296,6 +298,7 @@ const recipesSlice = createSlice({
         state.totalItems = action.payload.totalItems;
         state.loading = false;
       })
+
       .addCase(fetchFavoriteRecipes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || action.error.message;
@@ -309,7 +312,6 @@ export const {
   clearNotFound,
   addNewRecipe,
   clearRecipes,
-  removeRecipeFromFavoritesLocally,
 } = recipesSlice.actions;
 
 export const recipesReducer = recipesSlice.reducer;

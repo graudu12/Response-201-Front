@@ -1,19 +1,16 @@
 import css from "../Loading/Loading.module.css";
+import { ThreeDots } from "react-loader-spinner";
 
-import { Comment } from "react-loader-spinner";
-
-export default function Loading({ height = 80, width = 80 }) {
+export default function Loading() {
   return (
     <div className={css.loader}>
-      <Comment
+      <ThreeDots
+        height="80"
+        width="80"
+        radius="9"
+        color="#3a5a40"
+        ariaLabel="three-dots-loading"
         visible={true}
-        height={height}
-        width={width}
-        ariaLabel="comment-loading"
-        wrapperStyle={{}}
-        wrapperClass="comment-wrapper"
-        color="#4A90E2" // приятный синий
-        backgroundColor="transparent"
       />
     </div>
   );
