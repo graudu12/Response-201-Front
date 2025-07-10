@@ -200,11 +200,7 @@ export default function HomePage() {
           onChange={handleFilterChange}
           setIsFiltering={setIsFiltering}
         />
-        {loading && isPagination && (
-          <div className={css.loaderWrapper}>
-            <Loading />
-          </div>
-        )}
+        {loading && isPagination && <Loading />}
         <RecipesList
           recipes={recipesToShow}
           loading={false}
