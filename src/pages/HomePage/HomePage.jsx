@@ -200,10 +200,10 @@ export default function HomePage() {
           onChange={handleFilterChange}
           setIsFiltering={setIsFiltering}
         />
-        {loading && <Loading />}
+        {loading && isPagination && <Loading />}
         <RecipesList
           recipes={recipesToShow}
-          loading={loading}
+          loading={false}
           //onToggleFavorite={handleToggleFavorite}
           ref={recipesListRef}
           startIndex={startIndex}
@@ -211,7 +211,11 @@ export default function HomePage() {
 
         {/* Условие для LoadMoreBtn (логика замены LoadMoreBtn на Pagination
         "Илья") */}
-
+        {loading && !isPagination && (
+          <div className={css.loaderWrapper}>
+            <Loading />
+          </div>
+        )}
         {searchQuery || isFiltering ? (
           <div>
             {

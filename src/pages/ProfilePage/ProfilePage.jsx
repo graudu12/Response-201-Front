@@ -90,14 +90,15 @@ const ProfilePage = () => {
         <h1 className={css.title}>My profile</h1>
         <ProfileNavigation />
         <p className={css.totalRecipes}>{totalItems} recipes</p>
-        {loading && <Loader />}
+
         <RecipesList
           mode={mode}
           recipes={recipesToShow}
-          loading={loading}
+          loading={false}
           ref={recipesListRef}
           startIndex={startIndex}
         />
+        {loading && <Loader />}
         <div>
           {page * recipesPerPage < totalItems && !loading && (
             <LoadMoreBtn onClick={loadMore} />
