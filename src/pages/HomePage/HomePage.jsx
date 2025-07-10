@@ -17,6 +17,7 @@ import {
 } from "../../redux/recipes/operations";
 import { clearRecipes, clearNotFound } from "../../redux/recipes/slice";
 import { changeFilter } from "../../redux/filters/slice";
+import Loading from "../../components/Loading/Loading.jsx";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -137,31 +138,51 @@ export default function HomePage() {
   //  }
   // }, [recipes, startIndex]);
 
+  // useEffect(() => {
+  //  if (recipesListRef.current && startIndex !== null) {
+  //  const recipeExists = recipes[startIndex];
+
+  //   requestAnimationFrame(() => {
+  //   if (isPagination) {
+  //     window.scrollTo({ top: 0, behavior: "smooth" });
+  //    } else if (recipeExists) {
+  //   recipesListRef.current.scrollIntoView({
+  //     behavior: "smooth",
+  //      block: "start",
+  //    });
+  //   }
+
+  // ⬅️ Сбрасываем startIndex ТОЛЬКО после scroll
+  //  setStartIndex(null);
+  //   });
+  // }
+  // }, [recipes, startIndex, isPagination]);
+
+  //useEffect(() => {
+  // if (!loading) {
+  //  setStartIndex(null);
+  // }
+  // }, [loading]);
   useEffect(() => {
-    if (recipesListRef.current && startIndex !== null) {
-      const recipeExists = recipes[startIndex];
-
-      requestAnimationFrame(() => {
-        if (isPagination) {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        } else if (recipeExists) {
-          recipesListRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-
-        // ⬅️ Сбрасываем startIndex ТОЛЬКО после scroll
-        setStartIndex(null);
-      });
+    if (!loading && isPagination) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [recipes, startIndex, isPagination]);
+  }, [loading, isPagination]);
 
   useEffect(() => {
-    if (!loading) {
+    if (
+      !loading &&
+      startIndex !== null &&
+      recipes[startIndex] &&
+      recipesListRef.current
+    ) {
+      recipesListRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
       setStartIndex(null);
     }
-  }, [loading]);
+  }, [loading, recipes, startIndex]);
   const recipesToShow = recipes.slice(0, page * recipesPerPage);
 
   return (
@@ -179,6 +200,7 @@ export default function HomePage() {
           onChange={handleFilterChange}
           setIsFiltering={setIsFiltering}
         />
+        {loading && <Loading />}
         <RecipesList
           recipes={recipesToShow}
           loading={loading}
