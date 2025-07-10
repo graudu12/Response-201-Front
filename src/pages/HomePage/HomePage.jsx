@@ -78,9 +78,9 @@ export default function HomePage() {
         perPage: recipesPerPage,
         category: selectedFilters.category,
         ingredient: selectedFilters.ingredient,
-        append: false,
+        //append: false,
         //append: !isPagination,
-        //append: page > 1, // <-- Ось ключова зміна
+        append: page > 1, // <-- Ось ключова зміна
       })
     ).unwrap();
     // .then(() => setLoading(false))
