@@ -265,21 +265,27 @@ export default function AddRecipeForm() {
 
                   <label className={css.label} htmlFor="recipeCategory">
                     Category
-                    <Field
-                      className={`${css.field} selectPlaceholder`}
-                      id="recipeCategory"
-                      name="recipeCategory"
-                      as="select"
-                    >
-                      <option value="" disabled hidden>
-                        {categories[0]?.name || "Select category"}
-                      </option>
-                      {categories.map((cat) => (
-                        <option value={cat.name} key={cat._id}>
-                          {cat.name}
+                    <div className={css.selectWrapper}>
+                      <Field
+                        className={`${css.field}`}
+                        as="select"
+                        id="recipeCategory"
+                        name="recipeCategory"
+                      >
+                        <option value="" disabled hidden>
+                          {categories[0]?.name || "Select category"}
                         </option>
-                      ))}
-                    </Field>
+                        {categories.map((cat) => (
+                          <option key={cat._id} value={cat.name}>
+                            {cat.name}
+                          </option>
+                        ))}
+                      </Field>
+
+                      <svg className={css.selectArrow}>
+                        <use href={`/svg/sprite.svg#icon-select_arrow`} />
+                      </svg>
+                    </div>
                     <ErrorMessage
                       className={css.error}
                       name="recipeCategory"
@@ -296,21 +302,27 @@ export default function AddRecipeForm() {
                     htmlFor="name_ingredients"
                   >
                     Name
-                    <Field
-                      className={css.field}
-                      id="name_ingredients"
-                      name="name_ingredients"
-                      as="select"
-                    >
-                      <option value="" disabled hidden>
-                        {ingredients[0]?.name || "Select ingredient"}
-                      </option>
-                      {ingredients.map((ing) => (
-                        <option value={ing._id} key={ing._id}>
-                          {ing.name}
+                    <div className={css.selectWrapper}>
+                      <Field
+                        className={css.field}
+                        as="select"
+                        id="name_ingredients"
+                        name="name_ingredients"
+                      >
+                        <option value="" disabled hidden>
+                          {ingredients[0]?.name || "Select ingredient"}
                         </option>
-                      ))}
-                    </Field>
+                        {ingredients.map((ing) => (
+                          <option key={ing._id} value={ing._id}>
+                            {ing.name}
+                          </option>
+                        ))}
+                      </Field>
+
+                      <svg className={css.selectArrow}>
+                        <use href={`/svg/sprite.svg#icon-select_arrow`} />
+                      </svg>
+                    </div>
                     <ErrorMessage
                       className={css.error}
                       name="name_ingredients"
