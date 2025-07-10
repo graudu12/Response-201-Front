@@ -108,8 +108,6 @@ export default function Pagination({
       >
         <svg
           className={styles.logoIcon}
-          width={10}
-          height={10}
           viewBox="0 0 16 10"
           aria-hidden="true"
         >
