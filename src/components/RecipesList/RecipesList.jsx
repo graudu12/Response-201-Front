@@ -2,7 +2,7 @@
 import { forwardRef } from "react";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import styles from "./RecipesList.module.css";
-import Loading from "../Loading/Loading";
+//import Loading from "../Loading/Loading";
 
 const RecipesList = forwardRef(
   ({ recipes, loading, mode, startIndex }, ref) => {
@@ -28,7 +28,7 @@ const RecipesList = forwardRef(
             />
           );
         })}
-        {loading && <Loading />}
+     
       </div>
     );
   }
