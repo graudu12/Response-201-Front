@@ -24,7 +24,7 @@
 }
 
 .avatar {
-  background-color: #9b6c43;
+  background-color: #344e41;
   color: #fff;
   width: 32px;
   height: 32px;
@@ -65,5 +65,5 @@
 }
 
 .logoutBtn:hover .logoutIcon {
-  fill: #c2854d;
+  fill: #588157;
 }

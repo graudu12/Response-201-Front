@@ -38,7 +38,7 @@
 }
 
 .BtnLoad button {
-  background-color: #9b6c43;
+  background-color: #344e41;
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -50,5 +50,5 @@
 }
 
 .BtnLoad button:hover {
-  background-color: #855834;
+  background-color: #588157;
 }

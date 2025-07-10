@@ -9,7 +9,7 @@
 }
 
 .modal {
-  background-color: #fff8f2;
+  background-color: #a3b18a;
   padding: 32px 24px;
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
@@ -27,24 +27,24 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #7a4c2f;
+  color: #000;
 }
 
 .title {
   font-size: 18px;
   font-weight: 600;
-  color: #3b1f0a;
+  color: #000;
   margin-bottom: 8px;
 }
 
 .message {
   font-size: 14px;
-  color: #3b1f0a;
+  color: #000;
   margin-bottom: 24px;
 }
 
 .backButton {
-  background-color: #c2854d;
+  background-color: #344e41;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -55,5 +55,5 @@
 }
 
 .backButton:hover {
-  background-color: #a96b3a;
+  background-color: #588157;
 }
