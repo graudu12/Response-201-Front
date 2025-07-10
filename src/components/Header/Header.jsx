@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Logo from "../Logo/Logo";
 import Navigation from "../Navigation/Navigation";
@@ -29,19 +29,6 @@ const Header = () => {
       navigate("/");
     }
   };
-
-  // Забороняємо скролити сторінку під меню
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, [isMobileMenuOpen]);
 
   return (
     <header className={css.header}>
