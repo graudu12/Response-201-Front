@@ -1,5 +1,5 @@
 .header {
-  background-color: #3d2218;
+  background-color: #3a5a40;
 
   position: relative;
   z-index: 100;
@@ -39,7 +39,7 @@
 
 .mobileButton,
 .logoutBtn {
-  background-color: #c2854d;
+  background-color: #344e41;
   color: #fff;
   padding: 8px 16px;
   border: none;
@@ -50,7 +50,7 @@
 }
 
 .logoutBtn:hover {
-  background-color: #a96b3a;
+  background-color: #588157;
 }
 
 .userMenu {
@@ -60,7 +60,7 @@
 }
 
 .avatar {
-  background-color: #c2854d;
+  background-color: #344e41;
   color: #fff;
   width: 32px;
   height: 32px;
@@ -125,11 +125,11 @@
 }
 
 .link:hover {
-  color: #c2854d;
+  color: #a3b18a;
 }
 
 .mobileButton {
-  background-color: #c2854d;
+  background-color: #344e41;
   color: #fff;
   padding: 8px 16px;
   border: none;
@@ -143,7 +143,7 @@
 }
 
 .mobileButton:hover {
-  background-color: #a96b3a;
+  background-color: #588157;
 }
 
 .authContainer {
@@ -153,7 +153,7 @@
 }
 
 .authRegister {
-  background-color: #a67547;
+  background-color: #344e41;
   color: #fff;
   padding: 8px 20px;
   border-radius: 10px;
@@ -168,7 +168,7 @@
 }
 
 .authRegister:hover {
-  background-color: #8c5f38;
+  background-color: #588157;
 }
 
 /* === Tablet (768px+) === */

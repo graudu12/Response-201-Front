@@ -3,11 +3,11 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #fdfdf7;
+  background-color: #dad7cd;
 }
 
 .card {
-  background-color: #faf3e0;
+  background-color: #a3b18a;
   border-radius: 32px;
   padding: 40px 32px;
   width: 522px;
@@ -53,11 +53,11 @@
 }
 
 .input:hover {
-  border: 1px solid #9b6c43;
+  border: 1px solid #344e41;
 }
 
 .input:focus {
-  border: 1px solid #9b6c43;
+  border: 1px solid #344e41;
 }
 
 .error {
@@ -68,7 +68,7 @@
 }
 
 .button {
-  background-color: #9b6c43;
+  background-color: #344e41;
   color: #fff;
   border: none;
   padding: 12px;
@@ -85,11 +85,11 @@
 }
 
 .button:hover {
-  background-color: #563c29;
+  background-color: #588157;
 }
 
 .button:focus {
-  background-color: #563c29;
+  background-color: #588157;
 }
 
 .registerText {
@@ -105,11 +105,11 @@
 }
 
 .registerLink:hover {
-  color: #9b6c43;
+  color: #588157;
 }
 
 .registerLink:focus {
-  color: #9b6c43;
+  color: #588157;
 }
 
 .passwordFieldWrapper {

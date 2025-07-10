@@ -45,7 +45,7 @@
   justify-content: center;
   width: 100%;
   padding: 10px;
-  background: #9b6c43;
+  background: #344e41;
   color: white;
   border: none;
   border-radius: 8px;
@@ -66,16 +66,16 @@
 }
 .favoriteButton:hover,
 .smallFavoriteButton:hover {
-  background: #6d554b;
+  background: #588157;
   border: none;
 }
 
 .favoriteButton:active {
-  background: #9b6c43;
+  background: #344e41;
   border: 2px solid white;
 }
 .smallFavoriteButton.active {
-  background: #9b6c43;
+  background: #344e41;
   border: none;
   color: white;
 }
@@ -105,7 +105,7 @@
   color: white;
 }
 .smallFavoriteButton.active:hover {
-  background-color: #c80000;
+  background-color: #6d554b;
   border: none;
 }
 

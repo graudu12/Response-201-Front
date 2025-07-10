@@ -3,7 +3,7 @@
   left: 0;
   width: 100%;
   height: auto;
-  background-color: #3d2218;
+  background-color: #3a5a40;
   color: #ffffff;
 }
 .footerContainer {
@@ -55,7 +55,7 @@
   transition: color 0.3s ease;
 }
 .link:hover {
-  color: #c2854d;
+  color: #344e41;
 }
 
 @media only screen and (min-width: 768px) {

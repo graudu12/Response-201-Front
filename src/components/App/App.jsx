@@ -1,5 +1,5 @@
 import css from "../App/App.module.css";
-import { lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -44,6 +44,7 @@ export default function App() {
   ) : (
     <div className={css.app}>
       <Layout>
+         <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
@@ -77,6 +78,7 @@ export default function App() {
           {/* ❌ 404 */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </Suspense>
       </Layout>
 
       <NotificationToast />

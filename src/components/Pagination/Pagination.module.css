@@ -19,12 +19,12 @@
 }
 
 .button:hover:not(:disabled) {
-  background-color: #9b6c43;
+  background-color: #588157;
   color: #ffffff;
 }
 
 .active {
-  background-color: #9b6c43;
+  background-color: #344e41;
   color: #ffffff;
   font-weight: bold;
 }
@@ -43,14 +43,14 @@
   width: 32px;
   height: 32px;
   padding: 4px;
-  background-color: #9b6c43;
+  background-color: #344e41;
   border: none;
   border-radius: 8px;
   transition: background-color 0.3s ease;
 }
 
 .arrow:hover:not(:disabled) {
-  background-color: #6d554b;
+  background-color: #588157;
 }
 
 .logoIcon {

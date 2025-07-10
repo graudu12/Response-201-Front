@@ -2,7 +2,7 @@
   margin: 0 auto;
   max-width: 393px;
   padding: 48px 16px;
-  background-color: #fbfcf8;
+  background-color: #dad7cd;
 }
 .headerSection {
   display: flex;
@@ -30,7 +30,7 @@
 .info {
   display: flex;
   flex-direction: column;
-  background: #faf3e0;
+  background: #a3b18a;
   gap: 15px;
   padding: 16px;
   border-radius: 16px;
@@ -92,7 +92,7 @@ ol {
   justify-content: center;
   width: 100%;
   padding: 10px;
-  background: #9b6c43;
+  background: #344e41;
   color: white;
   border: none;
   border-radius: 8px;
@@ -103,11 +103,11 @@ ol {
 
 .favoriteButton:hover,
 .favoriteButton:focus {
-  background: #6d554b;
+  background: #588157;
 }
 
 .favoriteButton:active {
-  background: #9b6c43;
+  background: #344e41;
   border: 2px solid white;
 }
 .icon {

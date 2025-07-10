@@ -245,7 +245,10 @@ const recipesSlice = createSlice({
         state.loading = false;
         state.error = action.payload || action.error.message;
       })
-
+      .addCase(toggleFavoriteRecipeAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
         const { recipeId, add, mode } = action.payload;
         if (mode === "favorites" && !add) {
@@ -257,8 +260,12 @@ const recipesSlice = createSlice({
             recipe.isFavorite = add;
           }
         }
+        state.loading = false;
       })
-
+      .addCase(toggleFavoriteRecipeAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || action.error.message;
+      })
       .addCase(fetchMyRecipes.pending, (state) => {
         state.loading = true;
         state.error = null;

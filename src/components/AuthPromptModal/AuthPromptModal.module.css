@@ -9,7 +9,7 @@
 }
 
 .modal {
-  background-color: #faf3e0;
+  background-color: #a3b18a;
   padding: 56px 32px;
   border-radius: 32px;
   position: relative;
@@ -84,13 +84,13 @@
 }
 
 .registerBtn {
-  background-color: #9b643d;
+  background-color: #344e41;
   color: #fff;
   border: none;
 }
 
 .registerBtn:hover {
-  background-color: #7d5131;
+  background-color: #588157;
 }
 @media (min-width: 393px) and (max-width: 767px) {
   .modal {

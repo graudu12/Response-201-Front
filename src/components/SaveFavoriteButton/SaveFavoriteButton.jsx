@@ -25,7 +25,8 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
 
   const isFavorite = useSelector(makeSelectIsFavorite(recipeId));
 
-  const [hovered, setHovered] = useState(false);
+  // const [hovered, setHovered] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
 
   const handleToggle = async () => {
@@ -49,15 +50,15 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
     }
   };
 
-  const handleMouseEnter = () => {
-    if (small && isFavorite) setHovered(true);
-  };
+  // const handleMouseEnter = () => {
+  //   if (small && isFavorite) setHovered(true);
+  // };
 
-  const handleMouseLeave = () => {
-    setHovered(false);
-  };
+  // const handleMouseLeave = () => {
+  //   setHovered(false);
+  // };
 
-  const iconId = hovered ? "icon-delete" : "icon-saved";
+  // const iconId = hovered ? "icon-delete" : "icon-saved";
 
   return (
     <>
@@ -67,8 +68,8 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
           small ? styles.smallFavoriteButton : styles.favoriteButton
         } ${isFavorite ? styles.active : ""}`}
         aria-label={isFavorite ? "Remove" : "Add to favorites"}
-        onMouseEnter={small ? handleMouseEnter : undefined}
-        onMouseLeave={small ? handleMouseLeave : undefined}
+        // onMouseEnter={small ? handleMouseEnter : undefined}
+        // onMouseLeave={small ? handleMouseLeave : undefined}
       >
         <svg
           className={`${styles.icon} ${
@@ -77,7 +78,7 @@ function SaveFavoriteButton({ small, recipeId, mode }) {
           width="24"
           height="24"
         >
-          <use href={`/svg/sprite.svg#${iconId}`} />
+          <use href={`/svg/sprite.svg#icon-saved`} />
         </svg>
         {!small && (isFavorite ? "Remove" : "Save")}
       </button>
