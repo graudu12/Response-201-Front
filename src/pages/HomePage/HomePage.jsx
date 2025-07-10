@@ -79,13 +79,20 @@ export default function HomePage() {
         category: selectedFilters.category,
         ingredient: selectedFilters.ingredient,
         //append: false,
+        append: page > 1 && (searchQuery || isFiltering),
         //append: !isPagination,
-        append: page > 1, // <-- Ось ключова зміна
+        //append: page > 1, // <-- Ось ключова зміна
       })
     ).unwrap();
     // .then(() => setLoading(false))
     // .catch(() => setLoading(false));
-  }, [dispatch, page, selectedFilters, searchQuery /*isPagination*/]);
+  }, [
+    dispatch,
+    page,
+    selectedFilters,
+    searchQuery,
+    isFiltering /*isPagination*/,
+  ]);
 
   useEffect(() => {
     if (!searchQuery) return;
