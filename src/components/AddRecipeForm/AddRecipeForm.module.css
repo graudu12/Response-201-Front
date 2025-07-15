@@ -200,8 +200,8 @@
 
 .icon_delete {
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   color: #000;
   transition: color 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
