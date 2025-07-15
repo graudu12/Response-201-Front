@@ -1,21 +1,11 @@
-/* === Заборона скролу, коли меню відкрите === */
-.no-scroll {
-  overflow: hidden;
-  height: 100vh;
-}
-
-/* === Фіксований хедер === */
 .header {
   background-color: #3a5a40;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+
+  position: relative;
   z-index: 100;
   height: 74px; /* задаємо висоту */
 }
 
-/* === Контейнер для контенту хедера === */
 .container {
   display: flex;
   justify-content: space-between;
@@ -26,7 +16,6 @@
   height: 100%; /* дозволяє дочірнім елементам займати всю висоту */
 }
 
-/* === Логотип === */
 .logo {
   font-size: 18px;
   font-weight: bold;
@@ -37,7 +26,6 @@
   gap: 8px;
 }
 
-/* === Кнопка бургер-меню === */
 .burger {
   display: block;
   background: none;
@@ -47,12 +35,10 @@
   cursor: pointer;
 }
 
-/* === Навігація для десктопу === */
 .desktopNav {
   display: none;
 }
 
-/* === Кнопки (logout, мобільні) === */
 .mobileButton,
 .logoutBtn {
   background-color: #344e41;
@@ -63,17 +49,12 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
 }
 
-.logoutBtn:hover,
-.mobileButton:hover {
+.logoutBtn:hover {
   background-color: #588157;
 }
 
-/* === Меню користувача === */
 .userMenu {
   display: flex;
   align-items: center;
@@ -97,7 +78,6 @@
   font-weight: 500;
 }
 
-/* === Кнопка закриття мобільного меню === */
 .closeBtn {
   align-self: flex-end;
   background: none;
@@ -107,7 +87,6 @@
   cursor: pointer;
 }
 
-/* === Навігація === */
 .navList {
   display: flex;
   align-items: center;
@@ -151,7 +130,24 @@
   color: #a3b18a;
 }
 
-/* === Авторизація: кнопки === */
+.mobileButton {
+  background-color: #344e41;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.mobileButton:hover {
+  background-color: #588157;
+}
+
 .authContainer {
   display: flex;
   align-items: center;
@@ -177,13 +173,12 @@
   background-color: #588157;
 }
 
-/* === Планшет (768px+) === */
+/* === Tablet (768px+) === */
 @media screen and (min-width: 768px) {
   .container {
     max-width: 768px;
     padding: 14px 32px;
   }
-
   .logo {
     font-size: 22px;
   }
@@ -206,6 +201,7 @@
 
 /* === Десктоп (1440px+) === */
 @media screen and (min-width: 1440px) {
+
   .container {
     padding: 14px 108px;
     max-width: 1440px;
