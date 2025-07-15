@@ -38,6 +38,18 @@ export default function AddRecipeForm() {
       .catch((err) => console.error("Error loading ingredients:", err));
   }, []);
 
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showModal]);
+
   const handleSubmit = async (values, addedIngredients, actions) => {
 
     const token = localStorage.getItem("token");
@@ -142,7 +154,7 @@ export default function AddRecipeForm() {
     dishPhoto: Yup.mixed(),
     recipeDescription: Yup.string()
       .min(3, "Must be min 3 chars")
-      .max(100, "Must be max 100 chars")
+      .max(300, "Must be max 300 chars")
       .required("This field is required"),
     instructions: Yup.string().required("This field is required"),
     name_ingredients: Yup.string(),
