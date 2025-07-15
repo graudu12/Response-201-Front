@@ -39,10 +39,6 @@ export default function AddRecipeForm() {
   }, []);
 
   const handleSubmit = async (values, addedIngredients, actions) => {
-    if (addedIngredients.length === 0) {
-      toast("⚠️ Please add at least one ingredient.");
-      return;
-    }
 
     const token = localStorage.getItem("token");
     const formData = new FormData();
@@ -154,8 +150,16 @@ export default function AddRecipeForm() {
     cookingTime: Yup.string()
       .max(4, "Must be max 9999 minutes")
       .required("This field is required"),
-    calories: Yup.string(),
+    calories: Yup.string().required("This field is required"),
     recipeCategory: Yup.string().required("This field is required"),
+    ingredients: Yup.array()
+    .of(
+      Yup.object().shape({
+        id: Yup.string().required("Ingredient is required"),
+        measure: Yup.string().required("Ingredient amount is required"),
+      })
+    )
+    .min(1, "Please add at least one ingredient"),
   });
 
   return (
@@ -164,7 +168,7 @@ export default function AddRecipeForm() {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values, actions) => {
-          // values.ingredients = addedIngredients;
+          values.ingredients = addedIngredients;
           handleSubmit(values, addedIngredients, actions);
         }}
       >
@@ -232,13 +236,19 @@ export default function AddRecipeForm() {
 
                 <label className={css.label} htmlFor="cookingTime">
                   Cooking time in minutes
+                  <div className={css.selectWrapper}>
                   <Field
                     className={css.field}
                     id="cookingTime"
                     name="cookingTime"
                     type="number"
+                    min="0"
                     placeholder="10"
                   />
+                   <svg className={css.select_up_down}>
+                        <use href={`/svg/sprite.svg#icon-up-down`} />
+                    </svg>
+                   </div>
                   <ErrorMessage
                     className={css.error}
                     name="cookingTime"
@@ -249,13 +259,19 @@ export default function AddRecipeForm() {
                 <div className={css.cal_cat}>
                   <label className={css.label} htmlFor="calories">
                     Calories
+                    <div className={css.selectWrapper}>
                     <Field
                       className={css.field}
                       id="calories"
                       name="calories"
                       type="number"
+                      min="0"
                       placeholder="150 cals"
-                    />
+                      />
+                    <svg className={css.select_up_down}>
+                        <use href={`/svg/sprite.svg#icon-up-down`} />
+                    </svg>
+                    </div>
                     <ErrorMessage
                       className={css.error}
                       name="calories"
@@ -323,11 +339,6 @@ export default function AddRecipeForm() {
                         <use href={`/svg/sprite.svg#icon-select_arrow`} />
                       </svg>
                     </div>
-                    <ErrorMessage
-                      className={css.error}
-                      name="name_ingredients"
-                      component="span"
-                    ></ErrorMessage>
                   </label>
 
                   <label
@@ -343,11 +354,13 @@ export default function AddRecipeForm() {
                     />
                     <ErrorMessage
                       className={css.error}
-                      name="amount_ingredients"
+                      name="ingredients"
                       component="span"
                     ></ErrorMessage>
                   </label>
+                  
                 </div>
+                
 
                 <div className={css.btn_cont}>
                   {addedIngredients.length > 0 && (

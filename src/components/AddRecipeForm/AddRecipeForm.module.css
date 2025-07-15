@@ -42,8 +42,13 @@
   font-weight: 400;
   font-size: 18px;
   color: #000;
-  margin-bottom: 16px;
+  margin-bottom: 27px;
 }
+
+.label:has(.error) {
+  margin-bottom: 0;
+}
+
 .selectCustom {
   appearance: none;
   -webkit-appearance: none;
@@ -197,13 +202,13 @@
   display: block;
   width: 24px;
   height: 24px;
-  pointer-events: none;
-  color: red;
+  color: #000;
+  transition: color 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .icon_delete:hover,
 .icon_delete:focus {
-  stroke: var(--color1, #ff0606);
+  color: #c80000;
 }
 
 .btn_submit {
@@ -227,8 +232,10 @@
 
 .error {
   color: #ff4d4d;
-  font-size: 12px;
+  font-size: 11px;
 }
+
+
 
 .selectPlaceholder option[value=""] {
   color: grey;
@@ -253,8 +260,24 @@
   transform: translateY(-50%);
   pointer-events: none;
   width: 16px;
-  height: 16px;
+  height: 8px;
   fill: #000;
+}
+
+.select_up_down {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 16px;
+  height: 21px;
+  fill: #000;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0;
 }
 
 @media screen and (min-width: 768px) {
@@ -270,10 +293,6 @@
 
   .cont_ingred {
     display: flex;
-  }
-
-  .label {
-    margin-bottom: 32px;
   }
 
   .label_name {
