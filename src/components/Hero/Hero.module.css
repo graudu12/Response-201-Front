@@ -1,5 +1,6 @@
-/* Mobile First: 393px+ */
 .hero {
+  padding-top: 74px;
+  padding-bottom: 98px;
   background-color: #3d2218;
   background-image: linear-gradient(
       to left,
@@ -10,7 +11,7 @@
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
-  padding: 128px 0 98px;
+  margin-top: 68px;
 }
 
 @media (min-resolution: 192dpi) {
@@ -24,14 +25,12 @@
   }
 }
 
-/* Контейнер */
 .heroContainer {
   max-width: 393px;
   margin: 0 auto;
   padding: 0 32px;
 }
 
-/* Внутрішній контент */
 .content {
   display: flex;
   gap: 24px;
@@ -39,7 +38,6 @@
   align-items: flex-start;
 }
 
-/* Заголовок */
 .title {
   color: #fff;
   font-size: 48px;
@@ -51,25 +49,25 @@
 /* Tablet 768px+ */
 @media screen and (min-width: 768px) {
   .hero {
-    padding: 128px 0;
+    padding: 128px 0 98px;
+    padding-top: 74px;
     background-position: top center, center -40px;
   }
 
   .heroContainer {
-    padding: 0 65px 0 32px;
-  }
-  .heroContainer {
     max-width: 768px;
+    padding: 0 65px 0 32px;
   }
 }
 
-/* Desktop 1280px+ */
+/* Desktop 1440px+ */
 @media screen and (min-width: 1440px) {
+  .hero {
+    background-position: top center, center -120px;
+  }
+
   .heroContainer {
     min-width: 1440px;
     padding-left: 108px;
-  }
-  .hero {
-    background-position: top center, center -120px;
   }
 }

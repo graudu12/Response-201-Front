@@ -30,11 +30,27 @@ const Header = () => {
     }
   };
 
+
+  // Забороняємо скролити сторінку під відкритим мобільним меню
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [isMobileMenuOpen]);
+
+
   return (
     <header className={css.header}>
       <div className={css.container}>
         <Logo />
 
+        {/* Кнопка для мобільного меню */}
         <button
           className={css.burger}
           onClick={() => setMobileMenuOpen(true)}
@@ -43,6 +59,7 @@ const Header = () => {
           ☰
         </button>
 
+        {/* Навігація для десктопів */}
         <div className={css.desktopNav}>
           <Navigation isLoggedIn={isLoggedIn} />
           {isLoggedIn ? (
@@ -53,6 +70,7 @@ const Header = () => {
         </div>
       </div>
 
+      {/* Мобільне меню */}
       {isMobileMenuOpen && (
         <MobileMenu
           isLoggedIn={isLoggedIn}
