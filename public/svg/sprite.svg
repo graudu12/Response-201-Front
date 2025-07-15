@@ -21,8 +21,8 @@
 <path stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" stroke-width="1.5769" d="M1.019 26.25v-14.043c0-2.36 1.913-4.273 4.273-4.273 1.619 0 3.098-0.914 3.822-2.362l0.968-1.937c0.801-1.603 2.439-2.615 4.231-2.615h3.371c1.792 0 3.43 1.012 4.231 2.615l0.968 1.937c0.724 1.448 2.203 2.362 3.822 2.362 2.36 0 4.273 1.913 4.273 4.273v14.043c0 2.613-2.118 4.731-4.731 4.731h-20.5c-2.613 0-4.731-2.118-4.731-4.731z"></path>
 </symbol>
 
-<symbol id="icon-delete" viewBox="0 0 32 32">
-<path fill="none" stroke="#000" style="stroke: var(--color1, #000)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="1.3333" d="M16 21.846v-8.769M6.5 9.423h2.192M25.5 9.423h-2.192M19.654 9.423h-7.308M19.654 9.423v-1.462c0-0.807-0.654-1.462-1.462-1.462h-4.385c-0.807 0-1.462 0.654-1.462 1.462v1.462M19.654 9.423h3.654M12.346 9.423h-3.654M23.308 9.423v13.154c0 1.614-1.309 2.923-2.923 2.923h-8.769c-1.614 0-2.923-1.309-2.923-2.923v-13.154"></path>
+<symbol id="icon-delete" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 12.3846L8 5.80769M0.875 3.06731H2.51923M15.125 3.06731H13.4808M10.7404 3.06731H5.25962M10.7404 3.06731V1.97115C10.7404 1.36576 10.2496 0.875 9.64423 0.875H6.35577C5.75038 0.875 5.25962 1.36576 5.25962 1.97115V3.06731M10.7404 3.06731H13.4808M5.25962 3.06731H2.51923M13.4808 3.06731V12.9327C13.4808 14.1435 12.4992 15.125 11.2885 15.125H4.71154C3.50076 15.125 2.51923 14.1435 2.51923 12.9327V3.06731" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
 </symbol>
 
 <symbol id="icon-filter" viewBox="0 0 34 32">
@@ -63,10 +63,6 @@
   ></path>
 </symbol>
 
-<symbol id="icon-select_arrow" viewBox="0 0 32 32">
-<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="1.3333" d="M25 11.5l-9 9-9-9"></path>
-</symbol>
-
 <symbol id="icon-separator" viewBox="0 0 1 32">
 <path style="fill: var(--color1, #fff)" d="M0 0.4h0.8v31.2h-0.8v-31.2z"></path>
 </symbol>
@@ -75,6 +71,15 @@
 <path d="M4.799 8.001c0-0.424 0.169-0.831 0.469-1.131s0.707-0.469 1.131-0.469h19.2c0.424 0 0.831 0.169 1.131 0.469s0.469 0.707 0.469 1.131-0.169 0.831-0.469 1.131c-0.3 0.3-0.707 0.469-1.131 0.469h-19.2c-0.424 0-0.831-0.169-1.131-0.469s-0.469-0.707-0.469-1.131z"></path>
 <path d="M4.799 16.001c0-0.424 0.169-0.831 0.469-1.131s0.707-0.469 1.131-0.469h19.2c0.424 0 0.831 0.169 1.131 0.469s0.469 0.707 0.469 1.131c0 0.424-0.169 0.831-0.469 1.131s-0.707 0.469-1.131 0.469h-19.2c-0.424 0-0.831-0.169-1.131-0.469s-0.469-0.707-0.469-1.131z"></path>
 <path d="M4.799 24.001c0-0.424 0.169-0.831 0.469-1.131s0.707-0.469 1.131-0.469h19.2c0.424 0 0.831 0.169 1.131 0.469s0.469 0.707 0.469 1.131c0 0.424-0.169 0.831-0.469 1.131s-0.707 0.469-1.131 0.469h-19.2c-0.424 0-0.831-0.169-1.131-0.469s-0.469-0.707-0.469-1.131z"></path>
+</symbol>
+
+<symbol id="icon-select_arrow" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14.75 0.625001L8 7.375L1.25 0.625001" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+</symbol>
+
+<symbol id="icon-up-down" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1 6L6 1L11 6" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M1 12L6 17L11 12" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
 </symbol>
 
 </defs>
