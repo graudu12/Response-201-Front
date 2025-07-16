@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Logo from "../Logo/Logo";
 import Navigation from "../Navigation/Navigation";
@@ -30,6 +30,19 @@ const Header = () => {
     }
   };
 
+  // Забороняємо скролити сторінку під відкритим мобільним меню
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <header className={css.header}>
       <div className={css.container}>
@@ -37,8 +50,11 @@ const Header = () => {
 
         <button
           className={css.burger}
-          onClick={() => setMobileMenuOpen(true)}
+          onClick={() => {
+            if (!isMobileMenuOpen) setMobileMenuOpen(true);
+          }}
           aria-label="Open menu"
+          aria-expanded={isMobileMenuOpen}
         >
           ☰
         </button>
@@ -66,3 +82,4 @@ const Header = () => {
 };
 
 export default Header;
+
