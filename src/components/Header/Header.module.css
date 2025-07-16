@@ -196,7 +196,7 @@
   }
 }
 
-/* === Десктоп (1440px+) === */
+/* === Desktop (1440px+) === */
 @media screen and (min-width: 1440px) {
   .container {
     max-width: 1440px;
@@ -213,3 +213,4 @@
     font-size: 16px;
   }
 }
+

@@ -30,6 +30,7 @@ const Header = () => {
     }
   };
 
+  // Забороняємо скролити сторінку під відкритим мобільним меню
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.classList.add("no-scroll");
@@ -55,10 +56,9 @@ const Header = () => {
           aria-label="Open menu"
           aria-expanded={isMobileMenuOpen}
         >
-          {/**/}☰
+          ☰
         </button>
 
-        {/* Навігація для десктопів */}
         <div className={css.desktopNav}>
           <Navigation isLoggedIn={isLoggedIn} />
           {isLoggedIn ? (
@@ -69,7 +69,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Мобільне меню */}
       {isMobileMenuOpen && (
         <MobileMenu
           isLoggedIn={isLoggedIn}
@@ -83,3 +82,4 @@ const Header = () => {
 };
 
 export default Header;
+
